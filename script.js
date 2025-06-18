@@ -20,11 +20,6 @@ function updateThemeIcon(theme) {
 
 updateThemeIcon(currentTheme);
 
-// Initialize navbar background on page load
-document.addEventListener('DOMContentLoaded', () => {
-    updateNavbarBackground();
-});
-
 // Theme toggle event listener
 themeToggle.addEventListener('click', () => {
     const currentTheme = html.getAttribute('data-theme');
@@ -33,7 +28,6 @@ themeToggle.addEventListener('click', () => {
     html.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
     updateThemeIcon(newTheme);
-    updateNavbarBackground(); // Update navbar background immediately after theme change
 });
 
 // Mobile Navigation Toggle
@@ -71,25 +65,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Update navbar background based on scroll and theme
-function updateNavbarBackground() {
-    const navbar = document.querySelector('.navbar');
-    const isScrolled = window.scrollY > 50;
-    const isDark = html.getAttribute('data-theme') === 'dark';
-    
-    if (isScrolled) {
-        navbar.style.background = isDark 
-            ? 'rgba(17, 24, 39, 0.98)' 
-            : 'rgba(255, 255, 255, 0.98)';
-    } else {
-        navbar.style.background = isDark 
-            ? 'rgba(17, 24, 39, 0.95)' 
-            : 'rgba(255, 255, 255, 0.95)';
-    }
-}
-
 // Navbar Background on Scroll
-window.addEventListener('scroll', updateNavbarBackground);
+window.addEventListener('scroll', () => {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+});
 
 // Active Navigation Link Highlighting
 window.addEventListener('scroll', () => {
