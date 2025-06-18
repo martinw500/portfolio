@@ -69,13 +69,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
     if (window.scrollY > 50) {
-        navbar.style.background = html.getAttribute('data-theme') === 'dark' 
-            ? 'rgba(17, 24, 39, 0.98)' 
-            : 'rgba(255, 255, 255, 0.98)';
+        navbar.classList.add('scrolled');
     } else {
-        navbar.style.background = html.getAttribute('data-theme') === 'dark' 
-            ? 'rgba(17, 24, 39, 0.95)' 
-            : 'rgba(255, 255, 255, 0.95)';
+        navbar.classList.remove('scrolled');
     }
 });
 
