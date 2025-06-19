@@ -124,8 +124,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // Contact Form Handling
 const contactForm = document.querySelector('.contact-form');
 if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault(); // Prevent default form submission
         
         // Get form data
         const formData = new FormData(this);
@@ -145,9 +145,38 @@ if (contactForm) {
             return;
         }
         
-        // Simulate form submission (replace with actual form handling)
-        showNotification('Thank you for your message! I\'ll get back to you soon.', 'success');
-        this.reset();
+        // Show loading state
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+        
+        try {
+            // Submit to Formspree using fetch
+            const response = await fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                // Success - show notification and clear form
+                showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
+                this.reset(); // Clear all form fields
+            } else {
+                // Error from Formspree
+                showNotification('Oops! There was a problem sending your message. Please try again.', 'error');
+            }
+        } catch (error) {
+            // Network error
+            showNotification('Network error. Please check your connection and try again.', 'error');
+        } finally {
+            // Re-enable button
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }
     });
 }
 
@@ -172,38 +201,54 @@ function showNotification(message, type = 'info') {
         <span>${message}</span>
         <button class="notification-close">&times;</button>
     `;
-    
-    // Add notification styles
+      // Add notification styles
     notification.style.cssText = `
         position: fixed;
-        top: 20px;
+        top: 90px;
         right: 20px;
-        padding: 1rem 1.5rem;
-        border-radius: 8px;
+        padding: 1.2rem 1.8rem;
+        border-radius: 12px;
         background-color: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6'};
         color: white;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         z-index: 10000;
         display: flex;
         align-items: center;
         gap: 1rem;
-        max-width: 300px;
-        animation: slideIn 0.3s ease;
+        max-width: 350px;
+        font-weight: 500;
+        font-size: 0.95rem;
+        border: 2px solid ${type === 'success' ? '#065f46' : type === 'error' ? '#991b1b' : '#1e40af'};
+        animation: slideInBounce 0.5s ease;
     `;
     
     // Add animation keyframes
     if (!document.querySelector('#notification-styles')) {
         const style = document.createElement('style');
-        style.id = 'notification-styles';
-        style.textContent = `
-            @keyframes slideIn {
-                from {
-                    transform: translateX(100%);
+        style.id = 'notification-styles';        style.textContent = `
+            @keyframes slideInBounce {
+                0% {
+                    transform: translateX(100%) scale(0.8);
                     opacity: 0;
                 }
-                to {
-                    transform: translateX(0);
+                60% {
+                    transform: translateX(-10px) scale(1.05);
                     opacity: 1;
+                }
+                100% {
+                    transform: translateX(0) scale(1);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0) scale(1);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%) scale(0.8);
+                    opacity: 0;
                 }
             }
             
@@ -226,17 +271,26 @@ function showNotification(message, type = 'info') {
     
     // Add to page
     document.body.appendChild(notification);
-    
-    // Close button functionality
+      // Close button functionality
     const closeBtn = notification.querySelector('.notification-close');
     closeBtn.addEventListener('click', () => {
-        notification.remove();
+        notification.style.animation = 'slideOut 0.3s ease forwards';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.remove();
+            }
+        }, 300);
     });
     
-    // Auto remove after 5 seconds
+    // Auto remove after 5 seconds with slide out animation
     setTimeout(() => {
         if (notification.parentNode) {
-            notification.remove();
+            notification.style.animation = 'slideOut 0.3s ease forwards';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 300);
         }
     }, 5000);
 }
