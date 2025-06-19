@@ -186,6 +186,7 @@ body {
     width: 100%;
     height: 100%;
     background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    animation: float 20s ease-in-out infinite;
 }
 
 .hero-container {
@@ -198,6 +199,7 @@ body {
     align-items: center;
     position: relative;
     z-index: 1;
+}
 }
 
 .hero-content h1 {
@@ -240,13 +242,36 @@ body {
     border-radius: 50px;
     text-decoration: none;
     font-weight: 600;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     border: 2px solid transparent;
     cursor: pointer;
     font-size: 1rem;
+    position: relative;
+    overflow: hidden;
+    transform: translateY(0);
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
 .btn-primary {
@@ -259,6 +284,7 @@ body {
     background-color: transparent;
     color: var(--accent-color);
     border-color: var(--accent-color);
+    box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
 }
 
 .btn-secondary {
@@ -270,6 +296,7 @@ body {
 .btn-secondary:hover {
     background-color: white;
     color: var(--primary-color);
+    box-shadow: 0 10px 25px rgba(255,255,255,0.3);
 }
 
 .hero-image {
@@ -314,6 +341,139 @@ body {
     60% {
         transform: translateY(-5px) translateX(-50%);
     }
+}
+
+/* Enhanced Animations and Effects */
+
+/* Page entrance animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 5px var(--primary-color);
+    }
+    50% {
+        box-shadow: 0 0 20px var(--primary-color), 0 0 30px var(--primary-color);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* Enhanced animation classes */
+.animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-fade-in-left {
+    animation: fadeInLeft 0.8s ease-out forwards;
+}
+
+.animate-fade-in-right {
+    animation: fadeInRight 0.8s ease-out forwards;
+}
+
+.animate-slide-in-scale {
+    animation: slideInScale 0.6s ease-out forwards;
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+.animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.animate-pulse {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* Staggered animations */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+.stagger-6 { animation-delay: 0.6s; }
+
+/* Initial state for animated elements */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.animate-on-scroll.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Initial hidden states for page entrance animations */
+.hero-title,
+.hero-subtitle, 
+.hero-description,
+.hero-buttons,
+.hero-image {
+    opacity: 0;
+    transform: translateY(30px);
 }
 
 /* Section Styles */
@@ -448,12 +608,28 @@ section {
     font-weight: 500;
     transition: all 0.3s ease;
     border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.skill-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.5s;
 }
 
 .skill-item:hover {
-    background-color: var(--primary-color);
-    color: white;
     transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.skill-item:hover::before {
+    left: 100%;
 }
 
 /* Projects Section */
@@ -472,12 +648,30 @@ section {
     border-radius: 15px;
     overflow: hidden;
     box-shadow: var(--shadow-medium);
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+}
+
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.4s ease;
 }
 
 .project-card:hover {
-    transform: translateY(-10px);
-    box-shadow: var(--shadow-large);
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.project-card:hover::before {
+    opacity: 0.1;
 }
 
 .project-image {
@@ -495,6 +689,37 @@ section {
     justify-content: center;
     font-size: 3rem;
     color: white;
+    transition: transform 0.4s ease;
+    position: relative;
+}
+
+.project-card:hover .project-img-placeholder {
+    transform: scale(1.1);
+}
+
+.project-img-placeholder::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top: 2px solid white;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: spin 1s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.project-card:hover .project-img-placeholder::after {
+    opacity: 1;
 }
 
 .project-overlay {
@@ -509,11 +734,13 @@ section {
     justify-content: center;
     gap: 1rem;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: all 0.4s ease;
+    transform: scale(0.8);
 }
 
 .project-card:hover .project-overlay {
     opacity: 1;
+    transform: scale(1);
 }
 
 .project-link {
@@ -527,6 +754,16 @@ section {
     border-radius: 50%;
     text-decoration: none;
     transition: all 0.3s ease;
+    transform: translateY(20px);
+}
+
+.project-card:hover .project-link {
+    transform: translateY(0) scale(1.1);
+}
+
+.project-link:hover {
+    background-color: var(--accent-color);
+    transform: translateY(0) scale(1.2) rotate(5deg);
 }
 
 .project-link:hover {
@@ -796,3 +1033,77 @@ section {
 .mt-3 { margin-top: 1rem; }
 .mt-4 { margin-top: 1.5rem; }
 .mt-5 { margin-top: 2rem; }
+
+/* Additional polish and micro-interactions */
+
+/* Smooth transitions for all interactive elements */
+*:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+    transition: outline 0.2s ease;
+}
+
+/* Animated underline for navigation links */
+.nav-link {
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+/* Breathing animation for theme toggle */
+.theme-toggle {
+    position: relative;
+}
+
+.theme-toggle::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+    z-index: -1;
+}
+
+.theme-toggle:hover::before {
+    opacity: 0.1;
+    transform: scale(1);
+}
+
+/* Gradient text animation */
+.highlight {
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}

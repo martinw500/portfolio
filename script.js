@@ -399,3 +399,131 @@ backToTopButton.addEventListener('click', () => {
 // Console message for developers
 console.log('%c👋 Hello Developer!', 'color: #3b82f6; font-size: 20px; font-weight: bold;');
 console.log('%cThanks for checking out the code! If you have any questions, feel free to reach out.', 'color: #6b7280; font-size: 14px;');
+
+// Enhanced Animations and Interactive Effects
+
+// Page entrance animation
+document.addEventListener('DOMContentLoaded', () => {
+    // Animate hero content with staggered timing
+    const heroTitle = document.querySelector('.hero-title');
+    const heroSubtitle = document.querySelector('.hero-subtitle');
+    const heroDescription = document.querySelector('.hero-description');
+    const heroButtons = document.querySelector('.hero-buttons');
+    const heroImage = document.querySelector('.hero-image');
+
+    if (heroTitle) {
+        setTimeout(() => heroTitle.classList.add('animate-fade-in-up'), 100);
+        setTimeout(() => heroSubtitle.classList.add('animate-fade-in-up'), 300);
+        setTimeout(() => heroDescription.classList.add('animate-fade-in-up'), 500);
+        setTimeout(() => heroButtons.classList.add('animate-fade-in-up'), 700);
+        setTimeout(() => heroImage.classList.add('animate-fade-in-right'), 900);
+    }
+
+    // Add initial animation classes to elements
+    const animatedElements = document.querySelectorAll('.skill-category, .project-card');
+    animatedElements.forEach(el => el.classList.add('animate-on-scroll'));
+});
+
+// Enhanced scroll animations with staggered effects
+const createAdvancedObserver = () => {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('animated');
+                }, index * 100); // Stagger animation
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    // Observe skill categories and project cards
+    document.querySelectorAll('.skill-category').forEach((el, index) => {
+        el.style.setProperty('--stagger-delay', `${index * 0.1}s`);
+        observer.observe(el);
+    });
+
+    document.querySelectorAll('.project-card').forEach((el, index) => {
+        el.style.setProperty('--stagger-delay', `${index * 0.15}s`);
+        observer.observe(el);
+    });
+};
+
+// Initialize advanced animations
+createAdvancedObserver();
+
+// Add floating animation to hero image
+const heroImage = document.querySelector('.hero-img-placeholder');
+if (heroImage) {
+    heroImage.classList.add('animate-float');
+}
+
+// Smooth parallax effect for hero section
+window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const hero = document.querySelector('.hero');
+    const heroContent = document.querySelector('.hero-content');
+    
+    if (hero && scrolled < window.innerHeight) {
+        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        if (heroContent) {
+            heroContent.style.transform = `translateY(${scrolled * -0.2}px)`;
+        }
+    }
+});
+
+// Add magnetic effect to buttons
+document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        btn.style.transform = `translateY(-2px) translate(${x * 0.1}px, ${y * 0.1}px)`;
+    });
+    
+    btn.addEventListener('mouseleave', () => {
+        btn.style.transform = 'translateY(0) translate(0, 0)';
+    });
+});
+
+// Add glow effect to social links on hover
+document.querySelectorAll('.social-link').forEach(link => {
+    link.addEventListener('mouseenter', () => {
+        link.classList.add('animate-glow');
+    });
+    
+    link.addEventListener('mouseleave', () => {
+        link.classList.remove('animate-glow');
+    });
+});
+
+// Smooth reveal animation for sections
+const revealSections = () => {
+    const sections = document.querySelectorAll('section');
+    
+    sections.forEach(section => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        // Set initial state
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(30px)';
+        section.style.transition = 'all 0.8s ease-out';
+        
+        observer.observe(section);
+    });
+};
+
+// Initialize section reveals (skip hero section)
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(revealSections, 1000);
+});
