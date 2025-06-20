@@ -1,0 +1,212 @@
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+\usepackage{multicol}
+\setlength{\multicolsep}{-3.0pt}
+\setlength{\columnsep}{-1pt}
+\input{glyphtounicode}
+
+% ----------FONT----------
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.6in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1.19in}
+\addtolength{\topmargin}{-0.5in}
+\addtolength{\textheight}{1.4in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large\bfseries
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Ensure that generate pdf is machine readable/ATS parsable
+\pdfgentounicode=1
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\classesList}[4]{
+    \item\small{
+        {#1 #2 #3 #4 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \textbf{\small #2} \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{1.001\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \textbf{\small #2}\\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%----------HEADING----------
+\begin{center}
+    \vspace{15pt}
+    {\Huge \scshape \textbf{Martin Wu}} \\ \vspace{1pt}
+    236-518-9477 $|$ \href{mailto:martinwu500@gmail.com}{\underline{martinwu500@gmail.com}} $|$ 
+    \href{https://martinwu.tech}{\underline{martinwu.tech}} $|$
+    \href{https://www.linkedin.com/in/martinwu-500mw/}{\underline{LinkedIn}} $|$
+    \href{https://github.com/martinw500}{\underline{GitHub}}
+    \vspace{-8pt}
+\end{center}
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {University of British Columbia}{Expected 2025 -- 2029}
+      {Bachelor of Applied Science in Engineering}{Vancouver, BC}
+      \resumeItemListStart
+        \resumeItem{\textbf{Also accepted:} University of Waterloo Computer Science}
+      \resumeItemListEnd  \resumeSubHeadingListEnd
+
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Languages}{: Python, JavaScript, C++, Java, HTML, CSS, TypeScript} \\
+     \textbf{Frameworks \& Tools}{: React, Flask, NumPy, Git, GitHub Actions, REST APIs, PostgreSQL, Node.js, CI/CD} \\
+     \textbf{Libraries}{: MathJax, Styled Components, Axios, Pillow, Matplotlib, CustomTkinter} \\
+    }}
+ \end{itemize}
+ \vspace{-16pt}
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Founding Software Engineer}{Current}
+      {Stonewall}{Vancouver, BC}
+      \resumeItemListStart
+        \resumeItem{Achieved 15\% portfolio growth in Q2 and 241\% growth over 7-year backtesting (Jan 2018-present)}
+        \resumeItem{Developed algorithmic trading strategies in Pinescript v6 on TradingView with Python integration}
+        \resumeItem{Implemented both long-trade (241\% growth) and short-trade (179\% growth) strategies}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Robotics Team Programmer}{Sep 2024 -- Jun 2025}
+      {Moscrop Robotics Team}{Burnaby, BC}
+      \resumeItemListStart
+        \resumeItem{Architected modular C++ control algorithms optimizing autonomous routines, reducing cycle time by 18\%}
+        \resumeItem{Engineered real-time sensor-fusion pipelines enhancing obstacle detection robustness}
+        \resumeItem{Refactored 1,200-line legacy codebase, cutting runtime errors by 25\% and improving system stability}
+    \resumeItemListEnd
+
+    \resumeSubheading
+      {Advanced Mathematics Tutor Lead}{Sep 2023 -- Jun 2025}
+      {Math Challengers Program}{Burnaby, BC}
+      \resumeItemListStart
+        \resumeItem{Designed honours-level curriculum covering algebra, combinatorics, and geometry for 40+ gifted students}
+        \resumeItem{Created diagnostic assessments and progress tracking, boosting average contest scores by 32\%}
+        \resumeItem{Coordinated lesson schedules and resources across three partner schools}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Lead Volunteer}{Jul 2023 -- Aug 2024}
+      {SFU Camps}{Burnaby, BC}
+      \resumeItemListStart
+        \resumeItem{Led and mentored 80+ volunteers over 150+ hours across two consecutive summers}
+        \resumeItem{Designed and delivered daily STEM-focused activities for 200+ campers}
+        \resumeItem{Sole recipient of "Super Lead Volunteer" award for exceeding performance benchmarks in 2024}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+\vspace{-16pt}
+
+%-----------PROJECTS-----------
+\section{Projects}
+    \vspace{-5pt}
+    \resumeSubHeadingListStart
+      \resumeProjectHeading
+          {\textbf{Math Quiz Generator} $|$ \emph{React, Python Flask, MathJax, GitHub Actions, REST API}}{2024}
+          \resumeItemListStart
+            \resumeItem{Architected full-stack educational platform with intelligent difficulty algorithms across 10 progressive levels}
+            \resumeItem{Engineered dual-deployment architecture supporting REST API client-server and standalone frontend operation}
+            \resumeItem{Implemented real-time mathematical notation rendering using MathJax 3 with automated CI/CD pipeline}
+          \resumeItemListEnd
+          \vspace{-13pt}
+      \resumeProjectHeading
+          {\textbf{Advanced Haar Wavelet Image Compressor} $|$ \emph{Python, NumPy, Pillow, CustomTkinter}}{2024}
+          \resumeItemListStart
+            \resumeItem{Implemented custom Haar wavelet transform algorithms for real-time RGB image compression}
+            \resumeItem{Built responsive desktop GUI with interactive parameter controls and immediate visual feedback}
+            \resumeItem{Designed multi-channel processing pipeline with efficient memory management for large image arrays}
+          \resumeItemListEnd    \resumeSubHeadingListEnd
+\vspace{-15pt}
+
+%-----------AWARDS-----------
+\section{Awards \& Achievements}
+    \vspace{-5pt}
+    \resumeSubHeadingListStart
+        \item
+        \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+          \textbf{Mathematics Competition Awards} & \textbf{\small 2023 -- 2024} \\
+        \end{tabular*}\vspace{-10pt}
+          \resumeItemListStart
+            \resumeItem{\textbf{Euclid Contest:} Top 2\% with score of 85}
+            \resumeItem{\textbf{AIME Qualifier (2x):} Top 5\% on AMC 12 A \& B with score of 118.5}
+            \resumeItem{\textbf{Canadian Senior Mathematics Contest:} Top 0.5\% (71st place) with score of 52/60}
+            \resumeItem{\textbf{Canadian Open Mathematics Challenge:} Moscrop 3rd in BC}
+            \resumeItem{\textbf{Hypatia Mathematics Contest:} Top 3\% (182nd place), medal recipient}
+          \resumeItemListEnd
+    \resumeSubHeadingListEnd
+
+\end{document}
