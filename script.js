@@ -325,19 +325,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 */
 
-// Parallax Effect for Hero Section - DISABLED to prevent transform conflicts
-/*
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
-    const rate = scrolled * -0.5;
-    
-    if (hero) {
-        hero.style.transform = `translateY(${rate}px)`;
-    }
-});
-*/
-
 // Skills Animation on Scroll
 const skillsSection = document.querySelector('#skills');
 let skillsAnimated = false;
@@ -524,19 +511,7 @@ if (heroImage) {
     heroImage.classList.add('animate-float');
 }
 
-// Smooth parallax effect for hero section
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
-    const heroContent = document.querySelector('.hero-content');
-    
-    if (hero && scrolled < window.innerHeight) {
-        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-        if (heroContent) {
-            heroContent.style.transform = `translateY(${scrolled * -0.2}px)`;
-        }
-    }
-});
+// Parallax effect removed for better user experience
 
 // Add magnetic effect to buttons
 document.querySelectorAll('.btn').forEach(btn => {
