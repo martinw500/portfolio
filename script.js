@@ -1,3 +1,43 @@
+// Focus management - Only show focus outlines for keyboard navigation
+(function() {
+    let hadKeyboardEvent = false;
+
+    const detectKeyboard = (e) => {
+        // Tab, arrow keys, enter, space, etc.
+        if (e.key === 'Tab' || e.key === 'ArrowUp' || e.key === 'ArrowDown' || 
+            e.key === 'ArrowLeft' || e.key === 'ArrowRight' || e.key === 'Enter' || e.key === ' ') {
+            hadKeyboardEvent = true;
+            document.documentElement.classList.add('js-focus-visible');
+        }
+    };
+
+    const detectMouse = () => {
+        hadKeyboardEvent = false;
+        document.documentElement.classList.remove('js-focus-visible');
+    };
+
+    // Listen for keyboard navigation
+    document.addEventListener('keydown', detectKeyboard, true);
+    
+    // Listen for mouse/touch interactions
+    document.addEventListener('mousedown', detectMouse, true);
+    document.addEventListener('pointerdown', detectMouse, true);
+    document.addEventListener('touchstart', detectMouse, true);
+    
+    // Also detect focus events
+    document.addEventListener('focus', (e) => {
+        if (hadKeyboardEvent) {
+            e.target.classList.add('focus-visible');
+        } else {
+            e.target.classList.remove('focus-visible');
+        }
+    }, true);
+    
+    document.addEventListener('blur', (e) => {
+        e.target.classList.remove('focus-visible');
+    }, true);
+})();
+
 // Theme Toggle Functionality
 const themeToggle = document.getElementById('theme-toggle');
 const html = document.documentElement;

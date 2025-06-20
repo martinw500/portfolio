@@ -65,6 +65,31 @@
     box-sizing: border-box;
 }
 
+/* Focus management - Remove outlines for mouse users, keep for keyboard users */
+*:focus {
+    outline: none; /* Default: no outline */
+}
+
+/* Show focus outline ONLY when using keyboard navigation */
+.js-focus-visible .focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Fallback for browsers that don't support :focus-visible */
+@supports not selector(:focus-visible) {
+    /* Remove outline for mouse clicks */
+    *:focus:not(:focus-visible) {
+        outline: none;
+    }
+    
+    /* Show outline for keyboard navigation */
+    *:focus-visible {
+        outline: 2px solid var(--primary-color);
+        outline-offset: 2px;
+    }
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -1193,11 +1218,6 @@ section#projects {
 /* Additional polish and micro-interactions */
 
 /* Smooth transitions for all interactive elements */
-*:focus {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
-    transition: outline 0.2s ease;
-}
 
 /* Animated underline for navigation links */
 .nav-link {
