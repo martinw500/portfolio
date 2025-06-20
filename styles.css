@@ -382,35 +382,8 @@ body {
     font-size: 8rem;
     color: var(--hero-img-color, rgba(255, 255, 255, 0.3));
     border: 4px solid var(--hero-img-border, rgba(255, 255, 255, 0.2));
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.3s ease;
     position: relative;
-    overflow: hidden;
-}
-
-.hero-img-placeholder::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(from 0deg, transparent, var(--accent-color), transparent);
-    animation: rotate 4s linear infinite;
-    opacity: 0.3;
-}
-
-.hero-img-placeholder::after {
-    content: '';
-    position: absolute;
-    inset: 4px;
-    border-radius: 50%;
-    background: var(--hero-img-bg, rgba(255, 255, 255, 0.1));
-    z-index: 1;
-}
-
-.hero-img-placeholder i {
-    position: relative;
-    z-index: 2;
 }
 
 .scroll-indicator {
@@ -614,6 +587,7 @@ body {
 /* Section Styles */
 section {
     padding: 5rem 0;
+    transition: all 0.3s ease;
 }
 
 .section-title {
@@ -638,8 +612,14 @@ section {
 }
 
 /* About Section */
-.about {
-    background-color: var(--bg-secondary);
+section.about {
+    background-color: var(--bg-secondary) !important;
+    transition: background-color 0.3s ease !important;
+}
+
+section#about {
+    background-color: var(--bg-secondary) !important;
+    transition: background-color 0.3s ease !important;
 }
 
 .about-content {
@@ -669,7 +649,7 @@ section {
     background-color: var(--bg-primary);
     border-radius: 10px;
     box-shadow: var(--shadow-light);
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .stat:hover {
@@ -713,7 +693,7 @@ section {
     padding: 2rem;
     border-radius: 15px;
     box-shadow: var(--shadow-medium);
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .skill-category:hover {
@@ -768,8 +748,14 @@ section {
 }
 
 /* Projects Section */
-.projects {
-    background-color: var(--bg-secondary);
+section.projects {
+    background-color: var(--bg-secondary) !important;
+    transition: background-color 0.3s ease !important;
+}
+
+section#projects {
+    background-color: var(--bg-secondary) !important;
+    transition: background-color 0.3s ease !important;
 }
 
 .projects-grid {
@@ -936,6 +922,7 @@ section {
     border-radius: 15px;
     font-size: 0.8rem;
     font-weight: 500;
+    transition: all 0.3s ease;
 }
 
 /* Contact Section */
@@ -1005,6 +992,7 @@ section {
     padding: 2rem;
     border-radius: 15px;
     box-shadow: var(--shadow-medium);
+    transition: all 0.3s ease;
 }
 
 .form-group {
@@ -1014,14 +1002,13 @@ section {
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 0.75rem 1rem;
-    border: 2px solid var(--border-color);
+    padding: 0.75rem 1rem;    border: 2px solid var(--border-color);
     border-radius: 8px;
     font-family: inherit;
     font-size: 1rem;
     background-color: var(--bg-primary);
     color: var(--text-primary);
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .form-group input:focus,
@@ -1040,6 +1027,7 @@ section {
     background-color: var(--bg-tertiary);
     padding: 2rem 0;
     text-align: center;
+    transition: background-color 0.3s ease;
 }
 
 .footer-content p {
