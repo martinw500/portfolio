@@ -295,7 +295,9 @@ function showNotification(message, type = 'info') {
     }, 5000);
 }
 
-// Typing Animation for Hero Section
+// Typing Animation for Hero Section - DISABLED to prevent layout conflicts
+// The CSS animations handle the hero section presentation
+/*
 function typeWriter(element, text, speed = 100) {
     let i = 0;
     element.innerHTML = '';
@@ -310,8 +312,10 @@ function typeWriter(element, text, speed = 100) {
     
     type();
 }
+*/
 
-// Initialize typing animation when page loads
+// Initialize typing animation when page loads - DISABLED
+/*
 document.addEventListener('DOMContentLoaded', () => {
     const heroTitle = document.querySelector('.hero-title');
     if (heroTitle) {
@@ -319,8 +323,10 @@ document.addEventListener('DOMContentLoaded', () => {
         typeWriter(heroTitle, originalText, 50);
     }
 });
+*/
 
-// Parallax Effect for Hero Section
+// Parallax Effect for Hero Section - DISABLED to prevent transform conflicts
+/*
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
     const hero = document.querySelector('.hero');
@@ -330,6 +336,7 @@ window.addEventListener('scroll', () => {
         hero.style.transform = `translateY(${rate}px)`;
     }
 });
+*/
 
 // Skills Animation on Scroll
 const skillsSection = document.querySelector('#skills');
@@ -456,9 +463,11 @@ console.log('%cThanks for checking out the code! If you have any questions, feel
 
 // Enhanced Animations and Interactive Effects
 
-// Page entrance animation
+// Page entrance animation - DISABLED to let CSS animations handle hero section
 document.addEventListener('DOMContentLoaded', () => {
-    // Animate hero content with staggered timing
+    // CSS animations handle hero content timing and effects
+    // JavaScript hero animations disabled to prevent conflicts
+    /*
     const heroTitle = document.querySelector('.hero-title');
     const heroSubtitle = document.querySelector('.hero-subtitle');
     const heroDescription = document.querySelector('.hero-description');
@@ -472,6 +481,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => heroButtons.classList.add('animate-fade-in-up'), 700);
         setTimeout(() => heroImage.classList.add('animate-fade-in-right'), 900);
     }
+    */
 
     // Add initial animation classes to elements
     const animatedElements = document.querySelectorAll('.skill-category, .project-card');
