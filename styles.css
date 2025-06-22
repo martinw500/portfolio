@@ -1160,26 +1160,48 @@ section#projects {
         grid-template-columns: 1fr;
         text-align: center;
         gap: 2rem;
+    }    .hero-content h1 {
+        font-size: 2.5rem;
     }
 
-    .hero-content h1 {
-        font-size: 2.5rem;
-    }    .hero-img-placeholder {
+    .hero-image {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        width: 100% !important;
+        max-width: 200px !important;
+        margin: 0 auto !important;
+    }
+
+    .hero-img-placeholder {
         width: 200px;
         height: 200px;
         font-size: 5rem;
-    }    .hero-img {
-        width: 200px;
-        height: 200px;
+    }.hero-img {
+        width: 200px !important;
+        height: 200px !important;
+        border-radius: 50% !important;
+        object-fit: cover !important;
+        object-position: center !important;
         /* Adjust clip-path for smaller mobile size - larger initial circle */
-        clip-path: circle(90px at center);
+        clip-path: circle(90px at center) !important;
+        /* Ensure all image rendering properties are maintained */
+        image-rendering: -webkit-optimize-contrast !important;
+        image-rendering: -moz-crisp-edges !important;
+        image-rendering: crisp-edges !important;
+        image-rendering: auto !important;
+        -webkit-backface-visibility: hidden !important;
+        -moz-backface-visibility: hidden !important;
+        backface-visibility: hidden !important;
+        -webkit-transform: translateZ(0) !important;
+        transform: translateZ(0) !important;
     }
 
     .hero-img:hover {
         /* Smaller expansion for mobile with pop-out effect */
-        clip-path: circle(100px at center);
-        transform: translateY(-5px) scale(1.02) translateZ(0);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        clip-path: circle(100px at center) !important;
+        transform: translateY(-5px) scale(1.02) translateZ(0) !important;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4) !important;
     }
 
     .about-content {
