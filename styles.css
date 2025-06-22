@@ -899,6 +899,7 @@ section#projects {
     position: relative;
     height: 200px;
     overflow: hidden;
+    border-radius: 15px 15px 0 0;
 }
 
 .project-img-placeholder {
@@ -949,7 +950,7 @@ section#projects {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.85);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -957,11 +958,12 @@ section#projects {
     opacity: 0;
     transition: all 0.4s ease;
     transform: scale(0.8);
+    border-radius: 15px 15px 0 0;
 }
 
 .project-card:hover .project-overlay {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0);
 }
 
 .project-link {
