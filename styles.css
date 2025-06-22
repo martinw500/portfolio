@@ -225,7 +225,7 @@ body {
     padding: 100px 0 50px;
     background: var(--gradient-primary);
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
@@ -242,6 +242,7 @@ body {
     height: 100%;
     background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     animation: float 20s ease-in-out infinite;
+    z-index: 0;
 }
 
 .hero-container {
@@ -251,9 +252,8 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
-    align-items: center;
-    position: relative;
-    z-index: 1;
+    align-items: center;    position: relative;
+    z-index: 2;
 }
 
 /* .hero-content removed - individual child elements have their own staggered animations */
@@ -402,6 +402,30 @@ body {
     justify-content: center;
     align-items: center;
     animation: slideInRight 1s ease-out 0.8s both;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    overflow: visible;
+}
+
+/* Add circular underglow effect to the container */
+.hero-image::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.6), rgba(59, 130, 246, 0.2), transparent 60%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);    z-index: 1;
+    pointer-events: none;
+}
+
+.hero-image:hover::before {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
 }
 
 .hero-img-placeholder {
@@ -427,32 +451,23 @@ body {
     object-position: center;
     border: 4px solid var(--hero-img-border, rgba(255, 255, 255, 0.2));
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    position: relative;
-    box-shadow: var(--shadow-large);
-    /* Create a mask that can expand - larger initial size */
-    clip-path: circle(140px at center);
-    /* Ensure image is always crisp and high quality */
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: crisp-edges;
-    image-rendering: pixelated;
-    image-rendering: auto;
-    /* Force high quality rendering */
-    -webkit-backface-visibility: hidden;
-    -moz-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
+    position: relative;    box-shadow: var(--shadow-large);
+    clip-path: circle(140px at center);    z-index: 3;
 }
 
 .hero-img:hover {
-    /* Expand the visible circle to reveal more of the image */
     clip-path: circle(160px at center);
-    /* Add pop-out effect with scale and lift */
-    transform: translateY(-8px) scale(1.03) translateZ(0);
-    /* Enhanced shadow for depth */
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+    transform: translateY(-8px) scale(1.03);
     border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Theme-specific underglow colors */
+[data-theme="dark"] .hero-image::before {
+    background: radial-gradient(circle, rgba(96, 165, 250, 0.7), rgba(96, 165, 250, 0.25), transparent 60%);
+}
+
+[data-theme="light"] .hero-image::before {
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.6), rgba(59, 130, 246, 0.2), transparent 60%);
 }
 
 .scroll-indicator {
@@ -486,15 +501,6 @@ body {
     }
     to {
         transform: rotate(360deg);
-    }
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-20px);
     }
 }
 
@@ -1162,46 +1168,33 @@ section#projects {
         gap: 2rem;
     }    .hero-content h1 {
         font-size: 2.5rem;
-    }
-
-    .hero-image {
+    }    .hero-image {
         display: flex !important;
         justify-content: center !important;
         align-items: center !important;
         width: 100% !important;
         max-width: 200px !important;
         margin: 0 auto !important;
+    }    /* Mobile underglow adjustments */
+    .hero-image::before {
+        width: 300px !important;
+        height: 300px !important;
     }
 
     .hero-img-placeholder {
         width: 200px;
         height: 200px;
         font-size: 5rem;
-    }.hero-img {
+    }
+
+    .hero-img {
         width: 200px !important;
         height: 200px !important;
-        border-radius: 50% !important;
-        object-fit: cover !important;
-        object-position: center !important;
-        /* Adjust clip-path for smaller mobile size - larger initial circle */
         clip-path: circle(90px at center) !important;
-        /* Ensure all image rendering properties are maintained */
-        image-rendering: -webkit-optimize-contrast !important;
-        image-rendering: -moz-crisp-edges !important;
-        image-rendering: crisp-edges !important;
-        image-rendering: auto !important;
-        -webkit-backface-visibility: hidden !important;
-        -moz-backface-visibility: hidden !important;
-        backface-visibility: hidden !important;
-        -webkit-transform: translateZ(0) !important;
-        transform: translateZ(0) !important;
     }
 
     .hero-img:hover {
-        /* Smaller expansion for mobile with pop-out effect */
-        clip-path: circle(100px at center) !important;
-        transform: translateY(-5px) scale(1.02) translateZ(0) !important;
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4) !important;
+        clip-path: circle(100px at center) !important;        transform: translateY(-5px) scale(1.02) !important;
     }
 
     .about-content {
