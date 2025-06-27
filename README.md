@@ -1,6 +1,7 @@
 # Portfolio Website
 
 My personal portfolio website showcasing my projects and skills.
+Available at: https://martinwu.tech
 
 ## Built With
 - HTML5
@@ -9,11 +10,7 @@ My personal portfolio website showcasing my projects and skills.
 - Font Awesome icons
 - Google Fonts
 
-## Features
-- Responsive design
-- Dark/light theme toggle
-- Smooth animations
-- Interactive elements
+
 
 ---
 
