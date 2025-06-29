@@ -13,5 +13,3 @@ Available at: https://martinwu.tech
 
 
 ---
-
-*This is my personal portfolio - feel free to browse around!*
