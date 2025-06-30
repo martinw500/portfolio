@@ -10,5 +10,5 @@ Available at: https://martinwu.tech
 - Font Awesome icons
 - Google Fonts
 
-<br />
+---
 Deployed through Github Actions
