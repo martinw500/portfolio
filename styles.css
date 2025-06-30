@@ -419,8 +419,10 @@ body {
     border-radius: 50%;
     transform: translate(-50%, -50%) scale(0.5);
     opacity: 0;
-    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);    z-index: 1;
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 1;
     pointer-events: none;
+    will-change: transform, opacity;
 }
 
 .hero-image:hover::before {
@@ -451,14 +453,19 @@ body {
     object-position: center;
     border: 4px solid var(--hero-img-border, rgba(255, 255, 255, 0.2));
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    position: relative;    box-shadow: var(--shadow-large);
-    clip-path: circle(140px at center);    z-index: 3;
+    position: relative;
+    box-shadow: var(--shadow-large);
+    clip-path: circle(140px at center);
+    z-index: 3;
+    will-change: transform, clip-path;
 }
 
 .hero-img:hover {
     clip-path: circle(160px at center);
-    transform: translateY(-8px) scale(1.03);
     border-color: rgba(255, 255, 255, 0.6);
+    transition: clip-path 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                border-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.1s ease-out;
 }
 
 /* Theme-specific underglow colors */
@@ -998,11 +1005,6 @@ section#projects {
     transform: translateY(0) scale(1.2) rotate(5deg);
 }
 
-.project-link:hover {
-    background-color: var(--accent-color);
-    transform: scale(1.1);
-}
-
 .project-content {
     padding: 1.5rem;
 }
@@ -1205,7 +1207,9 @@ section#projects {
     }
 
     .hero-img:hover {
-        clip-path: circle(100px at center) !important;        transform: translateY(-5px) scale(1.02) !important;
+        clip-path: circle(100px at center) !important;
+        transition: clip-path 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                    transform 0.1s ease-out !important;
     }
 
     .about-content {

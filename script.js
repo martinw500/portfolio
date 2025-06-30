@@ -105,18 +105,21 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Navbar Background on Scroll
-window.addEventListener('scroll', () => {
+// Optimized scroll handling - combine navbar and navigation highlighting
+let ticking = false;
+
+function handleScroll() {
+    const scrollY = window.scrollY;
+    
+    // Navbar background on scroll
     const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
+    if (scrollY > 50) {
         navbar.classList.add('scrolled');
     } else {
         navbar.classList.remove('scrolled');
     }
-});
-
-// Active Navigation Link Highlighting
-window.addEventListener('scroll', () => {
+    
+    // Active navigation link highlighting
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-link');
     
@@ -136,6 +139,25 @@ window.addEventListener('scroll', () => {
             link.classList.add('active');
         }
     });
+    
+    // Back to top button
+    const backToTopButton = document.querySelector('.back-to-top');
+    if (backToTopButton) {
+        if (scrollY > 300) {
+            backToTopButton.style.display = 'flex';
+        } else {
+            backToTopButton.style.display = 'none';
+        }
+    }
+    
+    ticking = false;
+}
+
+window.addEventListener('scroll', () => {
+    if (!ticking) {
+        requestAnimationFrame(handleScroll);
+        ticking = true;
+    }
 });
 
 // Scroll Reveal Animation
@@ -469,14 +491,6 @@ backToTopButton.style.cssText = `
 
 document.body.appendChild(backToTopButton);
 
-window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 300) {
-        backToTopButton.style.display = 'flex';
-    } else {
-        backToTopButton.style.display = 'none';
-    }
-});
-
 backToTopButton.addEventListener('click', () => {
     window.scrollTo({
         top: 0,
@@ -549,6 +563,65 @@ createAdvancedObserver();
 const heroImage = document.querySelector('.hero-img-placeholder');
 if (heroImage) {
     heroImage.classList.add('animate-float');
+}
+
+// Profile image cursor-following reveal effect
+const heroImg = document.querySelector('.hero-img');
+if (heroImg) {
+    // Check if device supports hover (desktop)
+    const supportsHover = window.matchMedia('(hover: hover)').matches;
+    
+    if (supportsHover) {
+        let animationFrame;
+        
+        heroImg.addEventListener('mousemove', (e) => {
+            if (animationFrame) {
+                cancelAnimationFrame(animationFrame);
+            }
+            
+            animationFrame = requestAnimationFrame(() => {
+                const rect = heroImg.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                const mouseX = e.clientX;
+                const mouseY = e.clientY;
+                
+                // Calculate offset from center (normalized to -1 to 1)
+                const offsetX = (mouseX - centerX) / (rect.width / 2);
+                const offsetY = (mouseY - centerY) / (rect.height / 2);
+                
+                // Subtle movement - only 5px max in each direction
+                const moveX = offsetX * 5;
+                const moveY = offsetY * 5;
+                
+                // Apply the transform while maintaining the hover state
+                heroImg.style.transform = `translateY(-8px) scale(1.03) translate(${moveX}px, ${moveY}px)`;
+            });
+        });
+        
+        heroImg.addEventListener('mouseleave', () => {
+            if (animationFrame) {
+                cancelAnimationFrame(animationFrame);
+            }
+            // Reset to normal hover state
+            heroImg.style.transform = 'translateY(-8px) scale(1.03)';
+        });
+        
+        heroImg.addEventListener('mouseenter', () => {
+            // Set initial hover state
+            heroImg.style.transform = 'translateY(-8px) scale(1.03)';
+        });
+    } else {
+        // Mobile: simpler transform on touch
+        heroImg.addEventListener('touchstart', () => {
+            heroImg.style.transform = 'translateY(-5px) scale(1.02)';
+        });
+        
+        heroImg.addEventListener('touchend', () => {
+            heroImg.style.transform = 'translateY(0) scale(1)';
+        });
+    }
 }
 
 // Parallax effect removed for better user experience
