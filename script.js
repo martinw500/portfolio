@@ -42,8 +42,16 @@
 const themeToggle = document.getElementById('theme-toggle');
 const html = document.documentElement;
 
-// Check for saved theme preference or default to light theme
-const currentTheme = localStorage.getItem('theme') || 'light';
+// Function to get system theme preference
+function getSystemTheme() {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+    }
+    return 'light';
+}
+
+// Check for saved theme preference, system preference, or default to light theme
+const currentTheme = localStorage.getItem('theme') || getSystemTheme();
 html.setAttribute('data-theme', currentTheme);
 
 // Update theme toggle icon
@@ -69,6 +77,19 @@ themeToggle.addEventListener('click', () => {
     localStorage.setItem('theme', newTheme);
     updateThemeIcon(newTheme);
 });
+
+// Listen for system theme changes
+if (window.matchMedia) {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaQuery.addEventListener('change', (e) => {
+        // Only update if user hasn't manually set a theme preference
+        if (!localStorage.getItem('theme')) {
+            const newTheme = e.matches ? 'dark' : 'light';
+            html.setAttribute('data-theme', newTheme);
+            updateThemeIcon(newTheme);
+        }
+    });
+}
 
 // Mobile Navigation Toggle
 const hamburger = document.querySelector('.hamburger');
