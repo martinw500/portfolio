@@ -1,0 +1,40 @@
+name: Compile Resume to PDF
+
+on:
+  push:
+    paths:
+      - 'docs/resume.tex'
+  pull_request:
+    paths:
+      - 'docs/resume.tex'
+
+jobs:
+  compile-latex:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Compile LaTeX document
+      uses: xu-cheng/latex-action@v3
+      with:
+        root_file: docs/resume.tex
+        latexmk_use_xelatex: false
+        latexmk_shell_escape: true
+        args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
+        
+    - name: Move PDF to docs folder
+      run: mv resume.pdf docs/resume.pdf
+      
+    - name: Commit and push PDF
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add docs/resume.pdf
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "Auto-update resume PDF from LaTeX source"
+          git push
+        fi
