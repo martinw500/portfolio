@@ -640,6 +640,10 @@ body {
 }
 
 /* Enhanced animation classes */
+.animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
 .animate-fade-in-up {
     animation: fadeInUp 0.8s ease-out forwards;
 }
@@ -882,33 +886,68 @@ section#projects {
 
 .project-card {
     background-color: var(--bg-primary);
-    border-radius: 15px;
+    border-radius: 18px; /* slightly softer */
     overflow: hidden;
     box-shadow: var(--shadow-medium);
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     position: relative;
+    transition: box-shadow 0.45s cubic-bezier(0.22,0.61,0.36,1), transform 0.55s cubic-bezier(0.22,0.61,0.36,1);
+    transform: translateY(0) scale(1);
 }
 
+/* Under-glow layer */
+.project-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 110%, var(--accent-color) 0%, rgba(0,0,0,0) 70%);
+    opacity: 0;
+    filter: blur(22px) saturate(140%);
+    transform: scale(0.85) translateY(10px);
+    transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.22,0.61,0.36,1);
+    pointer-events: none;
+    z-index: -2;
+}
+[data-theme='dark'] .project-card::after {
+    background: radial-gradient(circle at 50% 110%, rgba(96,165,250,0.55) 0%, rgba(0,0,0,0) 70%);
+}
+
+/* Gradient sheen (existing ::before) refined */
 .project-card::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    inset: 0;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
     opacity: 0;
+    mix-blend-mode: overlay;
+    transition: opacity 0.5s ease;
     z-index: -1;
-    transition: opacity 0.4s ease;
 }
 
-.project-card:hover {
-    transform: translateY(-15px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+.project-card:hover,
+.project-card:focus-within,
+.project-card.focus-visible-card {
+    transform: translateY(-8px) scale(1.015);
+    box-shadow: 0 14px 32px -6px rgba(0,0,0,0.18), 0 4px 10px -2px rgba(0,0,0,0.08);
 }
+.project-card:hover::before,
+.project-card:focus-within::before,
+.project-card.focus-visible-card::before { opacity: 0.08; }
+.project-card:hover::after,
+.project-card:focus-within::after,
+.project-card.focus-visible-card::after { opacity: 1; transform: scale(1) translateY(0); }
 
-.project-card:hover::before {
-    opacity: 0.1;
+/* Tone down child element motion */
+.project-card:hover .project-img-placeholder { transform: scale(1.04); }
+.project-card:hover .project-img-placeholder::after { opacity: 0.9; }
+
+/* Links: minimal scale */
+.project-card:hover .project-link { transform: translateY(0) scale(1.05); }
+.project-link:hover { transform: translateY(0) scale(1.08); }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .project-card { transition: box-shadow 0.3s ease, background-color 0.3s ease; }
+    .project-card, .project-card::after { transform: none !important; }
 }
 
 .project-image {
@@ -1079,6 +1118,7 @@ section#projects {
 .social-links {
     display: flex;
     gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 .social-link {
@@ -1098,6 +1138,60 @@ section#projects {
     background-color: var(--primary-color);
     color: white;
     transform: translateY(-3px);
+}
+
+.social-link.resume-link {
+    width: auto !important;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 25px !important;
+    gap: 0.5rem !important;
+    font-weight: 500 !important;
+}
+
+.social-link.resume-link span {
+    margin-left: 0.5rem;
+}
+
+.resume-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+.resume-button {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    padding: 0.75rem 1.5rem !important;
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+    border-radius: 25px !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+    font-size: 0.95rem !important;
+    transition: all 0.3s ease !important;
+    border: 2px solid transparent !important;
+    box-shadow: var(--shadow-light) !important;
+}
+
+.resume-button:hover {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15) !important;
+}
+
+.resume-button:visited {
+    color: var(--text-primary) !important;
+}
+
+.resume-button:visited:hover {
+    color: white !important;
+}
+
+.resume-button i {
+    font-size: 1rem !important;
 }
 
 .contact-form {

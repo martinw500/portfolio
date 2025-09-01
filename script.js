@@ -437,25 +437,14 @@ function animateSkills() {
     });
 }
 
-// Project Card Tilt Effect
+// Project Card Tilt Effect REMOVED (was distracting)
+// Replaced with simple focus accessibility enhancement
+// document.querySelectorAll('.project-card').forEach(card => { /* removed tilt logic */ });
+
 document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const rotateX = (y - centerY) / 10;
-        const rotateY = (centerX - x) / 10;
-        
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
-    });
-    
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-    });
+    // Add focus style support for keyboard navigation
+    card.addEventListener('focusin', () => card.classList.add('focus-visible-card'));
+    card.addEventListener('focusout', () => card.classList.remove('focus-visible-card'));
 });
 
 // Copy Email to Clipboard
@@ -662,8 +651,8 @@ document.querySelectorAll('.btn').forEach(btn => {
     });
 });
 
-// Add glow effect to social links on hover
-document.querySelectorAll('.social-link').forEach(link => {
+// Add glow effect to social links and resume button on hover
+document.querySelectorAll('.social-link, .resume-button').forEach(link => {
     link.addEventListener('mouseenter', () => {
         link.classList.add('animate-glow');
     });
