@@ -288,3 +288,134 @@ console.log(
     '%c Curious about the code? Check it out: https://github.com/martinw500/portfolio',
     'color: #8892b0; font-size: 13px; font-family: monospace;'
 );
+
+// ── Contact Form ─────────────────────────────
+const contactForm = document.querySelector('.contact-form');
+if (contactForm) {
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+
+        // Validation
+        if (!formData.get('name') || !formData.get('email') || !formData.get('subject') || !formData.get('message')) {
+            showNotification('Please fill in all fields.', 'error');
+            return;
+        }
+
+        if (!isValidEmail(formData.get('email'))) {
+            showNotification('Please enter a valid email address.', 'error');
+            return;
+        }
+
+        // Loading state
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+
+        try {
+            const response = await fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (response.ok) {
+                showNotification('Message sent! I\'ll get back to you soon.', 'success');
+                this.reset();
+            } else {
+                showNotification('Oops! Something went wrong. Please try again.', 'error');
+            }
+        } catch (error) {
+            showNotification('Network error. Please check your connection.', 'error');
+        } finally {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }
+    });
+}
+
+function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function showNotification(message, type = 'info') {
+    // Remove existing
+    const existing = document.querySelector('.notification');
+    if (existing) existing.remove();
+
+    const notif = document.createElement('div');
+    notif.className = `notification notification-${type}`;
+    notif.innerHTML = `
+        <span>${message}</span>
+        <button class="notif-close">&times;</button>
+    `;
+
+    const colors = {
+        success: { bg: '#10b981', border: '#065f46' },
+        error: { bg: '#ef4444', border: '#991b1b' },
+        info: { bg: '#3b82f6', border: '#1e40af' }
+    };
+
+    const color = colors[type] || colors.info;
+
+    notif.style.cssText = `
+        position: fixed;
+        top: 90px;
+        right: 20px;
+        padding: 16px 20px;
+        background: ${color.bg};
+        color: white;
+        border: 2px solid ${color.border};
+        border-radius: 4px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        max-width: 350px;
+        font-size: 14px;
+        animation: slideInNotif 0.4s ease;
+    `;
+
+    document.body.appendChild(notif);
+
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideInNotif {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOutNotif {
+            to { transform: translateX(400px); opacity: 0; }
+        }
+        .notif-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    `;
+    document.head.appendChild(style);
+
+    const closeBtn = notif.querySelector('.notif-close');
+    closeBtn.addEventListener('click', () => {
+        notif.style.animation = 'slideOutNotif 0.3s ease forwards';
+        setTimeout(() => notif.remove(), 300);
+    });
+
+    setTimeout(() => {
+        if (notif.parentNode) {
+            notif.style.animation = 'slideOutNotif 0.3s ease forwards';
+            setTimeout(() => notif.remove(), 300);
+        }
+    }, 5000);
+}
