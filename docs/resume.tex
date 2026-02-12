@@ -110,7 +110,7 @@
 %-----------EDUCATION-----------
 \section{Education}  \resumeSubHeadingListStart
     \resumeSubheading
-      {University of British Columbia}{Expected 2025 -- 2029}
+      {University of British Columbia}{Sep 2025 -- 2029}
       {Bachelor of Applied Science in Engineering}{Vancouver, BC}
   \resumeSubHeadingListEnd
 
@@ -118,9 +118,9 @@
 \section{Technical Skills}
  \begin{itemize}[leftmargin=0.15in, label={}]
     \small{\item{
-     \textbf{Languages}{: Python, JavaScript, C++, Java, HTML, CSS, TypeScript} \\
-     \textbf{Frameworks \& Tools}{: React, Flask, NumPy, Git, GitHub Actions, REST APIs, PostgreSQL, Node.js, CI/CD} \\
-     \textbf{Libraries}{: MathJax, Styled Components, Axios, Pillow, Matplotlib, CustomTkinter} \\
+     \textbf{Languages}{: Python, C, C++, JavaScript, TypeScript, Java, HTML/CSS, SQL} \\
+     \textbf{Frameworks \& Tools}{: React, Flask, NumPy, Git, GitHub Actions, InfluxDB, Grafana} \\
+     \textbf{Embedded \& Hardware}{: STM32, SPI, CAN bus, HAL drivers, PT1000 RTD sensors, MAX31865} \\
     }}
  \end{itemize}
  \vspace{-16pt}
@@ -128,40 +128,25 @@
 %-----------EXPERIENCE-----------
 \section{Experience}
   \resumeSubHeadingListStart
+
     \resumeSubheading
-      {Embedded Systems}{Sep 2025 -- Present}
+      {Co-Founder \& Software Engineer}{Dec 2025 -- Present}
+      {AI/ML Startup (Seed Round)}{Vancouver, BC}
+      \resumeItemListStart
+        \resumeItem{Developing LLM optimization software enabling inference on low-RAM consumer hardware}
+        \resumeItem{Building downloadable product with memory-efficient model loading and inference pipeline}
+        \resumeItem{Contributing to technical architecture and product development in seed-stage startup environment}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Embedded Systems Engineer}{Sep 2025 -- Present}
       {UBC Solar}{Vancouver, BC}
       \resumeItemListStart
-        \resumeItem{Engineered a new motor temperature sensing system using PT1000 RTDs}
-        \resumeItem{Developed STM32 firmware in C utilizing HAL\_SPI drivers for real-time data acquisition and processing}
-        \resumeItem{Integrated sensor data over CAN bus to driver dashboard and telemetry modules for live diagnostics}
-      \resumeItemListEnd
-
-    \resumeSubheading
-      {Founding Software Engineer}{Jun 2025 -- Present}
-      {Stealth Startup - Quantitative Portfolio Management}{Vancouver, BC}
-      \resumeItemListStart
-        \resumeItem{Achieved 15\% portfolio growth in Q2 and 241\% growth over 7-year backtesting (Jan 2018-present)}
-        \resumeItem{Developed algorithmic trading strategies in Pinescript v6 on TradingView with Python integration}
-        \resumeItem{Implemented both long-trade (241\% growth) and short-trade (179\% growth) strategies}
-      \resumeItemListEnd
-
-    \resumeSubheading
-      {Robotics Team Programmer}{Sep 2024 -- Jun 2025}
-      {Moscrop Robotics Team}{Burnaby, BC}
-      \resumeItemListStart
-        \resumeItem{Architected modular C++ control algorithms optimizing autonomous routines, reducing cycle time by 18\%}
-        \resumeItem{Engineered real-time sensor-fusion pipelines enhancing obstacle detection robustness}
-        \resumeItem{Refactored 1,200-line legacy codebase, cutting runtime errors by 25\% and improving system stability}
-    \resumeItemListEnd
-
-    \resumeSubheading
-      {Advanced Mathematics Tutor Lead}{Sep 2023 -- Jun 2025}
-      {Math Challengers Program}{Burnaby, BC}
-      \resumeItemListStart
-        \resumeItem{Designed honours-level curriculum covering algebra, combinatorics, and geometry for 40+ gifted students}
-        \resumeItem{Created diagnostic assessments and progress tracking, boosting average contest scores by 32\%}
-        \resumeItem{Coordinated lesson schedules and resources across three partner schools}
+        \resumeItem{Engineered PT1000 RTD temperature sensing system with MAX31865 breakout board after motor failure at competition revealed telemetry blind spots; wired and integrated hardware to driver dashboard}
+        \resumeItem{Developed STM32 firmware in C implementing SPI communication to configure MAX31865 registers, initialize sensor parameters, and convert raw ADC readings to accurate temperature data}
+        \resumeItem{Integrated sensor data over CAN bus to driver dashboard for real-time monitoring independent of telemetry}
+        \resumeItem{Configured InfluxDB and Grafana data visualization via Sunlink radio system for live vehicle diagnostics}
+        \resumeItem{Currently developing external lighting control system with driver dashboard button integration}
       \resumeItemListEnd
 
   \resumeSubHeadingListEnd
@@ -172,19 +157,41 @@
     \vspace{-5pt}
     \resumeSubHeadingListStart
       \resumeProjectHeading
-          {\textbf{Math Quiz Generator} $|$ \emph{React, Python Flask, MathJax, GitHub Actions, REST API}}{2024}
+          {\textbf{Portfolio Website} $|$ \emph{HTML/CSS/JavaScript, GitHub Actions}}{2025}
           \resumeItemListStart
-            \resumeItem{Architected full-stack educational platform with intelligent difficulty algorithms across 10 progressive levels}
-            \resumeItem{Engineered dual-deployment architecture supporting REST API client-server and standalone frontend operation}
-            \resumeItem{Implemented real-time mathematical notation rendering using MathJax 3 with automated CI/CD pipeline}
+            \resumeItem{Built responsive personal portfolio with dark/light theme toggle and scroll-triggered animations}
+            \resumeItem{Implemented CSS custom properties for dynamic theming and optimized performance with efficient animations}
+            \resumeItem{Automated deployment pipeline with GitHub Actions for continuous delivery to martinwu.tech}
           \resumeItemListEnd
           \vspace{-13pt}
       \resumeProjectHeading
-          {\textbf{Advanced Haar Wavelet Image Compressor} $|$ \emph{Python, NumPy, Pillow, CustomTkinter}}{2024}
+          {\textbf{Useful Tool Hub} $|$ \emph{Python Flask, JavaScript, yt-dlp, Instaloader}}{2025 -- Present}
           \resumeItemListStart
-            \resumeItem{Implemented custom Haar wavelet transform algorithms for real-time RGB image compression}
-            \resumeItem{Built responsive desktop GUI with interactive parameter controls and immediate visual feedback}
-            \resumeItem{Designed multi-channel processing pipeline with efficient memory management for large image arrays}
+            \resumeItem{Built full-stack web application with Python Flask backend APIs for media downloading functionality}
+            \resumeItem{Integrated yt-dlp and Instaloader libraries for Instagram carousel and YouTube video extraction with format selection}
+            \resumeItem{Deployed on GitHub Pages with serverless architecture; live at \href{https://martinw500.github.io/Useful-Tool-Hub/}{martinw500.github.io/Useful-Tool-Hub}}
+          \resumeItemListEnd
+          \vspace{-13pt}
+      \resumeProjectHeading
+          {\textbf{Algorithmic Trading System} $|$ \emph{Pinescript v6, Python, TradingView}}{Q1 -- Q3 2025}
+          \resumeItemListStart
+            \resumeItem{Developed quantitative trading strategies achieving 179\% growth in backtesting with alpha of 1.05\%}
+            \resumeItem{Implemented separate long and short strategies yielding 8.3\% Q1 and 12.4\% Q2 portfolio growth}
+            \resumeItem{Built Python integration for data analysis and strategy validation across 7-year historical dataset}
+          \resumeItemListEnd
+          \vspace{-13pt}
+      \resumeProjectHeading
+          {\textbf{Math Quiz Generator} $|$ \emph{React, MathJax, Python Flask, GitHub Actions}}{2024}
+          \resumeItemListStart
+            \resumeItem{Developed quiz platform with adaptive difficulty scaling and weighted operation selection across 10 levels}
+            \resumeItem{Integrated MathJax for mathematical notation rendering; deployed via GitHub Actions to \href{https://martinw500.github.io/Math-Quiz-Generator/}{GitHub Pages}}
+          \resumeItemListEnd
+          \vspace{-13pt}
+      \resumeProjectHeading
+          {\textbf{Haar Wavelet Image Compressor} $|$ \emph{Python, NumPy, Pillow, CustomTkinter}}{2024}
+          \resumeItemListStart
+            \resumeItem{Implemented Haar wavelet transform algorithm for lossy RGB image compression using NumPy matrix operations}
+            \resumeItem{Built desktop GUI with CustomTkinter enabling real-time compression parameter adjustment and visual comparison}
           \resumeItemListEnd    \resumeSubHeadingListEnd
 \vspace{-15pt}
 
@@ -194,14 +201,12 @@
     \resumeSubHeadingListStart
         \item
         \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
-          \textbf{Mathematics Competition Awards} & \textbf{\small 2023 -- 2024} \\
+          \textbf{Mathematics Competition Awards} & \textbf{\small 2023 -- 2025} \\
         \end{tabular*}\vspace{-10pt}
           \resumeItemListStart
-            \resumeItem{\textbf{Euclid Contest:} Top 2\% with score of 85}
-            \resumeItem{\textbf{AIME Qualifier (2x):} Top 5\% on AMC 12 A \& B with score of 118.5}
             \resumeItem{\textbf{Canadian Senior Mathematics Contest:} Top 0.5\% (71st place) with score of 52/60}
-            \resumeItem{\textbf{Canadian Open Mathematics Challenge:} Moscrop 3rd in BC}
-            \resumeItem{\textbf{Hypatia Mathematics Contest:} Top 3\% (182nd place), medal recipient}
+            \resumeItem{\textbf{AIME Qualifier (2x):} Top 5\% on AMC 12 A \& B with score of 118.5}
+            \resumeItem{\textbf{Euclid Contest:} Top 2\% with score of 85}
           \resumeItemListEnd
     \resumeSubHeadingListEnd
 
