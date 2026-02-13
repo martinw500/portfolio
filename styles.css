@@ -431,7 +431,7 @@ img { max-width: 100%; display: block; }
     box-shadow:
         0 20px 60px -15px var(--navy-shadow),
         0 0 20px -5px rgba(var(--accent-rgb), 0.08);
-    transition: box-shadow 0.4s ease;
+    transition: box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hero-terminal:hover {
@@ -461,11 +461,327 @@ img { max-width: 100%; display: block; }
     border-radius: 50%;
     background: var(--slate);
     opacity: 0.3;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.terminal-dot svg {
+    width: 8px;
+    height: 8px;
+    color: rgba(0,0,0,0.6);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    flex-shrink: 0;
+}
+
+.terminal-dots:hover .terminal-dot svg {
+    opacity: 1;
+}
+
+.terminal-dot:hover {
+    transform: scale(1.2);
 }
 
 .terminal-dot:nth-child(1) { background: #ff5f56; opacity: 0.8; }
 .terminal-dot:nth-child(2) { background: #ffbd2e; opacity: 0.8; }
 .terminal-dot:nth-child(3) { background: #27c93f; opacity: 0.8; }
+
+/* Terminal minimize / maximize states */
+.hero-terminal .terminal-body {
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                padding 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.2s ease,
+                min-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    max-height: 600px;
+    overflow: hidden;
+}
+
+.hero-terminal.minimized .terminal-body {
+    max-height: 0;
+    min-height: 0;
+    padding: 0 20px;
+    opacity: 0;
+    overflow: hidden;
+}
+
+.hero-terminal.minimized .terminal-header {
+    border-bottom-color: transparent;
+}
+
+.hero-terminal.maximized {
+    transform: scale(1.04);
+    box-shadow:
+        0 25px 80px -15px var(--navy-shadow),
+        0 0 40px -5px rgba(var(--accent-rgb), 0.2);
+}
+
+/* Fullscreen interactive terminal overlay */
+.terminal-fullscreen-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    animation: overlayIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.terminal-fullscreen-overlay.closing {
+    animation: overlayOut 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes overlayIn {
+    from {
+        background: rgba(0, 0, 0, 0);
+        backdrop-filter: blur(0px);
+        -webkit-backdrop-filter: blur(0px);
+    }
+    to {
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+}
+
+@keyframes overlayOut {
+    from {
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+    to {
+        background: rgba(0, 0, 0, 0);
+        backdrop-filter: blur(0px);
+        -webkit-backdrop-filter: blur(0px);
+    }
+}
+
+.terminal-fullscreen {
+    width: 100%;
+    max-width: 900px;
+    height: 70vh;
+    max-height: 600px;
+    background: var(--bg-light);
+    border: 1px solid rgba(var(--accent-rgb), 0.2);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow:
+        0 30px 80px -15px rgba(0, 0, 0, 0.5),
+        0 0 60px -10px rgba(var(--accent-rgb), 0.15);
+    transform: scale(0.92) translateY(20px);
+    opacity: 0;
+    animation: termPopIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.05s;
+}
+
+.terminal-fullscreen.closing {
+    animation: termPopOut 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+@keyframes termPopIn {
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes termPopOut {
+    from {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: scale(0.92) translateY(20px);
+        opacity: 0;
+    }
+}
+
+/* PIP (picture-in-picture) mini terminal */
+.terminal-pip {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 380px;
+    height: 260px;
+    background: var(--bg-light);
+    border: 1px solid rgba(var(--accent-rgb), 0.2);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow:
+        0 15px 40px -10px rgba(0, 0, 0, 0.4),
+        0 0 30px -8px rgba(var(--accent-rgb), 0.12);
+    z-index: 9998;
+    transform: translateY(20px) scale(0.9);
+    opacity: 0;
+    animation: pipSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    resize: none;
+    transition: box-shadow 0.3s ease;
+}
+
+.terminal-pip:hover {
+    box-shadow:
+        0 20px 50px -10px rgba(0, 0, 0, 0.5),
+        0 0 40px -8px rgba(var(--accent-rgb), 0.18);
+}
+
+.terminal-pip.closing {
+    transform: translateY(20px) scale(0.85);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.25s ease;
+    animation: none;
+}
+
+@keyframes pipSlideIn {
+    to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.terminal-pip .terminal-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg-lighter);
+    border-bottom: 1px solid rgba(var(--accent-rgb), 0.1);
+    flex-shrink: 0;
+    cursor: grab;
+}
+
+.terminal-pip .terminal-header:active {
+    cursor: grabbing;
+}
+
+.terminal-pip .fs-term-body {
+    flex: 1;
+    padding: 12px;
+    overflow-y: auto;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xxs);
+    line-height: 1.7;
+    color: var(--light-slate);
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) transparent;
+}
+
+.terminal-pip .fs-input {
+    font-size: var(--fs-xxs);
+}
+
+@media (max-width: 480px) {
+    .terminal-pip {
+        width: calc(100vw - 32px);
+        right: 16px;
+        bottom: 16px;
+        height: 220px;
+    }
+}
+
+.terminal-fullscreen .terminal-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background: var(--bg-lighter);
+    border-bottom: 1px solid rgba(var(--accent-rgb), 0.1);
+    flex-shrink: 0;
+}
+
+.terminal-fullscreen .fs-term-body {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    line-height: 1.8;
+    color: var(--light-slate);
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) transparent;
+}
+
+.terminal-fullscreen .fs-term-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.terminal-fullscreen .fs-term-body::-webkit-scrollbar-thumb {
+    background: rgba(var(--accent-rgb), 0.3);
+    border-radius: 3px;
+}
+
+.fs-output-line {
+    margin-bottom: 2px;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.fs-input-line {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.fs-input-line .prompt { color: var(--accent); font-weight: 600; }
+
+.fs-input {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--lightest-slate);
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    caret-color: var(--accent);
+}
+
+/* Terminal crash / kernel panic */
+.hero-terminal.crashed .terminal-body {
+    animation: termGlitch 0.15s steps(2) 3;
+}
+
+.terminal-crash-screen {
+    color: #ff5f56;
+    font-size: var(--fs-xs);
+    line-height: 1.6;
+    animation: crashFade 0.4s ease forwards;
+}
+
+.terminal-crash-screen .crash-header {
+    color: #ffffff;
+    background: #ff5f56;
+    display: inline-block;
+    padding: 1px 6px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.terminal-reboot {
+    color: var(--accent);
+    margin-top: 12px;
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes termGlitch {
+    0%   { transform: translate(2px, -1px) skewX(1deg); }
+    25%  { transform: translate(-2px, 1px) skewX(-0.5deg); }
+    50%  { transform: translate(1px, 2px) skewX(0.5deg); }
+    75%  { transform: translate(-1px, -2px) skewX(-1deg); }
+    100% { transform: translate(0, 0) skewX(0); }
+}
+
+@keyframes crashFade {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
 
 .terminal-title {
     font-size: var(--fs-xxs);
