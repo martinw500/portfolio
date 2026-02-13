@@ -188,7 +188,7 @@ const commands = [
     {
         cmd: 'echo $STATUS',
         output: [
-            '<span class="out-val">🚀 Building the future, one commit at a time.</span>'
+            '<span class="out-val">🚀 Building the future.</span>'
         ]
     }
 ];
