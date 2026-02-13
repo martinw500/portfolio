@@ -111,7 +111,7 @@
 \section{Education}  \resumeSubHeadingListStart
     \resumeSubheading
       {University of British Columbia}{Sep 2025 -- 2029}
-      {Bachelor of Applied Science in Engineering}{Vancouver, BC}
+      {Bachelor of Applied Science in Engineering | GPA: 3.89/4.33}{Vancouver, BC}
   \resumeSubHeadingListEnd
 
 %-----------TECHNICAL SKILLS-----------
@@ -119,8 +119,9 @@
  \begin{itemize}[leftmargin=0.15in, label={}]
     \small{\item{
      \textbf{Languages}{: Python, C, C++, JavaScript, TypeScript, Java, HTML/CSS, SQL} \\
-     \textbf{Frameworks \& Tools}{: React, Flask, NumPy, Git, GitHub Actions, InfluxDB, Grafana} \\
+     \textbf{Frameworks \& Tools}{: React, Flask, PyTorch, NumPy, Git, GitHub Actions, Docker, InfluxDB, Grafana} \\
      \textbf{Embedded \& Hardware}{: STM32, SPI, CAN bus, HAL drivers, PT1000 RTD sensors, MAX31865} \\
+     \textbf{Developer Tools \& Platforms}{: WSL2/Linux, STM32CubeIDE, VSCode, Vercel, vast.ai, HuggingFace} \\
     }}
  \end{itemize}
  \vspace{-16pt}
@@ -133,19 +134,20 @@
       {Co-Founder \& Software Engineer}{Dec 2025 -- Present}
       {AI/ML Startup (Seed Round)}{Vancouver, BC}
       \resumeItemListStart
-        \resumeItem{Developing LLM optimization software enabling inference on low-RAM consumer hardware}
-        \resumeItem{Building downloadable product with memory-efficient model loading and inference pipeline}
-        \resumeItem{Contributing to technical architecture and product development in seed-stage startup environment}
+        \resumeItem{Developing configuration-level LLM optimization system reducing 70B parameter model hardware requirements from 8x A100 GPUs (640GB VRAM) to 2x RTX 4090 (48GB VRAM) for enterprise deployment cost reduction}
+        \resumeItem{Testing and optimizing inference pipelines using PyTorch and Llama-3.1-70B on vast.ai GPU infrastructure}
+        \resumeItem{Building production-ready deployment architecture with HuggingFace model integration and memory-efficient loading}
       \resumeItemListEnd
 
     \resumeSubheading
       {Embedded Systems Engineer}{Sep 2025 -- Present}
       {UBC Solar}{Vancouver, BC}
       \resumeItemListStart
-        \resumeItem{Engineered PT1000 RTD temperature sensing system with MAX31865 breakout board after motor failure at competition revealed telemetry blind spots; wired and integrated hardware to driver dashboard}
-        \resumeItem{Developed STM32 firmware in C implementing SPI communication to configure MAX31865 registers, initialize sensor parameters, and convert raw ADC readings to accurate temperature data}
-        \resumeItem{Integrated sensor data over CAN bus to driver dashboard for real-time monitoring independent of telemetry}
-        \resumeItem{Configured InfluxDB and Grafana data visualization via Sunlink radio system for live vehicle diagnostics}
+        \resumeItem{Engineered PT1000 RTD temperature sensing system with MAX31865 breakout board after motor failure at competition revealed telemetry blind spots; analyzed Altium PCB schematics and wired hardware integration to driver dashboard}
+        \resumeItem{Developed STM32 firmware in C using STM32CubeIDE and VSCode in WSL2/Linux environment; implemented SPI communication protocol, MAX31865 register configuration, and ADC-to-temperature conversion achieving within 1°C accuracy versus previous multi-degree variance}
+        \resumeItem{Integrated real-time sensor data over CAN bus to driver dashboard, enabling local heat monitoring independent of base station telemetry for critical safety improvements during competition}
+        \resumeItem{Configured remote data collection pipeline using Docker, Tailscale VPN, InfluxDB time-series database, and Grafana dashboards via Sunlink radio system for live vehicle diagnostics and performance analysis}
+        \resumeItem{Conducted design review presentations and technical debugging sessions using breakpoints and step-through analysis}
         \resumeItem{Currently developing external lighting control system with driver dashboard button integration}
       \resumeItemListEnd
 
@@ -165,11 +167,11 @@
           \resumeItemListEnd
           \vspace{-13pt}
       \resumeProjectHeading
-          {\textbf{Useful Tool Hub} $|$ \emph{Python Flask, JavaScript, yt-dlp, Instaloader}}{2025 -- Present}
+          {\textbf{Useful Tool Hub} $|$ \emph{Python Flask, JavaScript, yt-dlp, Instaloader, Vercel}}{2025 -- Present}
           \resumeItemListStart
             \resumeItem{Built full-stack web application with Python Flask backend APIs for media downloading functionality}
             \resumeItem{Integrated yt-dlp and Instaloader libraries for Instagram carousel and YouTube video extraction with format selection}
-            \resumeItem{Deployed on GitHub Pages with serverless architecture; live at \href{https://martinw500.github.io/Useful-Tool-Hub/}{martinw500.github.io/Useful-Tool-Hub}}
+            \resumeItem{Deployed Flask backend on Vercel serverless platform with GitHub Pages frontend; live at \href{https://martinw500.github.io/Useful-Tool-Hub/}{martinw500.github.io/Useful-Tool-Hub}}
           \resumeItemListEnd
           \vspace{-13pt}
       \resumeProjectHeading
