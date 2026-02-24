@@ -107,6 +107,13 @@
     \vspace{-8pt}
 \end{center}
 
+%-----------SUMMARY-----------
+\vspace{2pt}
+\begin{center}
+    \small{BASc Engineering student at UBC with production experience building machine learning pipelines, full-stack web applications, and embedded firmware systems across a stealth-mode AI startup and a competitive solar vehicle team.}
+\end{center}
+\vspace{-10pt}
+
 %-----------EDUCATION-----------
 \section{Education}  \resumeSubHeadingListStart
     \resumeSubheading
@@ -119,9 +126,10 @@
  \begin{itemize}[leftmargin=0.15in, label={}]
     \small{\item{
     \textbf{Languages}{: Python, C, C++, JavaScript, TypeScript, Java, MATLAB, HTML/CSS, SQL} \\
-     \textbf{Frameworks \& Tools}{: React, Flask, PyTorch, NumPy, Git, GitHub Actions, Docker, InfluxDB, Grafana} \\
+     \textbf{Frameworks \& Tools}{: React, Flask, PyTorch, transformers, NumPy, llama.cpp, sentence-transformers, Git, GitHub Actions, Docker, InfluxDB, Grafana} \\
+     \textbf{ML Techniques}{: Large language models (LLMs), deep learning, NLP, LoRA/QLoRA fine-tuning, Q4\_K\_M quantization, LLM-as-a-Judge, synthetic data generation, embedding drift detection} \\
      \textbf{Embedded \& Hardware}{: STM32, SPI, CAN bus, HAL drivers, PT1000 RTD sensors, MAX31865} \\
-     \textbf{Developer Tools \& Platforms}{: WSL2/Linux, STM32CubeIDE, VSCode, Vercel, vast.ai, HuggingFace} \\
+     \textbf{Developer Tools \& Platforms}{: WSL2/Linux, STM32CubeIDE, VSCode, Vercel, HuggingFace} \\
     }}
  \end{itemize}
  \vspace{-16pt}
@@ -132,25 +140,25 @@
 
     \resumeSubheading
       {Co-Founder \& Software Engineer}{Dec 2025 -- Present}
-      {AI/ML Startup (Seed Round)}{Vancouver, BC}
+      {Stealth-Mode AI Startup}{Vancouver, BC}
       \resumeItemListStart
-        \resumeItem{Developed LLM optimization system reducing 70B parameter model requirements from 8x A100 GPUs (640GB) to 2x RTX 4090 (48GB)}
-        \resumeItem{Optimized PyTorch inference pipelines for Llama-3.1-70B on vast.ai GPU infrastructure}
-        \resumeItem{Built production deployment architecture with HuggingFace integration and memory-efficient loading}
+        \resumeItem{Built two-stage data pipeline for local large language model fine-tuning: 8B model filters domain PDFs for relevance; 70B model synthesizes and quality-judges Q\&A training pairs}
+        \resumeItem{Developed LLM-as-a-Judge evaluation framework against a held-out golden anchor set, tracking factual accuracy, hallucination rate, and embedding drift with a 90\% pass threshold}
+        \resumeItem{Designed closed-loop retraining pipeline: model stash on quality regression, automated LoRA/QLoRA fine-tuning trigger, and human escalation with cache rollback after 3 audit failures}
+        \resumeItem{Implemented VRAM-aware task scheduler with mutex locking to sequence inference, sanity checks, and training without GPU resource conflicts}
+        \resumeItem{Reduced 70B model VRAM requirements from 640GB (8x A100) to 48GB (2x RTX 4090) via Q4\_K\_M quantization, enabling consumer-hardware deployment}
       \resumeItemListEnd
 
     \resumeSubheading
       {Embedded Systems Engineer}{Sep 2025 -- Present}
       {UBC Solar}{Vancouver, BC}
       \resumeItemListStart
-        \resumeItem{Engineered PT1000 RTD temperature sensing system with MAX31865 after motor failure at competition revealed telemetry gaps}
-        \resumeItem{Analyzed Altium PCB schematics and integrated hardware to driver dashboard for real-time monitoring}
+        \resumeItem{Engineered PT1000 RTD temperature sensing system with MAX31865, closing a critical motor telemetry gap identified after a competition failure}
+        \resumeItem{Reverse-engineered Altium PCB schematics to integrate MAX31865 hardware into the real-time driver dashboard monitoring stack}
         \resumeItem{Developed STM32 firmware in C implementing SPI communication and MAX31865 register configuration}
         \resumeItem{Achieved $<$1°C temperature measurement accuracy through ADC-to-temperature conversion, improving from multi-degree variance}
         \resumeItem{Integrated sensor data over CAN bus to dashboard, enabling safety monitoring independent of base station}
         \resumeItem{Configured Docker/Tailscale/InfluxDB/Grafana pipeline in WSL2/Linux via Sunlink radio for live vehicle diagnostics}
-        \resumeItem{Conducted design reviews and debugging sessions using breakpoints and step-through analysis}
-        \resumeItem{Developing external lighting control with dashboard button integration}
       \resumeItemListEnd
 
   \resumeSubHeadingListEnd
@@ -163,47 +171,26 @@
       \resumeProjectHeading
           {\textbf{Useful Tool Hub} $|$ \emph{Python Flask, JavaScript, yt-dlp, Instaloader, Vercel}}{2025 -- Present}
           \resumeItemListStart
-            \resumeItem{Built full-stack web app with Python Flask backend for media downloading}
-            \resumeItem{Integrated yt-dlp and Instaloader for Instagram carousel and YouTube video extraction with format selection}
-            \resumeItem{Deployed Flask backend on Vercel with GitHub Pages frontend; live at \href{https://martinw500.github.io/Useful-Tool-Hub/}{martinw500.github.io/Useful-Tool-Hub}}
+            \resumeItem{Built full-stack web app with Python Flask REST API backend and JavaScript frontend; integrated yt-dlp and Instaloader for YouTube and Instagram media extraction}
+            \resumeItem{Deployed backend on Vercel with CI/CD via GitHub Actions; live at \href{https://martinw500.github.io/Useful-Tool-Hub/}{martinw500.github.io/Useful-Tool-Hub}}
           \resumeItemListEnd
           \vspace{-13pt}
       \resumeProjectHeading
-          {\textbf{Algorithmic Trading System} $|$ \emph{Pinescript v6, Python, TradingView}}{Q1 -- Q3 2025}
+          {\textbf{Algorithmic Trading System} $|$ \emph{Python, Pinescript, TradingView}}{Q1 -- Q3 2025}
           \resumeItemListStart
             \resumeItem{Developed quantitative trading strategies achieving 179\% growth in backtesting with 1.05\% alpha}
             \resumeItem{Implemented long/short strategies yielding 8.3\% Q1 and 12.4\% Q2 portfolio growth}
             \resumeItem{Built Python integration for strategy validation across 7-year historical dataset}
           \resumeItemListEnd
-          \vspace{-13pt}
-      \resumeProjectHeading
-          {\textbf{Math Quiz Generator} $|$ \emph{React, MathJax, Python Flask, GitHub Actions}}{2024}
-          \resumeItemListStart
-            \resumeItem{Developed quiz platform with adaptive difficulty and weighted operation selection across 10 levels}
-            \resumeItem{Integrated MathJax for mathematical notation; deployed via GitHub Actions to \href{https://martinw500.github.io/Math-Quiz-Generator/}{GitHub Pages}}
-          \resumeItemListEnd
-          \vspace{-13pt}
-      \resumeProjectHeading
-          {\textbf{Haar Wavelet Image Compressor} $|$ \emph{Python, NumPy, Pillow, CustomTkinter}}{2024}
-          \resumeItemListStart
-            \resumeItem{Implemented Haar wavelet transform for lossy RGB image compression using NumPy}
-            \resumeItem{Built CustomTkinter GUI with real-time compression parameter adjustment and visual comparison}
-          \resumeItemListEnd    \resumeSubHeadingListEnd
+          \resumeSubHeadingListEnd
 \vspace{-15pt}
 
 %-----------AWARDS-----------
 \section{Awards \& Achievements}
-    \vspace{-5pt}
-    \resumeSubHeadingListStart
-        \item
-        \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
-          \textbf{Mathematics Competition Awards} & \textbf{\small 2023 -- 2025} \\
-        \end{tabular*}\vspace{-10pt}
-          \resumeItemListStart
-            \resumeItem{\textbf{Canadian Senior Mathematics Contest:} Top 0.5\% (71st place) with score of 52/60}
-            \resumeItem{\textbf{AIME Qualifier (2x):} Top 5\% on AMC 12 A \& B with score of 118.5}
-            \resumeItem{\textbf{Euclid Contest:} Top 2\% with score of 85}
-          \resumeItemListEnd
-    \resumeSubHeadingListEnd
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+    \textbf{Mathematics Competitions (2023--2025)}{: CSMC Top 0.5\% nationally (71st, 52/60) $|$ AIME Qualifier 2x -- Top 5\% on AMC 12A \& 12B (118.5) $|$ Euclid Contest Top 2\% (85/100)} \\
+    }}
+ \end{itemize}
 
 \end{document}
