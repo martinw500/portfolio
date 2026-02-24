@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Martin Wu</title>
-    <meta name="description" content="Martin Wu — Embedded Systems & Software Engineer. Co-founder, UBC Solar, builder.">
+    <meta name="description" content="Martin Wu — Software & ML Engineer. Building machine learning pipelines, full-stack applications, and embedded firmware. Co-founder at a stealth-mode AI startup, UBC Solar.">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -61,9 +61,9 @@
                 <h1 class="hero-name fade-up" style="--delay: 1">Martin Wu<span class="accent">.</span></h1>
                 <h2 class="hero-tagline fade-up" style="--delay: 2">I build things with code & hardware.</h2>
                 <p class="hero-description fade-up" style="--delay: 3">
-                    Embedded systems & software engineer. Currently co-founding an 
-                    <span class="text-accent">AI startup</span> and building firmware at 
-                    <span class="text-accent">UBC Solar</span>.
+                    Software engineer building ML pipelines, full-stack apps, and embedded firmware. 
+                    Co-founding a <span class="text-accent">stealth-mode AI startup</span> and engineering 
+                    firmware at <span class="text-accent">UBC Solar</span>.
                 </p>
                 <div class="hero-cta fade-up" style="--delay: 4">
                     <a href="#projects" class="btn-primary">View my work</a>
@@ -107,26 +107,26 @@
             <div class="about-grid">
                 <div class="about-text">
                     <p>
-                        I'm an engineering student at <span class="text-accent">UBC</span> with a passion for 
-                        building things — from embedded firmware to full-stack web applications. I like solving 
-                        problems that actually matter.
+                        I'm an engineering student at <span class="text-accent">UBC</span> who builds across the stack — 
+                        ML infrastructure, full-stack web applications, and low-level embedded firmware. 
+                        I like working on problems that are technically hard and actually matter.
                     </p>
                     <p>
-                        Right now, I'm co-founding an <span class="text-accent">AI startup</span> focused on 
-                        making LLMs run efficiently on consumer hardware, and building embedded systems at 
-                        <span class="text-accent">UBC Solar</span> where I engineer safety-critical temperature 
-                        monitoring for our solar race car.
+                        Right now I'm co-founding a <span class="text-accent">stealth-mode AI startup</span> focused on 
+                        making large language models run fully locally on consumer hardware — targeting 
+                        privacy-constrained industries where cloud AI isn't an option. I'm also building 
+                        safety-critical embedded firmware at <span class="text-accent">UBC Solar</span>.
                     </p>
                     <p>Here are some technologies I've been working with:</p>
                     <ul class="tech-list mono">
                         <li>Python</li>
                         <li>C / C++</li>
                         <li>JavaScript / TypeScript</li>
+                        <li>PyTorch / transformers</li>
+                        <li>llama.cpp / LoRA / QLoRA</li>
                         <li>React / Flask</li>
-                        <li>PyTorch</li>
                         <li>STM32 / SPI / CAN bus</li>
-                        <li>Docker / WSL2</li>
-                        <li>InfluxDB / Grafana</li>
+                        <li>Docker / InfluxDB / Grafana</li>
                     </ul>
                 </div>
                 <div class="about-photo">
@@ -149,15 +149,17 @@
                         <span class="exp-date mono">Dec 2025 — Present</span>
                     </div>
                     <div class="exp-right">
-                        <h3 class="exp-role">Co-Founder & Software Engineer <span class="exp-at">· AI/ML Startup</span></h3>
-                        <p class="exp-context mono">Seed Round · Vancouver, BC</p>
+                        <h3 class="exp-role">Co-Founder & Software Engineer <span class="exp-at">· Stealth-Mode AI Startup</span></h3>
+                        <p class="exp-context mono">Vancouver, BC</p>
                         <ul class="exp-points">
-                            <li>Developed LLM optimization system reducing 70B parameter model requirements from 8x A100 GPUs (640GB VRAM) to 2x RTX 4090 (48GB VRAM) for enterprise deployment</li>
-                            <li>Optimized PyTorch inference pipelines for Llama-3.1-70B on vast.ai GPU infrastructure</li>
-                            <li>Built production deployment architecture with HuggingFace model integration and memory-efficient loading</li>
+                            <li>Built two-stage data pipeline for local large language model fine-tuning: 8B model filters domain PDFs for relevance; 70B model synthesizes and quality-judges Q&A training pairs</li>
+                            <li>Developed LLM-as-a-Judge evaluation framework against a held-out golden anchor set, tracking factual accuracy, hallucination rate, and embedding drift with a 90% pass threshold</li>
+                            <li>Designed closed-loop retraining pipeline: model stash on quality regression, automated LoRA/QLoRA fine-tuning trigger, and human escalation with cache rollback after 3 audit failures</li>
+                            <li>Implemented VRAM-aware task scheduler with mutex locking to sequence inference, sanity checks, and training without GPU resource conflicts</li>
+                            <li>Reduced 70B model VRAM requirements from 640GB (8x A100) to 48GB (2x RTX 4090) via Q4_K_M quantization, enabling consumer-hardware deployment</li>
                         </ul>
                         <div class="exp-tech">
-                            <span>Python</span><span>PyTorch</span><span>Llama-3.1-70B</span><span>HuggingFace</span><span>vast.ai</span>
+                            <span>Python</span><span>PyTorch</span><span>transformers</span><span>llama.cpp</span><span>LoRA/QLoRA</span><span>LLM-as-a-Judge</span>
                         </div>
                     </div>
                 </div>
@@ -170,14 +172,12 @@
                         <h3 class="exp-role">Embedded Systems Engineer <span class="exp-at">· UBC Solar</span></h3>
                         <p class="exp-context mono">Vancouver, BC</p>
                         <ul class="exp-points">
-                            <li>Engineered PT1000 RTD temperature sensing system with MAX31865 breakout board after motor failure at competition revealed telemetry gaps</li>
-                            <li>Analyzed Altium PCB schematics and integrated hardware to driver dashboard for real-time temperature monitoring</li>
-                            <li>Developed STM32 firmware in C using STM32CubeIDE and VSCode in WSL2/Linux environment, implementing SPI communication and MAX31865 register configuration</li>
-                            <li>Achieved <1°C temperature measurement accuracy through ADC-to-temperature conversion, improving from multi-degree variance</li>
-                            <li>Integrated sensor data over CAN bus to dashboard, enabling critical safety monitoring independent of base station telemetry</li>
-                            <li>Configured Docker/InfluxDB/Grafana pipeline in WSL2/Linux with Tailscale VPN via Sunlink radio for live vehicle diagnostics</li>
-                            <li>Conducted design reviews and debugging sessions using breakpoints and step-through analysis</li>
-                            <li>Currently developing external lighting control system with driver dashboard button integration</li>
+                            <li>Engineered PT1000 RTD temperature sensing system with MAX31865, closing a critical motor telemetry gap identified after a competition failure</li>
+                            <li>Reverse-engineered Altium PCB schematics to integrate MAX31865 hardware into the real-time driver dashboard monitoring stack</li>
+                            <li>Developed STM32 firmware in C implementing SPI communication and MAX31865 register configuration</li>
+                            <li>Achieved &lt;1°C temperature measurement accuracy through ADC-to-temperature conversion, improving from multi-degree variance</li>
+                            <li>Integrated sensor data over CAN bus to dashboard, enabling safety monitoring independent of base station</li>
+                            <li>Configured Docker/Tailscale/InfluxDB/Grafana pipeline in WSL2/Linux via Sunlink radio for live vehicle diagnostics</li>
                         </ul>
                         <div class="exp-tech">
                             <span>C</span><span>STM32</span><span>WSL2/Linux</span><span>Docker</span><span>SPI</span><span>CAN bus</span><span>Grafana</span>

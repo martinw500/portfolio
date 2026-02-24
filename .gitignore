@@ -90,3 +90,6 @@ temp/
 *.ilg
 *.lof
 *.lot
+# Cloned private repos (local reference only)
+docs/condor-sanity/
+docs/condor-sanity2/
