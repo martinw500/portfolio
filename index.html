@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Martin Wu</title>
-    <meta name="description" content="Martin Wu — Software & ML Engineer. Building machine learning pipelines, full-stack applications, and embedded firmware. Co-founder at a stealth-mode AI startup, UBC Solar.">
+    <meta name="description" content="Martin Wu — firmware and software intern. STM32 firmware at UBC Solar, Supercluster agent orchestration, full-stack apps.">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -59,11 +59,13 @@
             <div class="hero-content">
                 <p class="hero-greeting mono fade-up" style="--delay: 0">Hi, my name is</p>
                 <h1 class="hero-name fade-up" style="--delay: 1">Martin Wu<span class="accent">.</span></h1>
-                <h2 class="hero-tagline fade-up" style="--delay: 2">I build things with code & hardware.</h2>
+                <h2 class="hero-tagline fade-up" style="--delay: 2">Firmware and software, shipped.</h2>
                 <p class="hero-description fade-up" style="--delay: 3">
-                    Software engineer building ML pipelines, full-stack apps, and embedded firmware. 
-                    Co-founding a <span class="text-accent">stealth-mode AI startup</span> and engineering 
-                    firmware at <span class="text-accent">UBC Solar</span>.
+                    Engineering student at UBC writing STM32 firmware for
+                    <span class="text-accent">UBC Solar</span>, co-founding
+                    <span class="text-accent">Supercluster</span> (agent orchestration),
+                    and shipping apps — including a game with
+                    <span class="text-accent">100k+ visits</span>.
                 </p>
                 <div class="hero-cta fade-up" style="--delay: 4">
                     <a href="#projects" class="btn-primary">View my work</a>
@@ -107,26 +109,27 @@
             <div class="about-grid">
                 <div class="about-text">
                     <p>
-                        I'm an engineering student at <span class="text-accent">UBC</span> who builds across the stack — 
-                        ML infrastructure, full-stack web applications, and low-level embedded firmware. 
-                        I like working on problems that are technically hard and actually matter.
+                        I'm a first-year engineering student at <span class="text-accent">UBC</span>.
+                        Most of my time is on embedded firmware and software that has to work on real hardware
+                        or a real URL.
                     </p>
                     <p>
-                        Right now I'm co-founding a <span class="text-accent">stealth-mode AI startup</span> focused on 
-                        making large language models run fully locally on consumer hardware — targeting 
-                        privacy-constrained industries where cloud AI isn't an option. I'm also building 
-                        safety-critical embedded firmware at <span class="text-accent">UBC Solar</span>.
+                        At <span class="text-accent">UBC Solar</span> I write C for Cascadia — motor-drive,
+                        steering-wheel, and driver-display boards on CAN. I'm co-founding
+                        <span class="text-accent">Supercluster</span>, a two-plane Go runtime that
+                        orchestrates AI agents (mTLS gRPC control plane + governed data plane). I also ship web apps
+                        (Songless, 100k+ visits).
                     </p>
-                    <p>Here are some technologies I've been working with:</p>
+                    <p>Recently:</p>
                     <ul class="tech-list mono">
+                        <li>C / STM32 / FreeRTOS</li>
+                        <li>SPI / CAN bus</li>
+                        <li>Go / gRPC</li>
+                        <li>TypeScript / React</li>
                         <li>Python</li>
-                        <li>C / C++</li>
-                        <li>JavaScript / TypeScript</li>
-                        <li>PyTorch / transformers</li>
-                        <li>llama.cpp / LoRA / QLoRA</li>
-                        <li>React / Flask</li>
-                        <li>STM32 / SPI / CAN bus</li>
-                        <li>Docker / InfluxDB / Grafana</li>
+                        <li>Vite / Cloudflare R2</li>
+                        <li>CMake / Git</li>
+                        <li>Docker</li>
                     </ul>
                 </div>
                 <div class="about-photo">
@@ -146,20 +149,19 @@
             <div class="exp-list">
                 <div class="exp-card">
                     <div class="exp-left">
-                        <span class="exp-date mono">Dec 2025 — Present</span>
+                        <span class="exp-date mono">Oct 2025 — Present</span>
                     </div>
                     <div class="exp-right">
-                        <h3 class="exp-role">Co-Founder & Software Engineer <span class="exp-at">· Stealth-Mode AI Startup</span></h3>
-                        <p class="exp-context mono">Vancouver, BC</p>
+                        <h3 class="exp-role">Co-Founder & Software Engineer <span class="exp-at">· Supercluster</span></h3>
+                        <p class="exp-context mono">Vancouver, BC · <a href="https://github.com/ericx057/supercluster" target="_blank" rel="noopener">github.com/ericx057/supercluster</a></p>
                         <ul class="exp-points">
-                            <li>Built two-stage data pipeline for local large language model fine-tuning: 8B model filters domain PDFs for relevance; 70B model synthesizes and quality-judges Q&A training pairs</li>
-                            <li>Developed LLM-as-a-Judge evaluation framework against a held-out golden anchor set, tracking factual accuracy, hallucination rate, and embedding drift with a 90% pass threshold</li>
-                            <li>Designed closed-loop retraining pipeline: model stash on quality regression, automated LoRA/QLoRA fine-tuning trigger, and human escalation with cache rollback after 3 audit failures</li>
-                            <li>Implemented VRAM-aware task scheduler with mutex locking to sequence inference, sanity checks, and training without GPU resource conflicts</li>
-                            <li>Reduced 70B model VRAM requirements from 640GB (8x A100) to 48GB (2x RTX 4090) via Q4_K_M quantization, enabling consumer-hardware deployment</li>
+                            <li>Building a two-plane Go runtime for agent orchestration: control plane dispatches over mTLS gRPC (bidi <code>Connect</code> + unary <code>ReportCompletion</code>); data plane is the only path agents have to Postgres, S3, REST, etc.</li>
+                            <li>Wrote <code>data-plane-local</code> — an in-memory probe of the production 11-step dispatcher (identity → idempotency → outbox → intent audit → adapter → result audit). Fail-closed denials never reach the adapter; <code>go run</code>, no Docker</li>
+                            <li>Shipped the operator console (vanilla HTML/CSS/JS): live INTENT/RESULT/DENIED ledger, DAG workflows with fail-closed halt, 11 adapter sources, policy denials</li>
+                            <li>Planes share only <code>proto/agent</code>. Every agent read/write is mediated by policy and a tamper-evident audit chain — metadata only; row values never cross the boundary</li>
                         </ul>
                         <div class="exp-tech">
-                            <span>Python</span><span>PyTorch</span><span>transformers</span><span>llama.cpp</span><span>LoRA/QLoRA</span><span>LLM-as-a-Judge</span>
+                            <span>Go</span><span>gRPC</span><span>TypeScript</span><span>policy</span><span>audit</span>
                         </div>
                     </div>
                 </div>
@@ -170,17 +172,16 @@
                     </div>
                     <div class="exp-right">
                         <h3 class="exp-role">Embedded Systems Engineer <span class="exp-at">· UBC Solar</span></h3>
-                        <p class="exp-context mono">Vancouver, BC</p>
+                        <p class="exp-context mono">Vancouver, BC · Cascadia / firmware_v4</p>
                         <ul class="exp-points">
-                            <li>Engineered PT1000 RTD temperature sensing system with MAX31865, closing a critical motor telemetry gap identified after a competition failure</li>
-                            <li>Reverse-engineered Altium PCB schematics to integrate MAX31865 hardware into the real-time driver dashboard monitoring stack</li>
-                            <li>Developed STM32 firmware in C implementing SPI communication and MAX31865 register configuration</li>
-                            <li>Achieved &lt;1°C temperature measurement accuracy through ADC-to-temperature conversion, improving from multi-degree variance</li>
-                            <li>Integrated sensor data over CAN bus to dashboard, enabling safety monitoring independent of base station</li>
-                            <li>Configured Docker/Tailscale/InfluxDB/Grafana pipeline in WSL2/Linux via Sunlink radio for live vehicle diagnostics</li>
+                            <li>Brought up STM32 Motor Drive Interface firmware — pinout, SPI chip-select, CAN filters, FreeRTOS tasks. Six merged PRs across MDI, STR, and DRD on <a href="https://github.com/UBC-Solar/firmware_v4" target="_blank">firmware_v4</a></li>
+                            <li>Wrote the MAX31865 PT1000 driver (15-bit conversion, 3-wire SPI). Hardware-verified &lt;1°C; faulted samples are debounced and not sent on CAN</li>
+                            <li>Parsed driver-display motor commands on MDI with timeout-aware command caching for the motor controller</li>
+                            <li>Shipped steering-wheel firmware: cyclic drive-control CAN (regen, cruise, lights), MDU RPM → km/h, AS1115 hex speed display</li>
+                            <li>Wrote DRD external-lights firmware for the v4 vehicle</li>
                         </ul>
                         <div class="exp-tech">
-                            <span>C</span><span>STM32</span><span>WSL2/Linux</span><span>Docker</span><span>SPI</span><span>CAN bus</span><span>Grafana</span>
+                            <span>C</span><span>STM32</span><span>FreeRTOS</span><span>SPI</span><span>CAN</span><span>CMake</span>
                         </div>
                     </div>
                 </div>
@@ -193,97 +194,92 @@
         <div class="section-container">
             <h2 class="section-heading"><span class="heading-num mono">03.</span> Projects</h2>
             
-            <!-- Featured Projects -->
             <div class="featured-projects">
-                <article class="featured-project">
+                <article class="featured-project" data-project="songless" tabindex="0">
                     <div class="fp-content">
                         <p class="fp-overline mono">Featured Project</p>
-                        <h3 class="fp-title">Useful Tool Hub</h3>
+                        <h3 class="fp-title">Songless</h3>
                         <div class="fp-desc">
-                            <p>A collection of useful web tools I built because I got tired of searching for them everywhere. Features Instagram carousel extraction, YouTube video downloading with format selection, and a growing library of utilities. Full-stack with Flask backend deployed on Vercel.</p>
+                            <p>Song-intro guessing game. 100k+ visits. Stage-locked Web Audio clues (0.01s–15s), then the full track from Cloudflare R2. Vercel hosts the app; audio never goes in the git repo.</p>
                         </div>
                         <ul class="fp-tech mono">
-                            <li>Python Flask</li>
-                            <li>JavaScript</li>
-                            <li>yt-dlp</li>
-                            <li>Instaloader</li>
-                            <li>Vercel</li>
+                            <li>React</li>
+                            <li>TypeScript</li>
+                            <li>Vite</li>
+                            <li>Cloudflare R2</li>
+                            <li>Web Audio</li>
                         </ul>
                         <div class="fp-links">
-                            <a href="https://github.com/martinw500/Useful-Tool-Hub" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                            <a href="https://martinw500.github.io/Useful-Tool-Hub/" target="_blank" aria-label="Live Demo"><i class="fas fa-external-link-alt"></i></a>
+                            <a href="https://github.com/martinw500/songless" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="https://songless-zeta.vercel.app" target="_blank" aria-label="Live Demo"><i class="fas fa-external-link-alt"></i></a>
                         </div>
                     </div>
                     <div class="fp-image">
-                        <a href="https://martinw500.github.io/Useful-Tool-Hub/" target="_blank">
-                            <div class="fp-placeholder"><i class="fas fa-tools"></i></div>
-                        </a>
+                        <div class="shot" data-shot="assets/projects/songless-cover.png" data-label="songless-cover.png"></div>
                     </div>
                 </article>
 
-                <article class="featured-project reverse">
+                <article class="featured-project reverse" data-project="us" tabindex="0">
                     <div class="fp-content">
                         <p class="fp-overline mono">Featured Project</p>
-                        <h3 class="fp-title">Algorithmic Trading System</h3>
+                        <h3 class="fp-title">Us</h3>
                         <div class="fp-desc">
-                            <p>Quantitative trading strategies achieving 179% growth in backtesting with alpha of 1.05%. Built separate long/short strategies yielding 8.3% Q1 and 12.4% Q2 portfolio growth. Python integration layer for data analysis and strategy validation across 7-year historical dataset.</p>
+                            <p>Browser story game in a Pokémon Gen 3 pixel style. Custom Phaser 4 engine: grid movement, save/fast-travel, dialogue, audio buses, touch + keyboard. 15+ scenes with Playwright visual audits.</p>
                         </div>
                         <ul class="fp-tech mono">
-                            <li>Pinescript v6</li>
-                            <li>Python</li>
-                            <li>TradingView</li>
-                            <li>Data Analysis</li>
+                            <li>Phaser 4</li>
+                            <li>TypeScript</li>
+                            <li>Vite</li>
+                            <li>Playwright</li>
                         </ul>
                         <div class="fp-links">
-                            <a href="https://github.com/martinw500" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="https://github.com/martinw500/larissa-game" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="https://martinw500.github.io/larissa-game/" target="_blank" aria-label="Live Demo"><i class="fas fa-external-link-alt"></i></a>
                         </div>
                     </div>
                     <div class="fp-image">
-                        <a href="https://github.com/martinw500" target="_blank">
-                            <div class="fp-placeholder"><i class="fas fa-chart-line"></i></div>
-                        </a>
+                        <div class="shot" data-shot="assets/projects/us-cover.png" data-label="us-cover.png"></div>
                     </div>
                 </article>
             </div>
 
-            <!-- Other Projects Grid -->
-            <h3 class="other-heading">Other Noteworthy Projects</h3>
+            <h3 class="other-heading">Other Projects</h3>
             <div class="projects-grid">
-                <article class="project-tile">
+                <article class="project-tile" data-project="uth" tabindex="0">
                     <div class="tile-header">
                         <i class="far fa-folder tile-icon"></i>
                         <div class="tile-links">
-                            <a href="https://github.com/martinw500/portfolio" target="_blank"><i class="fab fa-github"></i></a>
-                            <a href="https://martinwu.tech" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                            <a href="https://github.com/martinw500/UTH" target="_blank"><i class="fab fa-github"></i></a>
+                            <a href="https://martinw500.github.io/UTH/" target="_blank"><i class="fas fa-external-link-alt"></i></a>
                         </div>
                     </div>
-                    <h4 class="tile-title">Portfolio Website</h4>
-                    <p class="tile-desc">Responsive personal portfolio with dark/light theme toggle, scroll-triggered animations, and automated CI/CD deployment pipeline via GitHub Actions.</p>
+                    <h4 class="tile-title">Useful Tool Hub</h4>
+                    <p class="tile-desc">Ten in-browser tools (convert, edit, QR, PDF). YouTube/Instagram downloaders on Vercel Python; everything else stays on-device.</p>
                     <ul class="tile-tech mono">
-                        <li>HTML/CSS</li>
                         <li>JavaScript</li>
-                        <li>GitHub Actions</li>
+                        <li>Python</li>
+                        <li>Vercel</li>
                     </ul>
                 </article>
 
-                <article class="project-tile">
+                <article class="project-tile" data-project="nutritracker" tabindex="0">
                     <div class="tile-header">
                         <i class="far fa-folder tile-icon"></i>
                         <div class="tile-links">
-                            <a href="https://github.com/martinw500/Math-Quiz-Generator" target="_blank"><i class="fab fa-github"></i></a>
-                            <a href="https://martinw500.github.io/Math-Quiz-Generator/" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                            <a href="https://github.com/martinw500/Nutritracker" target="_blank"><i class="fab fa-github"></i></a>
+                            <a href="https://nutritracker-mocha.vercel.app" target="_blank"><i class="fas fa-external-link-alt"></i></a>
                         </div>
                     </div>
-                    <h4 class="tile-title">Math Quiz Generator</h4>
-                    <p class="tile-desc">Quiz platform with adaptive difficulty scaling and weighted operation selection across 10 levels. MathJax rendering with GitHub Pages deployment.</p>
+                    <h4 class="tile-title">NutriTracker</h4>
+                    <p class="tile-desc">59 micronutrient values against USDA FoodData Central. A vision model would only name the food; the database owns every number.</p>
                     <ul class="tile-tech mono">
-                        <li>React</li>
-                        <li>Flask</li>
-                        <li>MathJax</li>
+                        <li>TypeScript</li>
+                        <li>Postgres</li>
+                        <li>USDA FDC</li>
                     </ul>
                 </article>
 
-                <article class="project-tile">
+                <article class="project-tile" data-project="haar" tabindex="0">
                     <div class="tile-header">
                         <i class="far fa-folder tile-icon"></i>
                         <div class="tile-links">
@@ -291,11 +287,10 @@
                         </div>
                     </div>
                     <h4 class="tile-title">Haar Wavelet Compressor</h4>
-                    <p class="tile-desc">Haar wavelet transform algorithm for lossy RGB image compression using NumPy matrix operations. Desktop GUI with real-time parameter adjustment.</p>
+                    <p class="tile-desc">Haar transform on RGB channels with NumPy. Desktop GUI for threshold and iteration — closer to DSP than a web toy.</p>
                     <ul class="tile-tech mono">
                         <li>Python</li>
                         <li>NumPy</li>
-                        <li>CustomTkinter</li>
                     </ul>
                 </article>
             </div>
@@ -308,7 +303,7 @@
             <p class="contact-overline mono">04. What's Next?</p>
             <h2 class="contact-heading">Get In Touch</h2>
             <p class="contact-text">
-                Whether you have an opportunity, a project in mind, or just want to connect, I’d love to hear from you. My inbox is always open.
+                Internships, firmware, or software — email is the fastest way to reach me.
             </p>
             
             <form class="contact-form" action="https://formspree.io/f/xpwrlbje" method="POST">
@@ -355,6 +350,14 @@
             Built by Martin Wu
         </p>
     </footer>
+
+    <div class="project-modal" id="project-modal" hidden>
+        <div class="project-modal-backdrop" data-modal-close></div>
+        <div class="project-modal-panel" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
+            <button class="project-modal-close" type="button" data-modal-close aria-label="Close">&times;</button>
+            <div class="project-modal-body" id="project-modal-body"></div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

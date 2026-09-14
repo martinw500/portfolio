@@ -65,9 +65,11 @@ navLinks.querySelectorAll('.nav-link').forEach(link => {
 // ── Smooth Scroll ────────────────────────────
 document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
-        e.preventDefault();
-        const target = document.querySelector(a.getAttribute('href'));
+        const href = a.getAttribute('href');
+        if (!href || href === '#' || href.startsWith('#project/')) return;
+        const target = document.querySelector(href);
         if (!target) return;
+        e.preventDefault();
         const offset = 80;
         const top = target.getBoundingClientRect().top + window.scrollY - offset;
         window.scrollTo({ top, behavior: 'smooth' });
@@ -149,7 +151,6 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Reveal sections, cards, tiles
     const els = document.querySelectorAll(
         '.exp-card, .featured-project, .project-tile, .about-grid, .contact-container'
     );
@@ -158,6 +159,8 @@ document.addEventListener('DOMContentLoaded', () => {
         el.style.transitionDelay = `${i * 80}ms`;
         revealObserver.observe(el);
     });
+    hydrateShots(document);
+    initProjectModal();
 });
 
 // ── Terminal Typing Animation ────────────────
@@ -172,7 +175,7 @@ const commands = [
             '  <span class="out-key">"name"</span>: <span class="out-val">"Martin Wu"</span>,',
             '  <span class="out-key">"role"</span>: <span class="out-val">"Embedded Systems & Software Engineer"</span>,',
             '  <span class="out-key">"school"</span>: <span class="out-val">"University of British Columbia"</span>,',
-            '  <span class="out-key">"focus"</span>: <span class="out-val">["firmware", "full-stack", "AI/ML"]</span>,',
+            '  <span class="out-key">"focus"</span>: <span class="out-val">["firmware", "orchestration", "full-stack"]</span>,',
             '  <span class="out-key">"currently"</span>: <span class="out-val">"building cool stuff"</span>',
             '<span class="out-bracket">}</span>'
         ]
@@ -180,9 +183,8 @@ const commands = [
     {
         cmd: 'ls projects/',
         output: [
-            '<span class="out-val">useful-tool-hub/</span>    <span class="out-val">trading-system/</span>',
-            '<span class="out-val">math-quiz/</span>          <span class="out-val">image-compressor/</span>',
-            '<span class="out-val">portfolio/</span>          <span class="out-val">rtd-firmware/</span>'
+            '<span class="out-val">songless/</span>          <span class="out-val">us/</span>',
+            '<span class="out-val">cascadia-firmware/</span>  <span class="out-val">useful-tool-hub/</span>'
         ]
     },
     {
@@ -667,20 +669,18 @@ function processFsCommand(cmd) {
   <span style="color:var(--accent)">"name"</span>: <span style="color:var(--lightest-slate)">"Martin Wu"</span>,
   <span style="color:var(--accent)">"role"</span>: <span style="color:var(--lightest-slate)">"Embedded Systems & Software Engineer"</span>,
   <span style="color:var(--accent)">"school"</span>: <span style="color:var(--lightest-slate)">"University of British Columbia"</span>,
-  <span style="color:var(--accent)">"focus"</span>: <span style="color:var(--lightest-slate)">["firmware", "full-stack", "AI/ML"]</span>
+  <span style="color:var(--accent)">"focus"</span>: <span style="color:var(--lightest-slate)">["firmware", "orchestration", "full-stack"]</span>
 <span style="color:var(--accent)">}</span>`,
 
-        'skills': `<span style="color:var(--accent)">Languages:</span>  Python, C/C++, JavaScript/TypeScript
-<span style="color:var(--accent)">Frameworks:</span> React, Flask, PyTorch
-<span style="color:var(--accent)">Hardware:</span>   STM32, SPI, CAN bus
-<span style="color:var(--accent)">Tools:</span>      Docker, WSL2, Git, Grafana`,
+        'skills': `<span style="color:var(--accent)">Languages:</span>  C/C++, Go, Python, TypeScript
+<span style="color:var(--accent)">Embedded:</span>  STM32, FreeRTOS, SPI, CAN
+<span style="color:var(--accent)">Software:</span>   gRPC, React, Git, Docker`,
 
-        'projects': `<span style="color:var(--lightest-slate)">useful-tool-hub/</span>      Web tool collection
-<span style="color:var(--lightest-slate)">trading-system/</span>       Algo trading (179% growth)
-<span style="color:var(--lightest-slate)">math-quiz/</span>            Adaptive quiz platform
-<span style="color:var(--lightest-slate)">image-compressor/</span>     Haar wavelet compression
-<span style="color:var(--lightest-slate)">portfolio/</span>            This website
-<span style="color:var(--lightest-slate)">rtd-firmware/</span>         PT1000 temperature sensing`,
+        'projects': `<span style="color:var(--lightest-slate)">songless/</span>             100k+ visits, R2 audio
+<span style="color:var(--lightest-slate)">us/</span>                   Phaser 4 story game
+<span style="color:var(--lightest-slate)">cascadia-firmware/</span>    UBC Solar MDI / STR
+<span style="color:var(--lightest-slate)">useful-tool-hub/</span>      10 in-browser tools
+<span style="color:var(--lightest-slate)">nutritracker/</span>         USDA nutrient tracker`,
 
         'contact': `<span style="color:var(--accent)">Email:</span>    martinwu500@gmail.com
 <span style="color:var(--accent)">Phone:</span>    (236) 518-9477
@@ -891,3 +891,184 @@ function showNotification(message, type = 'info') {
         }
     }, 5000);
 }
+
+// ── Project modal ────────────────────────────
+const PROJECTS = {
+    songless: {
+        title: 'Songless',
+        overline: 'Featured · 100k+ visits',
+        github: 'https://github.com/martinw500/songless',
+        live: 'https://songless-zeta.vercel.app',
+        tech: ['React', 'TypeScript', 'Vite', 'Cloudflare R2', 'Web Audio'],
+        shots: ['songless-cover.png', 'songless-1.png', 'songless-2.png', 'songless-3.png'],
+        body: [
+            'Guess the song from a growing intro clip. After a win or a full miss, the complete track streams from R2 — Vercel only serves the app and a small catalogue JSON.',
+        ],
+        points: [
+            'Stage-locked Web Audio clues (0.01s–15s). Timeline and enabled stages stay in sync; play locks the round so the clip cannot be mutated mid-guess.',
+            'Clue MP3s are compact; the full 128 kbps master is fetched only on reveal. Decoded audio is LRU-cached (3 songs) so a long session does not keep the library in RAM.',
+            'Upload path audits YouTube sources, strips digital silence, encodes, and refuses a batch that would exceed an 8.5 GB R2 cap.',
+            'Five difficulty pools, searchable aliases, 120-song live catalogue.',
+        ],
+    },
+    us: {
+        title: 'Us',
+        overline: 'Featured',
+        github: 'https://github.com/martinw500/larissa-game',
+        live: 'https://martinw500.github.io/larissa-game/',
+        tech: ['Phaser 4', 'TypeScript', 'Vite', 'Playwright'],
+        shots: ['us-cover.png', 'us-1.png', 'us-2.png', 'us-3.png'],
+        body: [
+            'A full browser story game: 15+ scenes, save/fast-travel, dialogue with rewind, audio buses, and a first-run tutorial. Pokémon Gen 3 scale and outlines; the maps are real UBC and Vancouver places, not a Pokémon town.',
+        ],
+        points: [
+            'Shared BaseScene for collision, interaction, menus, and discovery-gated travel.',
+            'Procedural venue art plus cropped sheets; Playwright films assert lighting, walk cycles, and collision so a scene cannot silently regress.',
+            'Keyboard-first on desktop, D-pad + A on touch, one cog menu. Playable end to end.',
+        ],
+    },
+    uth: {
+        title: 'Useful Tool Hub',
+        overline: 'Other',
+        github: 'https://github.com/martinw500/UTH',
+        live: 'https://martinw500.github.io/UTH/',
+        tech: ['JavaScript', 'Python', 'Vercel'],
+        shots: ['uth-1.png', 'uth-2.png'],
+        body: [
+            'A set of tools I actually use. Convert/edit/QR/PDF run in the browser (Canvas, FFmpeg.wasm). YouTube and Instagram downloaders hit Vercel Python.',
+        ],
+        points: [
+            'Ten tools, no accounts.',
+            'On-device converters never upload the file.',
+        ],
+    },
+    nutritracker: {
+        title: 'NutriTracker',
+        overline: 'Other',
+        github: 'https://github.com/martinw500/Nutritracker',
+        live: 'https://nutritracker-mocha.vercel.app',
+        tech: ['TypeScript', 'Postgres', 'USDA FDC'],
+        shots: ['nutritracker-1.png', 'nutritracker-2.png'],
+        body: [
+            'Tracks 59 micronutrient and phytonutrient values against USDA FoodData Central. Photo logging is designed so a model only names the food — nutrient numbers come from the database, never from the model.',
+        ],
+        points: [
+            'UI runs off labeled demo fixtures today; Postgres/auth foundation is in place.',
+            'No composite “health scores.” Claims carry an evidence tier.',
+        ],
+    },
+    haar: {
+        title: 'Haar Wavelet Compressor',
+        overline: 'Other',
+        github: 'https://github.com/martinw500/Haar-Wavelet-Image-Compressor',
+        live: '',
+        tech: ['Python', 'NumPy'],
+        shots: ['haar-1.png', 'haar-2.png'],
+        body: [
+            'Lossy RGB compression with a Haar wavelet on each channel. Threshold and iteration sliders, live preview.',
+        ],
+        points: [
+            'Matrix ops in NumPy, not a black-box codec wrapper.',
+        ],
+    },
+};
+
+function hydrateShots(root) {
+    root.querySelectorAll('.shot[data-shot]').forEach(el => {
+        if (el.dataset.hydrated) return;
+        el.dataset.hydrated = '1';
+        const src = el.dataset.shot;
+        const label = el.dataset.label || src.split('/').pop();
+        el.dataset.label = label;
+        el.classList.add('is-empty');
+        const img = new Image();
+        img.alt = label;
+        img.onload = () => {
+            el.classList.remove('is-empty');
+            el.classList.add('has-image');
+            el.appendChild(img);
+        };
+        img.src = src;
+    });
+}
+
+function shotMarkup(filename) {
+    const src = `assets/projects/${filename}`;
+    return `<div class="shot is-empty" data-shot="${src}" data-label="${filename}"></div>`;
+}
+
+function renderProject(id) {
+    const p = PROJECTS[id];
+    if (!p) return '';
+    const links = [
+        p.github ? `<a href="${p.github}" target="_blank" rel="noopener">GitHub</a>` : '',
+        p.live ? `<a href="${p.live}" target="_blank" rel="noopener">Live</a>` : '',
+    ].filter(Boolean).join('');
+    return `
+        <p class="pm-overline mono">${p.overline}</p>
+        <h2 class="pm-title" id="project-modal-title">${p.title}</h2>
+        <ul class="pm-tech">${p.tech.map(t => `<li>${t}</li>`).join('')}</ul>
+        <div class="pm-links">${links}</div>
+        <div class="pm-body">${p.body.map(t => `<p>${t}</p>`).join('')}</div>
+        <ul class="pm-points">${p.points.map(t => `<li>${t}</li>`).join('')}</ul>
+        <div class="pm-shots">${p.shots.map(shotMarkup).join('')}</div>
+        <p class="pm-hint">Screenshots: drop files into <span class="mono">assets/projects/</span> using the names on the empty frames.</p>
+    `;
+}
+
+function initProjectModal() {
+    const modal = document.getElementById('project-modal');
+    const body = document.getElementById('project-modal-body');
+    if (!modal || !body) return;
+
+    function openProject(id, pushHash) {
+        if (!PROJECTS[id]) return;
+        body.innerHTML = renderProject(id);
+        hydrateShots(body);
+        modal.hidden = false;
+        document.body.classList.add('modal-open');
+        if (pushHash) {
+            history.pushState({ project: id }, '', `#project/${id}`);
+        }
+    }
+
+    function closeProject() {
+        modal.hidden = true;
+        document.body.classList.remove('modal-open');
+        if (location.hash.startsWith('#project/')) {
+            history.pushState({}, '', location.pathname + location.search);
+        }
+    }
+
+    document.querySelectorAll('[data-project]').forEach(card => {
+        const open = () => openProject(card.dataset.project, true);
+        card.addEventListener('click', e => {
+            if (e.target.closest('a')) return;
+            open();
+        });
+        card.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                open();
+            }
+        });
+    });
+
+    modal.querySelectorAll('[data-modal-close]').forEach(el => {
+        el.addEventListener('click', closeProject);
+    });
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && !modal.hidden) closeProject();
+    });
+
+    window.addEventListener('popstate', () => {
+        const id = (location.hash.match(/^#project\/([\w-]+)/) || [])[1];
+        if (id) openProject(id, false);
+        else closeProject();
+    });
+
+    const initial = (location.hash.match(/^#project\/([\w-]+)/) || [])[1];
+    if (initial) openProject(initial, false);
+}
+
