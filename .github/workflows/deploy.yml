@@ -28,11 +28,18 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
+      # Only these files are public. Notes, LaTeX source and tooling stay in the repo.
+      - name: Stage site
+        run: |
+          mkdir -p _site/docs
+          cp -R index.html styles.css script.js assets CNAME favicon* apple-touch-icon.png _site/
+          cp docs/resume.pdf docs/pfp.jpg _site/docs/
+          rm -f _site/assets/projects/README.md
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: '.'
+          path: '_site'
 
       - name: Deploy to GitHub Pages
         id: deployment

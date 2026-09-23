@@ -1,14 +1,5 @@
-# Portfolio Website
+# martinwu.tech
 
-My personal portfolio website showcasing my projects and skills. <br />
-Available at: https://martinwu.tech
+Personal portfolio. Vanilla HTML, CSS and JS, with no build step. A push to `main` deploys to GitHub Pages through `.github/workflows/deploy.yml`, which publishes only the site files it stages into `_site`.
 
-## Built With
-- HTML5
-- CSS3
-- JavaScript
-- Font Awesome icons
-- Google Fonts
-
----
-Deployed through Github Actions
+The resume source is `docs/resume.tex`; rebuild it with `tectonic docs/resume.tex`.

@@ -1,56 +1,62 @@
 /* ============================================
    Portfolio — script.js
-   Smooth interactions + terminal animation
+   Theme, nav, scroll reveal, hero terminal, project modal
    ============================================ */
 
-// ── Theme ────────────────────────────────────
-const themeToggle = document.getElementById('theme-toggle');
 const html = document.documentElement;
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
-function getSystemTheme() {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-}
-
-const savedTheme = localStorage.getItem('theme') || 'dark';
-html.setAttribute('data-theme', savedTheme);
-updateThemeIcon(savedTheme);
+// ── Theme ────────────────────────────────────
+// The inline <head> script has already set data-theme before first paint.
+const themeToggle = document.getElementById('theme-toggle');
 
 function updateThemeIcon(theme) {
-    const icon = themeToggle.querySelector('i');
-    icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    const use = themeToggle.querySelector('use');
+    if (use) use.setAttribute('href', theme === 'dark' ? '#i-sun' : '#i-moon');
 }
+
+function setTheme(theme, save) {
+    html.dataset.theme = theme;
+    if (save) { try { localStorage.setItem('theme', theme); } catch (e) {} }
+    updateThemeIcon(theme);
+}
+
+updateThemeIcon(html.dataset.theme);
 
 themeToggle.addEventListener('click', () => {
-    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    html.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-    updateThemeIcon(next);
+    const next = html.dataset.theme === 'dark' ? 'light' : 'dark';
+    if (!document.startViewTransition || reducedMotion.matches) return setTheme(next, true);
+    // New theme wipes in as a circle from the button. Element transitions are
+    // paused so the "after" snapshot is the finished theme, not frame one of
+    // a 0.22s colour fade.
+    const r = themeToggle.getBoundingClientRect();
+    html.style.setProperty('--vt-x', `${r.left + r.width / 2}px`);
+    html.style.setProperty('--vt-y', `${r.top + r.height / 2}px`);
+    html.classList.add('theme-switching');
+    const vt = document.startViewTransition(() => setTheme(next, true));
+    vt.finished.finally(() => html.classList.remove('theme-switching'));
 });
 
-if (window.matchMedia) {
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-        if (!localStorage.getItem('theme')) {
-            const t = e.matches ? 'dark' : 'light';
-            html.setAttribute('data-theme', t);
-            updateThemeIcon(t);
-        }
-    });
-}
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    let saved = null;
+    try { saved = localStorage.getItem('theme'); } catch (err) {}
+    if (!saved) setTheme(e.matches ? 'dark' : 'light', false);
+});
 
 // ── Mobile Nav ───────────────────────────────
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('nav-links');
 
-// Create mobile overlay
 const overlay = document.createElement('div');
 overlay.className = 'mobile-overlay';
 document.body.appendChild(overlay);
 
 function toggleMenu() {
-    hamburger.classList.toggle('active');
-    navLinks.classList.toggle('open');
-    overlay.classList.toggle('active');
-    document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
+    const open = navLinks.classList.toggle('open');
+    hamburger.classList.toggle('active', open);
+    hamburger.setAttribute('aria-expanded', open);
+    overlay.classList.toggle('active', open);
+    document.body.style.overflow = open ? 'hidden' : '';
 }
 
 hamburger.addEventListener('click', toggleMenu);
@@ -70,41 +76,33 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
         const target = document.querySelector(href);
         if (!target) return;
         e.preventDefault();
-        const offset = 80;
-        const top = target.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top, behavior: 'smooth' });
+        const top = target.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
     });
 });
 
-// ── Navbar Hide/Show on Scroll ───────────────
+// ── Navbar hide/show, active link, back to top ─
 let lastScroll = 0;
 let ticking = false;
 const header = document.getElementById('header');
+const backToTop = document.getElementById('back-to-top');
+const sections = document.querySelectorAll('section[id]');
+const navAnchors = document.querySelectorAll('.nav-link');
 
 function onScroll() {
     const scrollY = window.scrollY;
 
-    // Add shadow when scrolled
     header.classList.toggle('scrolled', scrollY > 50);
+    if (scrollY > 300) header.classList.toggle('hidden', scrollY > lastScroll);
+    else header.classList.remove('hidden');
+    backToTop.classList.toggle('show', scrollY > 500);
 
-    // Hide/show on scroll direction
-    if (scrollY > 300) {
-        header.classList.toggle('hidden', scrollY > lastScroll);
-    } else {
-        header.classList.remove('hidden');
-    }
-
-    // Active nav link
-    const sections = document.querySelectorAll('section[id]');
     let current = '';
     sections.forEach(s => {
         const top = s.getBoundingClientRect().top;
-        if (top <= 120 && top + s.offsetHeight > 120) {
-            current = s.id;
-        }
+        if (top <= 120 && top + s.offsetHeight > 120) current = s.id;
     });
-
-    document.querySelectorAll('.nav-link').forEach(link => {
+    navAnchors.forEach(link => {
         link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
     });
 
@@ -116,32 +114,12 @@ window.addEventListener('scroll', () => {
     if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
 });
 
-// ── Cursor Glow ──────────────────────────────
-const cursorGlow = document.getElementById('cursor-glow');
-
-if (window.matchMedia('(hover: hover)').matches && cursorGlow) {
-    let mouseX = 0, mouseY = 0;
-    let glowX = 0, glowY = 0;
-
-    document.addEventListener('mousemove', e => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
-
-    function animateGlow() {
-        // Smooth lerp
-        glowX += (mouseX - glowX) * 0.12;
-        glowY += (mouseY - glowY) * 0.12;
-        cursorGlow.style.left = glowX + 'px';
-        cursorGlow.style.top = glowY + 'px';
-        requestAnimationFrame(animateGlow);
-    }
-
-    animateGlow();
-}
+backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+});
 
 // ── Scroll Reveal ────────────────────────────
-const revealObserver = new IntersectionObserver((entries) => {
+const revealObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add('visible');
@@ -151,58 +129,73 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
 document.addEventListener('DOMContentLoaded', () => {
-    const els = document.querySelectorAll(
-        '.exp-card, .featured-project, .project-tile, .about-grid, .contact-container'
-    );
-    els.forEach((el, i) => {
+    // --i staggers siblings by 40ms each: bullets settle in order rather
+    // than as one block.
+    document.querySelectorAll(
+        '.exp-card, .exp-points li, .featured-project, .project-tile, .about-grid, .awards, .contact-container'
+    ).forEach(el => {
+        el.style.setProperty('--i', [...el.parentElement.children].indexOf(el));
         el.classList.add('reveal');
-        el.style.transitionDelay = `${i * 80}ms`;
         revealObserver.observe(el);
     });
     hydrateShots(document);
     initProjectModal();
+    document.querySelectorAll('[data-more]').forEach(el => {
+        const n = (PROJECTS[el.dataset.more] || {}).shots?.length || 0;
+        if (n) el.textContent = `${n} screenshots`;
+    });
 });
 
-// ── Terminal Typing Animation ────────────────
-let typedCmd = document.getElementById('typed-cmd');
-let termOutput = document.getElementById('terminal-output');
-
+// ── Terminal ─────────────────────────────────
+// Replays real work instead of restating the hero. Output values are
+// illustrative; the PR count and the <1 °C figure are the real ones.
 const commands = [
     {
-        cmd: 'cat about.json',
+        cmd: 'gh pr list --author @me --state merged | wc -l',
         output: [
-            '<span class="out-bracket">{</span>',
-            '  <span class="out-key">"name"</span>: <span class="out-val">"Martin Wu"</span>,',
-            '  <span class="out-key">"role"</span>: <span class="out-val">"Embedded Systems & Software Engineer"</span>,',
-            '  <span class="out-key">"school"</span>: <span class="out-val">"University of British Columbia"</span>,',
-            '  <span class="out-key">"focus"</span>: <span class="out-val">["firmware", "orchestration", "full-stack"]</span>,',
-            '  <span class="out-key">"currently"</span>: <span class="out-val">"building cool stuff"</span>',
-            '<span class="out-bracket">}</span>'
-        ]
+            '<span class="out-dim"># UBC-Solar/firmware_v4</span>',
+            '<span class="out-val">6</span>',
+        ],
     },
     {
-        cmd: 'ls projects/',
+        cmd: 'cat /dev/mdi/pt1000',
         output: [
-            '<span class="out-val">songless/</span>          <span class="out-val">us/</span>',
-            '<span class="out-val">cascadia-firmware/</span>  <span class="out-val">useful-tool-hub/</span>'
-        ]
+            '<span class="out-fw">24.6 °C</span>  <span class="out-dim">MAX31865 · fault=none · verified ±1 °C</span>',
+        ],
     },
     {
-        cmd: 'echo $STATUS',
+        cmd: 'go run ./data-plane-local',
         output: [
-            '<span class="out-val">🚀 Building the future.</span>'
-        ]
-    }
+            '<span class="out-key">INTENT</span>  agent-7  read   orders',
+            '<span class="out-val">RESULT</span>  agent-7  read   orders   rows=42',
+            '<span class="out-fw">DENIED</span>  agent-7  write  payroll  <span class="out-dim">fail-closed</span>',
+        ],
+    },
 ];
 
+const heroTerminal = document.querySelector('.hero-terminal');
+const termBody = heroTerminal.querySelector('.terminal-body');
+const termTitle = heroTerminal.querySelector('.terminal-title');
+let typedCmd, termOutput;
 let cmdIndex = 0;
 let charIndex = 0;
-let isTyping = false;
 let currentTimeout = null;
+
+function resetTerminal() {
+    // Output above, live prompt below, like a real shell.
+    termBody.innerHTML = `
+        <div class="terminal-output"></div>
+        <div class="terminal-line">
+            <span class="prompt">$</span> <span class="cmd"></span><span class="cursor-blink">|</span>
+        </div>`;
+    typedCmd = termBody.querySelector('.cmd');
+    termOutput = termBody.querySelector('.terminal-output');
+    cmdIndex = 0;
+    charIndex = 0;
+}
 
 function typeCommand() {
     if (cmdIndex >= commands.length) {
-        // Loop back
         cmdIndex = 0;
         typedCmd.textContent = '';
         termOutput.innerHTML = '';
@@ -211,765 +204,184 @@ function typeCommand() {
     }
 
     const { cmd, output } = commands[cmdIndex];
-    isTyping = true;
 
     if (charIndex < cmd.length) {
-        typedCmd.textContent += cmd[charIndex];
-        charIndex++;
-        currentTimeout = setTimeout(typeCommand, 40 + Math.random() * 40);
-    } else {
-        // Finished typing command — show output
-        isTyping = false;
-        charIndex = 0;
-
-        const outputHtml = output.map(line =>
-            `<div class="out-line">${line}</div>`
-        ).join('');
-
-        // Build previous commands + new output
-        const prevHtml = termOutput.innerHTML;
-        const newBlock = `<div class="out-line" style="margin-bottom:4px"><span class="prompt">$</span> <span class="cmd">${cmd}</span></div>${outputHtml}<br>`;
-
-        termOutput.innerHTML = prevHtml + newBlock;
-        typedCmd.textContent = '';
-
-        cmdIndex++;
-
-        // Next command after pause
-        if (cmdIndex < commands.length) {
-            currentTimeout = setTimeout(typeCommand, 1500);
-        } else {
-            currentTimeout = setTimeout(typeCommand, 4000);
-        }
-    }
-}
-
-// Start terminal animation after hero loads
-setTimeout(typeCommand, 2000);
-
-// ── Terminal Window Buttons ──────────────────
-const heroTerminal = document.querySelector('.hero-terminal');
-const termClose = document.getElementById('term-close');
-const termMinimize = document.getElementById('term-minimize');
-const termMaximize = document.getElementById('term-maximize');
-const termTitle = document.querySelector('.terminal-title');
-
-// Red button — "crash" the terminal with a kernel panic, then reboot
-if (termClose) {
-    termClose.addEventListener('click', () => {
-        if (heroTerminal.classList.contains('crashed')) return;
-
-        // Stop the typing animation
-        clearTimeout(currentTimeout);
-        heroTerminal.classList.add('crashed');
-
-        // Glitch, then show crash screen
-        setTimeout(() => {
-            const termBody = heroTerminal.querySelector('.terminal-body');
-            const originalContent = termBody.innerHTML;
-
-            termBody.innerHTML = `
-                <div class="terminal-crash-screen">
-                    <span class="crash-header"> KERNEL PANIC </span><br>
-                    <span style="color:var(--lightest-slate)">fatal: not a git repository</span><br>
-                    Segmentation fault (core dumped)<br>
-                    <span style="opacity:0.6">Process terminated with exit code 139</span><br>
-                    <span style="opacity:0.6">Stack trace saved to /var/log/core.dump</span><br>
-                    <div class="terminal-reboot">Rebooting in 3s...</div>
-                </div>
-            `;
-
-            termTitle.textContent = '💀 martin@dev — PANIC';
-
-            // Countdown 3..2..1
-            let countdown = 3;
-            const countdownInterval = setInterval(() => {
-                countdown--;
-                const rebootEl = termBody.querySelector('.terminal-reboot');
-                if (rebootEl) {
-                    if (countdown > 0) {
-                        rebootEl.textContent = 'Rebooting in ' + countdown + 's...';
-                    } else {
-                        rebootEl.textContent = 'Rebooting...';
-                    }
-                }
-            }, 1000);
-
-            // Reboot after 3s
-            setTimeout(() => {
-                clearInterval(countdownInterval);
-                heroTerminal.classList.remove('crashed');
-                termTitle.textContent = 'martin@dev ~';
-
-                // Reset terminal state
-                termBody.innerHTML = `
-                    <div class="terminal-line">
-                        <span class="prompt">$</span> <span class="cmd" id="typed-cmd"></span><span class="cursor-blink">|</span>
-                    </div>
-                    <div class="terminal-output" id="terminal-output"></div>
-                `;
-
-                // Re-bind references and restart typing
-                const newTypedCmd = document.getElementById('typed-cmd');
-                const newTermOutput = document.getElementById('terminal-output');
-                // Patch global refs
-                Object.defineProperty(window, '_typedCmd', { value: newTypedCmd, writable: true });
-                Object.defineProperty(window, '_termOutput', { value: newTermOutput, writable: true });
-                typedCmd = newTypedCmd;
-                termOutput = newTermOutput;
-
-                cmdIndex = 0;
-                charIndex = 0;
-                currentTimeout = setTimeout(typeCommand, 800);
-            }, 3500);
-        }, 450);
-    });
-}
-
-// Yellow button — minimize / restore terminal body (hero only)
-if (termMinimize) {
-    termMinimize.addEventListener('click', () => {
-        heroTerminal.classList.remove('maximized');
-        heroTerminal.classList.toggle('minimized');
-    });
-}
-
-// Green button — open fullscreen interactive terminal
-if (termMaximize) {
-    termMaximize.addEventListener('click', () => {
-        heroTerminal.classList.remove('minimized');
-        openFullscreenTerminal();
-    });
-}
-
-// ── Shared terminal state for PIP persistence ──
-let activeFsBody = null; // holds the body element across fullscreen/pip transitions
-
-function openFullscreenTerminal(existingBody) {
-    // Don't open twice
-    if (document.querySelector('.terminal-fullscreen-overlay')) return;
-    // Close any existing PIP first (without animation delay)
-    const existingPip = document.querySelector('.terminal-pip');
-    if (existingPip) existingPip.remove();
-
-    const fsOverlay = document.createElement('div');
-    fsOverlay.className = 'terminal-fullscreen-overlay';
-
-    const fsTerminal = document.createElement('div');
-    fsTerminal.className = 'terminal-fullscreen';
-
-    // Header with working dots (red = close, yellow = pip, green = disabled in fullscreen)
-    const fsHeader = document.createElement('div');
-    fsHeader.className = 'terminal-header';
-    fsHeader.innerHTML = `
-        <div class="terminal-dots">
-            <span class="terminal-dot fs-close" style="background:#ff5f56;opacity:0.8;cursor:pointer">
-                <svg viewBox="0 0 12 12"><path d="M3.5 3.5l5 5M8.5 3.5l-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            </span>
-            <span class="terminal-dot fs-minimize" style="background:#ffbd2e;opacity:0.8;cursor:pointer">
-                <svg viewBox="0 0 12 12"><path d="M2.5 6h7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            </span>
-            <span class="terminal-dot" style="background:#27c93f;opacity:0.8">
-                <svg viewBox="0 0 12 12"><path d="M2 10L5 7M7 5l3-3M7.5 2H10v2.5M4.5 10H2V7.5" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-        </div>
-        <span class="terminal-title mono">martin@dev ~ (interactive)</span>
-    `;
-
-    // Use existing body (from PIP) or create a new one
-    let fsBody;
-    if (existingBody) {
-        fsBody = existingBody;
-        fsBody.className = 'fs-term-body';
-    } else {
-        fsBody = document.createElement('div');
-        fsBody.className = 'fs-term-body';
-        fsBody.innerHTML = `
-            <div class="fs-output-line" style="color:var(--accent)">Welcome to Martin's interactive terminal!</div>
-            <div class="fs-output-line" style="color:var(--slate)">Type 'help' for available commands.</div>
-            <div class="fs-output-line">&nbsp;</div>
-        `;
-    }
-    activeFsBody = fsBody;
-
-    fsTerminal.appendChild(fsHeader);
-    fsTerminal.appendChild(fsBody);
-    fsOverlay.appendChild(fsTerminal);
-    document.body.appendChild(fsOverlay);
-    document.body.style.overflow = 'hidden';
-
-    // Create input line if body is fresh or has no active input
-    if (!fsBody.querySelector('.fs-input-line:last-child .fs-input:not([disabled])')) {
-        createFsInputLine(fsBody);
-    } else {
-        // Re-focus existing input
-        setTimeout(() => {
-            const inp = fsBody.querySelector('.fs-input-line:last-child .fs-input');
-            if (inp) inp.focus();
-        }, 100);
+        typedCmd.textContent += cmd[charIndex++];
+        currentTimeout = setTimeout(typeCommand, 35 + Math.random() * 35);
+        return;
     }
 
-    // Scroll to bottom
-    setTimeout(() => { fsBody.scrollTop = fsBody.scrollHeight; }, 100);
-
-    // Close on red dot
-    fsHeader.querySelector('.fs-close').addEventListener('click', () => closeFsTerminal(fsOverlay));
-
-    // Minimize to PIP on yellow dot
-    fsHeader.querySelector('.fs-minimize').addEventListener('click', () => {
-        minimizeToPip(fsOverlay);
-    });
-
-    // Click overlay background to close
-    fsOverlay.addEventListener('click', (e) => {
-        if (e.target === fsOverlay) closeFsTerminal(fsOverlay);
-    });
-
-    // Escape to close
-    const escHandler = (e) => {
-        if (e.key === 'Escape') {
-            closeFsTerminal(fsOverlay);
-            document.removeEventListener('keydown', escHandler);
-        }
-    };
-    document.addEventListener('keydown', escHandler);
+    charIndex = 0;
+    const lines = output.map(line => `<div class="out-line">${line}</div>`).join('');
+    termOutput.insertAdjacentHTML('beforeend',
+        `<div class="out-line out-cmd"><span class="prompt">$</span> <span class="cmd">${cmd}</span></div>${lines}<br>`);
+    // Keep the newest line in view inside the fixed-height body.
+    termBody.scrollTop = termBody.scrollHeight;
+    typedCmd.textContent = '';
+    cmdIndex++;
+    currentTimeout = setTimeout(typeCommand, cmdIndex < commands.length ? 1500 : 4000);
 }
 
-function closeFsTerminal(fsOverlay) {
-    if (fsOverlay.classList.contains('closing')) return;
-
-    const fsTerm = fsOverlay.querySelector('.terminal-fullscreen');
-    if (fsTerm) fsTerm.classList.add('closing');
-    fsOverlay.classList.add('closing');
-
-    // Wait for both animations to finish
-    const cleanup = () => {
-        fsOverlay.remove();
-        document.body.style.overflow = '';
-        activeFsBody = null;
-    };
-    fsOverlay.addEventListener('animationend', cleanup, { once: true });
-    // Fallback in case animationend doesn't fire
-    setTimeout(cleanup, 400);
+resetTerminal();
+if (reducedMotion.matches) {
+    // No typing: show the finished session.
+    termOutput.innerHTML = commands.map(({ cmd, output }) =>
+        `<div class="out-line out-cmd"><span class="prompt">$</span> <span class="cmd">${cmd}</span></div>` +
+        output.map(line => `<div class="out-line">${line}</div>`).join('') + '<br>').join('');
+} else {
+    currentTimeout = setTimeout(typeCommand, 1600);
 }
 
-function minimizeToPip(fsOverlay) {
-    // Grab the body element before removing overlay
-    const fsBody = fsOverlay.querySelector('.fs-term-body');
-    if (!fsBody) return;
+// Red button: kernel panic, then reboot.
+document.getElementById('term-close').addEventListener('click', () => {
+    if (heroTerminal.classList.contains('crashed')) return;
+    clearTimeout(currentTimeout);
+    heroTerminal.classList.add('crashed');
 
-    // Detach body from fullscreen so it doesn't get destroyed
-    fsBody.remove();
-
-    // Close fullscreen overlay smoothly
-    const fsTerm = fsOverlay.querySelector('.terminal-fullscreen');
-    if (fsTerm) fsTerm.classList.add('closing');
-    fsOverlay.classList.add('closing');
-
-    const cleanup = () => {
-        fsOverlay.remove();
-        document.body.style.overflow = '';
-    };
-    fsOverlay.addEventListener('animationend', cleanup, { once: true });
-    setTimeout(cleanup, 400);
-
-    // Create PIP widget
-    createPipTerminal(fsBody);
-}
-
-function createPipTerminal(fsBody) {
-    // Remove any existing pip
-    const existing = document.querySelector('.terminal-pip');
-    if (existing) existing.remove();
-
-    const pip = document.createElement('div');
-    pip.className = 'terminal-pip';
-
-    // PIP header — only red (close) and green (expand)
-    const pipHeader = document.createElement('div');
-    pipHeader.className = 'terminal-header';
-    pipHeader.innerHTML = `
-        <div class="terminal-dots">
-            <span class="terminal-dot pip-close" style="background:#ff5f56;opacity:0.8;cursor:pointer">
-                <svg viewBox="0 0 12 12"><path d="M3.5 3.5l5 5M8.5 3.5l-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            </span>
-            <span class="terminal-dot pip-expand" style="background:#27c93f;opacity:0.8;cursor:pointer">
-                <svg viewBox="0 0 12 12"><path d="M2 10L5 7M7 5l3-3M7.5 2H10v2.5M4.5 10H2V7.5" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-        </div>
-        <span class="terminal-title mono" style="font-size:10px">terminal (mini)</span>
-    `;
-
-    // Reuse the body
-    fsBody.className = 'fs-term-body';
-    activeFsBody = fsBody;
-
-    pip.appendChild(pipHeader);
-    pip.appendChild(fsBody);
-    document.body.appendChild(pip);
-
-    // Scroll to bottom
-    setTimeout(() => { fsBody.scrollTop = fsBody.scrollHeight; }, 100);
-
-    // Re-focus input
     setTimeout(() => {
-        const inp = fsBody.querySelector('.fs-input-line:last-child .fs-input:not([disabled])');
-        if (inp) inp.focus();
-    }, 150);
+        termBody.innerHTML = `
+            <div class="terminal-crash-screen">
+                <span class="crash-header"> KERNEL PANIC </span><br>
+                HardFault_Handler: stacking error<br>
+                <span style="opacity:0.6">watchdog reset in 3s...</span>
+                <div class="terminal-reboot">Rebooting in 3s...</div>
+            </div>`;
+        termTitle.textContent = 'martin@dev — PANIC';
 
-    // Red dot — close PIP entirely
-    pipHeader.querySelector('.pip-close').addEventListener('click', () => {
-        pip.classList.add('closing');
+        let countdown = 3;
+        const tick = setInterval(() => {
+            countdown--;
+            const el = termBody.querySelector('.terminal-reboot');
+            if (el) el.textContent = countdown > 0 ? `Rebooting in ${countdown}s...` : 'Rebooting...';
+        }, 1000);
+
         setTimeout(() => {
-            pip.remove();
-            activeFsBody = null;
-        }, 300);
-    });
+            clearInterval(tick);
+            heroTerminal.classList.remove('crashed');
+            termTitle.textContent = 'martin@dev ~';
+            resetTerminal();
+            currentTimeout = setTimeout(typeCommand, 800);
+        }, 3500);
+    }, 450);
+});
 
-    // Green dot — expand back to fullscreen
-    pipHeader.querySelector('.pip-expand').addEventListener('click', () => {
-        fsBody.remove();
-        pip.remove();
-        openFullscreenTerminal(fsBody);
-    });
-
-    // Make PIP draggable by header
-    makeDraggable(pip, pipHeader);
-}
-
-function makeDraggable(element, handle) {
-    let isDragging = false;
-    let startX, startY, startLeft, startTop;
-
-    handle.addEventListener('mousedown', (e) => {
-        // Don't drag if clicking a dot button
-        if (e.target.closest('.terminal-dot')) return;
-
-        isDragging = true;
-        const rect = element.getBoundingClientRect();
-        startX = e.clientX;
-        startY = e.clientY;
-        startLeft = rect.left;
-        startTop = rect.top;
-
-        // Switch to absolute positioning for dragging
-        element.style.right = 'auto';
-        element.style.bottom = 'auto';
-        element.style.left = startLeft + 'px';
-        element.style.top = startTop + 'px';
-
-        e.preventDefault();
-    });
-
-    document.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        const dx = e.clientX - startX;
-        const dy = e.clientY - startY;
-        element.style.left = (startLeft + dx) + 'px';
-        element.style.top = (startTop + dy) + 'px';
-    });
-
-    document.addEventListener('mouseup', () => {
-        isDragging = false;
-    });
-}
-
-function createFsInputLine(body) {
-    const lineDiv = document.createElement('div');
-    lineDiv.className = 'fs-input-line';
-    lineDiv.innerHTML = '<span class="prompt">$</span>';
-
-    const input = document.createElement('input');
-    input.className = 'fs-input';
-    input.setAttribute('spellcheck', 'false');
-    input.setAttribute('autocomplete', 'off');
-
-    lineDiv.appendChild(input);
-    body.appendChild(lineDiv);
-
-    // Focus
-    setTimeout(() => input.focus(), 50);
-
-    // Click anywhere in body to focus
-    body.addEventListener('click', () => {
-        const activeInput = body.querySelector('.fs-input-line:last-child .fs-input');
-        if (activeInput) activeInput.focus();
-    });
-
-    input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            const cmd = input.value.trim();
-            input.disabled = true;
-
-            // Replace input line with static text
-            lineDiv.innerHTML = `<span class="prompt">$</span> <span style="color:var(--lightest-slate)">${escapeHtmlStr(cmd)}</span>`;
-
-            // Process command
-            const output = processFsCommand(cmd);
-
-            if (output === '%%CLEAR%%') {
-                body.innerHTML = '';
-            } else if (output === '%%EXIT%%') {
-                const fsOverlay = body.closest('.terminal-fullscreen-overlay');
-                const pipEl = body.closest('.terminal-pip');
-                if (fsOverlay) closeFsTerminal(fsOverlay);
-                else if (pipEl) {
-                    pipEl.classList.add('closing');
-                    setTimeout(() => { pipEl.remove(); activeFsBody = null; }, 300);
-                }
-                return;
-            } else if (output !== null) {
-                const outDiv = document.createElement('div');
-                outDiv.className = 'fs-output-line';
-                outDiv.innerHTML = output;
-                body.appendChild(outDiv);
-            }
-
-            // Add blank line
-            const spacer = document.createElement('div');
-            spacer.className = 'fs-output-line';
-            spacer.innerHTML = '&nbsp;';
-            body.appendChild(spacer);
-
-            // New input line
-            createFsInputLine(body);
-
-            // Scroll to bottom
-            body.scrollTop = body.scrollHeight;
-        }
-    });
-}
+// Yellow button: minimize / restore the body.
+document.getElementById('term-minimize').addEventListener('click', () => {
+    heroTerminal.classList.toggle('minimized');
+});
 
 function escapeHtmlStr(str) {
     const div = document.createElement('div');
     div.textContent = str;
-    return div.innerHTML;
+    // textContent -> innerHTML escapes < > &, but not quotes. This value is
+    // interpolated into attributes (data-alt="..."), so a caption containing a
+    // double quote would break out of the attribute without this.
+    return div.innerHTML.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
-
-function processFsCommand(cmd) {
-    const lower = cmd.toLowerCase().trim();
-
-    if (!lower) return null;
-
-    const responses = {
-        'help': `<span style="color:var(--accent)">Available commands:</span>
-  <span style="color:var(--lightest-slate)">about</span>       — who am I
-  <span style="color:var(--lightest-slate)">skills</span>      — tech stack
-  <span style="color:var(--lightest-slate)">projects</span>    — my projects
-  <span style="color:var(--lightest-slate)">contact</span>     — reach me
-  <span style="color:var(--lightest-slate)">socials</span>     — links
-  <span style="color:var(--lightest-slate)">whoami</span>      — current user
-  <span style="color:var(--lightest-slate)">date</span>        — current date
-  <span style="color:var(--lightest-slate)">echo [msg]</span>  — echo a message
-  <span style="color:var(--lightest-slate)">neofetch</span>    — system info
-  <span style="color:var(--lightest-slate)">clear</span>       — clear terminal
-  <span style="color:var(--lightest-slate)">exit</span>        — close terminal`,
-
-        'about': `<span style="color:var(--accent)">{</span>
-  <span style="color:var(--accent)">"name"</span>: <span style="color:var(--lightest-slate)">"Martin Wu"</span>,
-  <span style="color:var(--accent)">"role"</span>: <span style="color:var(--lightest-slate)">"Embedded Systems & Software Engineer"</span>,
-  <span style="color:var(--accent)">"school"</span>: <span style="color:var(--lightest-slate)">"University of British Columbia"</span>,
-  <span style="color:var(--accent)">"focus"</span>: <span style="color:var(--lightest-slate)">["firmware", "orchestration", "full-stack"]</span>
-<span style="color:var(--accent)">}</span>`,
-
-        'skills': `<span style="color:var(--accent)">Languages:</span>  C/C++, Go, Python, TypeScript
-<span style="color:var(--accent)">Embedded:</span>  STM32, FreeRTOS, SPI, CAN
-<span style="color:var(--accent)">Software:</span>   gRPC, React, Git, Docker`,
-
-        'projects': `<span style="color:var(--lightest-slate)">songless/</span>             100k+ visits, R2 audio
-<span style="color:var(--lightest-slate)">us/</span>                   Phaser 4 story game
-<span style="color:var(--lightest-slate)">cascadia-firmware/</span>    UBC Solar MDI / STR
-<span style="color:var(--lightest-slate)">useful-tool-hub/</span>      10 in-browser tools
-<span style="color:var(--lightest-slate)">nutritracker/</span>         USDA nutrient tracker`,
-
-        'contact': `<span style="color:var(--accent)">Email:</span>    martinwu500@gmail.com
-<span style="color:var(--accent)">Phone:</span>    (236) 518-9477
-<span style="color:var(--accent)">Location:</span> Vancouver, BC`,
-
-        'socials': `<span style="color:var(--accent)">GitHub:</span>   <a href="https://github.com/martinw500" target="_blank" style="color:var(--lightest-slate)">github.com/martinw500</a>
-<span style="color:var(--accent)">LinkedIn:</span> <a href="https://www.linkedin.com/in/martinwuu/" target="_blank" style="color:var(--lightest-slate)">linkedin.com/in/martinwuu</a>`,
-
-        'whoami': '<span style="color:var(--lightest-slate)">martin</span>',
-
-        'date': `<span style="color:var(--lightest-slate)">${new Date().toLocaleString()}</span>`,
-
-        'neofetch': `<span style="color:var(--accent)">        .--.        </span>  <span style="color:var(--accent)">martin</span>@<span style="color:var(--accent)">dev</span>
-<span style="color:var(--accent)">       |o_o |       </span>  <span style="color:var(--accent)">OS:</span>     Portfolio v2.0
-<span style="color:var(--accent)">       |:_/ |       </span>  <span style="color:var(--accent)">Shell:</span>  martin.js
-<span style="color:var(--accent)">      //   \\ \\      </span>  <span style="color:var(--accent)">Theme:</span>  ${document.documentElement.getAttribute('data-theme')}
-<span style="color:var(--accent)">     (|     | )     </span>  <span style="color:var(--accent)">Stack:</span>  C, Python, JS
-<span style="color:var(--accent)">    /'\\_   _/\`\\    </span>  <span style="color:var(--accent)">Uptime:</span> ${Math.floor((Date.now() - performance.timeOrigin) / 1000)}s
-<span style="color:var(--accent)">    \\___)=(___/     </span>`,
-    };
-
-    if (lower === 'clear') return '%%CLEAR%%';
-    if (lower === 'exit') return '%%EXIT%%';
-    if (lower.startsWith('echo ')) {
-        return `<span style="color:var(--lightest-slate)">${escapeHtmlStr(cmd.slice(5))}</span>`;
-    }
-    if (lower === 'echo') return '';
-    if (lower === 'sudo rm -rf /') {
-        return '<span style="color:#ff5f56">Nice try 😏</span>';
-    }
-
-    if (responses[lower]) return responses[lower];
-
-    return `<span style="color:#ff5f56">command not found: ${escapeHtmlStr(cmd)}</span>\n<span style="color:var(--slate)">Type 'help' for available commands.</span>`;
-}
-
-// ── Back to Top ──────────────────────────────
-const backToTop = document.createElement('button');
-backToTop.innerHTML = '<i class="fas fa-arrow-up"></i>';
-backToTop.className = 'back-to-top';
-backToTop.setAttribute('aria-label', 'Back to top');
-backToTop.style.cssText = `
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    width: 42px;
-    height: 42px;
-    border-radius: 4px;
-    border: 1px solid var(--accent);
-    background: var(--bg-light);
-    color: var(--accent);
-    font-size: 16px;
-    cursor: pointer;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 50;
-    transition: all 0.25s ease;
-`;
-
-document.body.appendChild(backToTop);
-
-backToTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-window.addEventListener('scroll', () => {
-    backToTop.style.display = window.scrollY > 500 ? 'flex' : 'none';
-});
 
 // ── Console Easter Egg ───────────────────────
 console.log(
     '%c Hey! 👋',
-    'color: #64ffda; font-size: 20px; font-weight: bold; font-family: monospace;'
+    'color: #E0A32E; font-size: 20px; font-weight: bold; font-family: monospace;'
 );
 console.log(
     '%c Curious about the code? Check it out: https://github.com/martinw500/portfolio',
-    'color: #8892b0; font-size: 13px; font-family: monospace;'
+    'color: #A39A8F; font-size: 13px; font-family: monospace;'
 );
-
-// ── Contact Form ─────────────────────────────
-const contactForm = document.querySelector('.contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-
-        const formData = new FormData(this);
-        const submitBtn = this.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-
-        // Validation
-        if (!formData.get('name') || !formData.get('email') || !formData.get('subject') || !formData.get('message')) {
-            showNotification('Please fill in all fields.', 'error');
-            return;
-        }
-
-        if (!isValidEmail(formData.get('email'))) {
-            showNotification('Please enter a valid email address.', 'error');
-            return;
-        }
-
-        // Loading state
-        submitBtn.textContent = 'Sending...';
-        submitBtn.disabled = true;
-
-        try {
-            const response = await fetch(this.action, {
-                method: 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
-            });
-
-            if (response.ok) {
-                showNotification('Message sent! I\'ll get back to you soon.', 'success');
-                this.reset();
-            } else {
-                showNotification('Oops! Something went wrong. Please try again.', 'error');
-            }
-        } catch (error) {
-            showNotification('Network error. Please check your connection.', 'error');
-        } finally {
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        }
-    });
-}
-
-function isValidEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-function showNotification(message, type = 'info') {
-    // Remove existing
-    const existing = document.querySelector('.notification');
-    if (existing) existing.remove();
-
-    const notif = document.createElement('div');
-    notif.className = `notification notification-${type}`;
-    notif.innerHTML = `
-        <span>${message}</span>
-        <button class="notif-close">&times;</button>
-    `;
-
-    const colors = {
-        success: { bg: '#10b981', border: '#065f46' },
-        error: { bg: '#ef4444', border: '#991b1b' },
-        info: { bg: '#3b82f6', border: '#1e40af' }
-    };
-
-    const color = colors[type] || colors.info;
-
-    notif.style.cssText = `
-        position: fixed;
-        top: 90px;
-        right: 20px;
-        padding: 16px 20px;
-        background: ${color.bg};
-        color: white;
-        border: 2px solid ${color.border};
-        border-radius: 4px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        z-index: 10000;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        max-width: 350px;
-        font-size: 14px;
-        animation: slideInNotif 0.4s ease;
-    `;
-
-    document.body.appendChild(notif);
-
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes slideInNotif {
-            from { transform: translateX(400px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes slideOutNotif {
-            to { transform: translateX(400px); opacity: 0; }
-        }
-        .notif-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            padding: 0;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    `;
-    document.head.appendChild(style);
-
-    const closeBtn = notif.querySelector('.notif-close');
-    closeBtn.addEventListener('click', () => {
-        notif.style.animation = 'slideOutNotif 0.3s ease forwards';
-        setTimeout(() => notif.remove(), 300);
-    });
-
-    setTimeout(() => {
-        if (notif.parentNode) {
-            notif.style.animation = 'slideOutNotif 0.3s ease forwards';
-            setTimeout(() => notif.remove(), 300);
-        }
-    }, 5000);
-}
 
 // ── Project modal ────────────────────────────
 const PROJECTS = {
     songless: {
         title: 'Songless',
-        overline: 'Featured · 100k+ visits',
+        overline: '100k+ visits',
         github: 'https://github.com/martinw500/songless',
         live: 'https://songless-zeta.vercel.app',
         tech: ['React', 'TypeScript', 'Vite', 'Cloudflare R2', 'Web Audio'],
-        shots: ['songless-cover.png', 'songless-1.png', 'songless-2.png', 'songless-3.png'],
+        shots: [
+            { src: 'songless-cover.png', caption: 'Five difficulty pools decide how much of the intro you hear. The clip grows each time you miss.' },
+            { src: 'songless-1.png', caption: 'Search matches aliases as well as titles, so a half-remembered name still finds the track.' },
+            { src: 'songless-2.png', caption: 'Filters narrow the pool by era and genre, and the count updates before you commit to a mix.' },
+            { src: 'songless-3.png', caption: 'Harder pools start from shorter clues. Expert opens on a hundredth of a second.' },
+        ],
         body: [
-            'Guess the song from a growing intro clip. After a win or a full miss, the complete track streams from R2 — Vercel only serves the app and a small catalogue JSON.',
+            'A music guessing game with 100k+ visits. You hear a sliver of a song intro and name it; each miss buys you a longer clip. After a win or a full miss, the complete track streams from R2. Vercel only serves the app and a small catalogue JSON.',
         ],
         points: [
-            'Stage-locked Web Audio clues (0.01s–15s). Timeline and enabled stages stay in sync; play locks the round so the clip cannot be mutated mid-guess.',
-            'Clue MP3s are compact; the full 128 kbps master is fetched only on reveal. Decoded audio is LRU-cached (3 songs) so a long session does not keep the library in RAM.',
-            'Upload path audits YouTube sources, strips digital silence, encodes, and refuses a batch that would exceed an 8.5 GB R2 cap.',
+            'Stage-locked Web Audio clues (0.01s–15s). Playing locks the round, so the clip cannot change mid-guess.',
+            'Clue MP3s are small; the full 128 kbps master is fetched only on reveal. Decoded audio is LRU-cached (3 songs) so a long session does not hold the library in RAM.',
+            'The upload pipeline audits YouTube sources, strips digital silence, encodes, and refuses a batch that would exceed an 8.5 GB R2 cap.',
             'Five difficulty pools, searchable aliases, 120-song live catalogue.',
         ],
     },
     us: {
         title: 'Us',
-        overline: 'Featured',
-        github: 'https://github.com/martinw500/larissa-game',
+        overline: '15+ scenes · playable end to end',
         live: 'https://martinw500.github.io/larissa-game/',
         tech: ['Phaser 4', 'TypeScript', 'Vite', 'Playwright'],
-        shots: ['us-cover.png', 'us-1.png', 'us-2.png', 'us-3.png'],
+        shots: [
+            { src: 'us-cover.png', caption: 'Title screen. The polaroids are art from scenes further in, so the menu previews where the story goes.' },
+            { src: 'us-1.png', caption: 'It opens on a lock screen. One Instagram notification at 1:07am is the whole inciting incident.' },
+            { src: 'us-2.png', caption: 'The Pit, party night. Lit floor panels, a mirror ball and a crowd of NPCs.' },
+            { src: 'us-3.png', caption: 'The drive home is its own view: dashboard, windshield, and the drinks on the console.' },
+            { src: 'us-4.png', caption: 'Inside Molly Tea. Order and pickup are interaction points, flagged with the prompt marker used across the game.' },
+            { src: 'us-5.png', caption: 'Dinner at Hestia. Warm interior lighting against the daylight exteriors.' },
+            { src: 'us-6.png', caption: 'The confession. E advances a line, Q rewinds to one you have already read.' },
+        ],
         body: [
-            'A full browser story game: 15+ scenes, save/fast-travel, dialogue with rewind, audio buses, and a first-run tutorial. Pokémon Gen 3 scale and outlines; the maps are real UBC and Vancouver places, not a Pokémon town.',
+            'A full browser story game: 15+ scenes, save and fast travel, dialogue with rewind, audio buses, and a first-run tutorial. Gen 3 Pokémon scale and outlines; the maps are real UBC and Vancouver places.',
         ],
         points: [
-            'Shared BaseScene for collision, interaction, menus, and discovery-gated travel.',
-            'Procedural venue art plus cropped sheets; Playwright films assert lighting, walk cycles, and collision so a scene cannot silently regress.',
+            'A shared BaseScene handles collision, interaction, menus and discovery-gated travel.',
+            'Playwright tests assert lighting, walk cycles and collision, so a scene cannot silently regress.',
             'Keyboard-first on desktop, D-pad + A on touch, one cog menu. Playable end to end.',
         ],
     },
     uth: {
         title: 'Useful Tool Hub',
-        overline: 'Other',
+        overline: 'Ten tools, no accounts',
         github: 'https://github.com/martinw500/UTH',
         live: 'https://martinw500.github.io/UTH/',
         tech: ['JavaScript', 'Python', 'Vercel'],
-        shots: ['uth-1.png', 'uth-2.png'],
+        shots: [
+            { src: 'uth-1.png', caption: 'Ten tools in one page, grouped by what they do. The "On device" badge marks the ones that never upload your file.' },
+            { src: 'uth-2.png', caption: 'File conversion running in the browser through Canvas and FFmpeg.wasm. Nothing leaves the machine.' },
+        ],
         body: [
-            'A set of tools I actually use. Convert/edit/QR/PDF run in the browser (Canvas, FFmpeg.wasm). YouTube and Instagram downloaders hit Vercel Python.',
+            'Ten small utilities in one page, the ones I actually use. Convert, edit, QR and PDF run in the browser (Canvas, FFmpeg.wasm). The YouTube and Instagram downloaders call Vercel Python functions.',
         ],
         points: [
-            'Ten tools, no accounts.',
             'On-device converters never upload the file.',
         ],
     },
     nutritracker: {
         title: 'NutriTracker',
-        overline: 'Other',
+        overline: 'In progress',
         github: 'https://github.com/martinw500/Nutritracker',
         live: 'https://nutritracker-mocha.vercel.app',
         tech: ['TypeScript', 'Postgres', 'USDA FDC'],
-        shots: ['nutritracker-1.png', 'nutritracker-2.png'],
+        shots: [
+            { src: 'nutritracker-1.png', caption: 'The daily view scores intake against estimated need and flags which of the 59 tracked nutrients are short.' },
+            { src: 'nutritracker-2.png', caption: 'Macronutrients are shown as acceptable ranges rather than single targets, because that is how the reference data is actually published.' },
+        ],
         body: [
-            'Tracks 59 micronutrient and phytonutrient values against USDA FoodData Central. Photo logging is designed so a model only names the food — nutrient numbers come from the database, never from the model.',
+            'A nutrition tracker that scores meals on 59 micronutrients and phytonutrients from USDA FoodData Central. Photo logging is designed so a model only names the food; nutrient numbers come from the database, never from the model.',
         ],
         points: [
-            'UI runs off labeled demo fixtures today; Postgres/auth foundation is in place.',
+            'Status: the interface runs on labelled demo data while the Postgres and auth foundation is finished.',
             'No composite “health scores.” Claims carry an evidence tier.',
         ],
     },
     haar: {
         title: 'Haar Wavelet Compressor',
-        overline: 'Other',
+        overline: 'NumPy, no codec library',
         github: 'https://github.com/martinw500/Haar-Wavelet-Image-Compressor',
         live: '',
         tech: ['Python', 'NumPy'],
-        shots: ['haar-1.png', 'haar-2.png'],
+        shots: [],
         body: [
-            'Lossy RGB compression with a Haar wavelet on each channel. Threshold and iteration sliders, live preview.',
+            'An image compressor built from the Haar wavelet transform, applied per RGB channel as matrix operations in NumPy. Threshold and iteration sliders with a live preview.',
         ],
-        points: [
-            'Matrix ops in NumPy, not a black-box codec wrapper.',
-        ],
+        points: [],
     },
 };
 
@@ -977,68 +389,69 @@ function hydrateShots(root) {
     root.querySelectorAll('.shot[data-shot]').forEach(el => {
         if (el.dataset.hydrated) return;
         el.dataset.hydrated = '1';
-        const src = el.dataset.shot;
-        const label = el.dataset.label || src.split('/').pop();
-        el.dataset.label = label;
         el.classList.add('is-empty');
         const img = new Image();
-        img.alt = label;
+        img.alt = el.dataset.alt || '';
         img.onload = () => {
             el.classList.remove('is-empty');
             el.classList.add('has-image');
             el.appendChild(img);
         };
-        img.src = src;
+        img.src = el.dataset.shot;
     });
 }
 
-function shotMarkup(filename) {
-    const src = `assets/projects/${filename}`;
-    return `<div class="shot is-empty" data-shot="${src}" data-label="${filename}"></div>`;
+function shotMarkup(shot) {
+    // The caption doubles as the image's alt text: one description, written once.
+    return `<figure class="pm-figure">
+        <div class="shot is-empty" data-shot="assets/projects/${shot.src}" data-alt="${escapeHtmlStr(shot.caption)}"></div>
+        <figcaption class="pm-figcaption">${escapeHtmlStr(shot.caption)}</figcaption>
+    </figure>`;
 }
 
 function renderProject(id) {
     const p = PROJECTS[id];
-    if (!p) return '';
     const links = [
-        p.github ? `<a href="${p.github}" target="_blank" rel="noopener">GitHub</a>` : '',
-        p.live ? `<a href="${p.live}" target="_blank" rel="noopener">Live</a>` : '',
-    ].filter(Boolean).join('');
+        p.live ? `<a href="${p.live}" target="_blank" rel="noopener">Live ↗</a>` : '',
+        p.github ? `<a href="${p.github}" target="_blank" rel="noopener">Code ↗</a>` : '',
+    ].join('');
     return `
         <p class="pm-overline mono">${p.overline}</p>
         <h2 class="pm-title" id="project-modal-title">${p.title}</h2>
         <ul class="pm-tech">${p.tech.map(t => `<li>${t}</li>`).join('')}</ul>
-        <div class="pm-links">${links}</div>
+        <div class="pm-links mono">${links}</div>
         <div class="pm-body">${p.body.map(t => `<p>${t}</p>`).join('')}</div>
-        <ul class="pm-points">${p.points.map(t => `<li>${t}</li>`).join('')}</ul>
-        <div class="pm-shots">${p.shots.map(shotMarkup).join('')}</div>
-        <p class="pm-hint">Screenshots: drop files into <span class="mono">assets/projects/</span> using the names on the empty frames.</p>
+        ${p.points.length ? `<ul class="pm-points">${p.points.map(t => `<li>${t}</li>`).join('')}</ul>` : ''}
+        ${p.shots.length ? `<div class="pm-shots">${p.shots.map(shotMarkup).join('')}</div>` : ''}
     `;
 }
 
 function initProjectModal() {
     const modal = document.getElementById('project-modal');
     const body = document.getElementById('project-modal-body');
-    if (!modal || !body) return;
 
     function openProject(id, pushHash) {
         if (!PROJECTS[id]) return;
         body.innerHTML = renderProject(id);
         hydrateShots(body);
-        modal.hidden = false;
+        if (!modal.open) modal.showModal();
+        modal.querySelector('.project-modal-panel').scrollTop = 0;
         document.body.classList.add('modal-open');
-        if (pushHash) {
-            history.pushState({ project: id }, '', `#project/${id}`);
-        }
+        if (pushHash) history.pushState({ project: id }, '', `#project/${id}`);
     }
 
-    function closeProject() {
-        modal.hidden = true;
+    // Runs on every close path: the × button, Esc, a backdrop click, Back.
+    modal.addEventListener('close', () => {
         document.body.classList.remove('modal-open');
+        // Locking body scroll for the modal moves the page, so the scroll
+        // handler wakes up comparing against a stale offset and decides you
+        // scrolled down, leaving the nav parked off-screen. Resync it.
+        lastScroll = window.scrollY;
+        header.classList.remove('hidden');
         if (location.hash.startsWith('#project/')) {
             history.pushState({}, '', location.pathname + location.search);
         }
-    }
+    });
 
     document.querySelectorAll('[data-project]').forEach(card => {
         const open = () => openProject(card.dataset.project, true);
@@ -1047,6 +460,7 @@ function initProjectModal() {
             open();
         });
         card.addEventListener('keydown', e => {
+            if (e.target !== card) return;
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 open();
@@ -1054,21 +468,17 @@ function initProjectModal() {
         });
     });
 
-    modal.querySelectorAll('[data-modal-close]').forEach(el => {
-        el.addEventListener('click', closeProject);
-    });
-
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Escape' && !modal.hidden) closeProject();
-    });
+    modal.querySelector('[data-modal-close]').addEventListener('click', () => modal.close());
+    // The panel fills the dialog, so a click whose target is the dialog
+    // itself landed on the ::backdrop.
+    modal.addEventListener('click', e => { if (e.target === modal) modal.close(); });
 
     window.addEventListener('popstate', () => {
         const id = (location.hash.match(/^#project\/([\w-]+)/) || [])[1];
         if (id) openProject(id, false);
-        else closeProject();
+        else if (modal.open) modal.close();
     });
 
     const initial = (location.hash.match(/^#project\/([\w-]+)/) || [])[1];
     if (initial) openProject(initial, false);
 }
-

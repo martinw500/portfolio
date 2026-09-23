@@ -12,7 +12,9 @@
 \usepackage[english]{babel}
 \usepackage{tabularx}
 \usepackage{fontawesome5}
-\input{glyphtounicode}
+\ifdefined\pdfgentounicode
+  \input{glyphtounicode}
+\fi
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -36,7 +38,9 @@
   \vspace{-4pt}\scshape\raggedright\large\bfseries
 }{}{0em}{}[\color{black}\titlerule \vspace{-4pt}]
 
-\pdfgentounicode=1
+\ifdefined\pdfgentounicode
+  \pdfgentounicode=1
+\fi
 
 \newcommand{\resumeItem}[1]{
   \item\small{{#1 \vspace{-2pt}}}
@@ -69,7 +73,7 @@
 
 \begin{center}
     {\Huge \scshape \textbf{Martin Wu}} \\ \vspace{2pt}
-    236-518-9477 $|$ \href{mailto:martinwu500@gmail.com}{\underline{martinwu500@gmail.com}} $|$
+    \href{mailto:martinwu500@gmail.com}{\underline{martinwu500@gmail.com}} $|$
     \href{https://martinwu.tech}{\underline{martinwu.tech}} $|$
     \href{https://www.linkedin.com/in/martinwuu/}{\underline{LinkedIn}} $|$
     \href{https://github.com/martinw500}{\underline{GitHub}}
@@ -78,8 +82,11 @@
 \section{Education}
   \resumeSubHeadingListStart
     \resumeSubheading
-      {University of British Columbia}{Sep 2025 -- 2029}
-      {Bachelor of Applied Science in Engineering}{Vancouver, BC}
+      {University of British Columbia}{Expected May 2029}
+      {Bachelor of Applied Science in Computer Engineering}{Vancouver, BC}
+      \resumeItemListStart
+        \resumeItem{\textbf{Seeking co-op: Summer 2027, 4 or 8 months}}
+      \resumeItemListEnd
   \resumeSubHeadingListEnd
 
 \section{Technical Skills}
@@ -97,23 +104,21 @@
 
     \resumeSubheading
       {Co-Founder \& Software Engineer}{Oct 2025 -- Present}
-      {Supercluster $|$ \href{https://github.com/ericx057/supercluster}{\underline{GitHub}}}{Vancouver, BC}
+      {Supercluster}{Vancouver, BC}
       \resumeItemListStart
-        \resumeItem{Building a two-plane Go runtime for agent orchestration: control plane dispatches over mTLS gRPC (bidi \texttt{Connect} + unary \texttt{ReportCompletion}); data plane is the only path to backends}
-        \resumeItem{Wrote \texttt{data-plane-local}: in-memory probe of the production 11-step dispatcher --- identity gate, idempotent writes, intent-before-adapter audit, fail-closed denials; \texttt{go run}, no Docker}
-        \resumeItem{Shipped the operator console (HTML/CSS/JS): live INTENT/RESULT/DENIED ledger, DAG workflows with fail-closed halt, 11 adapter sources, policy denials}
-        \resumeItem{Planes share only \texttt{proto/agent}; every agent read/write is mediated by policy and a tamper-evident audit chain (metadata only --- row values never cross)}
+        \resumeItem{Co-founded a startup building a Go runtime that lets AI agents reach company databases and APIs only through a policy-checked gateway: an mTLS gRPC control plane dispatches to an isolated data plane, and every request lands in a hash-chained audit log (metadata only, never row data)}
+        \resumeItem{Built \texttt{data-plane-local}, a \texttt{go run} replica of the production 11-step request dispatcher (identity gate, idempotent writes, audit before any backend call, fail-closed denials) so the team can test the full path without Docker}
+        \resumeItem{Shipped the operator console (HTML/CSS/JS): a live ledger of allowed and denied agent requests, DAG workflows that halt on a denial, and 11 data-source adapters}
       \resumeItemListEnd
 
     \resumeSubheading
       {Embedded Systems Engineer}{Sep 2025 -- Present}
       {UBC Solar}{Vancouver, BC}
       \resumeItemListStart
-        \resumeItem{Brought up STM32 Motor Drive Interface firmware (SPI, CAN, FreeRTOS) for Cascadia; 6 merged PRs on \href{https://github.com/UBC-Solar/firmware_v4}{firmware\_v4}}
-        \resumeItem{Wrote MAX31865 PT1000 driver with hardware-verified $<$1°C reads; faulted samples are debounced and withheld from CAN}
-        \resumeItem{Implemented MDI CAN motor-command parsing from the driver display, with timeout-aware command caching for the motor controller}
-        \resumeItem{Shipped steering-wheel firmware: cyclic drive-control CAN (regen, cruise, lights) and AS1115 hex speed display}
-        \resumeItem{Wrote DRD external-lights firmware for the v4 vehicle}
+        \resumeItem{Brought up firmware for the Motor Drive Interface board on the Cascadia race car (STM32, FreeRTOS, SPI, CAN filters); 6 merged PRs to \href{https://github.com/UBC-Solar/firmware_v4}{firmware\_v4}}
+        \resumeItem{Wrote a MAX31865 driver for PT1000 temperature sensors over 3-wire SPI, verified on hardware to within 1\,°C; faulted samples are debounced and never sent on CAN}
+        \resumeItem{Parsed driver-display motor commands off CAN and cached them with a timeout for the motor controller}
+        \resumeItem{Shipped steering-wheel firmware (periodic CAN frames for regen, cruise and lights; AS1115-driven LED speed display) and the external-lights firmware for the v4 car}
       \resumeItemListEnd
 
   \resumeSubHeadingListEnd
@@ -123,19 +128,19 @@
       \resumeProjectHeading
           {\textbf{Songless} $|$ \emph{React, TypeScript, Vite, Cloudflare R2, Web Audio} $|$ \href{https://songless-zeta.vercel.app}{Live}}{2026}
           \resumeItemListStart
-            \resumeItem{Song-intro guessing game with 100k+ visits; stage-locked Web Audio clues (0.01--15s) and R2-hosted full-track streaming}
-            \resumeItem{Media pipeline: YouTube source audit, silence-trimmed encodes, storage-capped R2 uploads, 120-song catalogue}
+            \resumeItem{Song-intro guessing game with 100k+ visits: Web Audio clues from 0.01\,s to 15\,s, then the full track streamed from R2}
+            \resumeItem{Built the media pipeline: source audit, silence trimming, encoding and a hard R2 storage cap; 120-song catalogue}
           \resumeItemListEnd
       \resumeProjectHeading
-          {\textbf{Us} $|$ \emph{Phaser 4, TypeScript, Vite, Playwright}}{2026}
+          {\textbf{Us} $|$ \emph{Phaser 4, TypeScript, Vite, Playwright} $|$ \href{https://martinw500.github.io/larissa-game/}{Live}}{2026}
           \resumeItemListStart
-            \resumeItem{Browser story game with a custom engine: 32px grid movement, save/fast-travel, dialogue, audio buses, 15+ scenes}
-            \resumeItem{Playwright visual-audit gates on lighting, walk cycles, and collision so scenes cannot silently regress}
+            \resumeItem{Browser story game on a custom Phaser engine: grid movement, save/fast travel, dialogue with rewind, 15+ scenes}
+            \resumeItem{Playwright visual-audit tests check lighting, walk cycles and collision so a scene cannot silently regress}
           \resumeItemListEnd
       \resumeProjectHeading
           {\textbf{Useful Tool Hub} $|$ \emph{JavaScript, Python, Vercel} $|$ \href{https://martinw500.github.io/UTH/}{Live}}{2025 -- 2026}
           \resumeItemListStart
-            \resumeItem{Ten in-browser tools (convert, PDF, QR, image edit); YouTube/Instagram downloaders on Vercel Python, rest on-device}
+            \resumeItem{Ten tools in one page (conversion, PDF, QR, image editing); converters run on-device, downloaders on Vercel Python}
           \resumeItemListEnd
           \resumeSubHeadingListEnd
 

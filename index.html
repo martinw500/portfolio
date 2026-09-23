@@ -3,39 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Martin Wu</title>
-    <meta name="description" content="Martin Wu — firmware and software intern. STM32 firmware at UBC Solar, Supercluster agent orchestration, full-stack apps.">
-    
-    <!-- Favicon -->
+    <title>Martin Wu — Computer Engineering @ UBC | Firmware &amp; Software</title>
+    <meta name="description" content="Second-year computer engineering student at UBC. STM32 firmware for the UBC Solar race car, Go agent infrastructure at Supercluster, and Songless, a web game with 100k+ visits. Seeking a Summer 2027 co-op.">
+    <link rel="canonical" href="https://martinwu.tech/">
+
+    <!-- Set the theme before first paint so a light-mode visitor never sees a dark flash. -->
+    <script>try{document.documentElement.dataset.theme=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark')}catch(e){document.documentElement.dataset.theme='dark'}</script>
+
+    <!-- Link previews: the site is meant to be sent to people, so it needs to
+         unfurl with a title, a summary and an image rather than a bare URL. -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://martinwu.tech/">
+    <meta property="og:title" content="Martin Wu — Computer Engineering @ UBC">
+    <meta property="og:description" content="Firmware for a solar race car. Web apps with 100k+ visits. Seeking a Summer 2027 co-op, 4 or 8 months.">
+    <meta property="og:image" content="https://martinwu.tech/assets/og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Martin Wu — Computer Engineering @ UBC">
+    <meta name="twitter:description" content="Firmware for a solar race car. Web apps with 100k+ visits. Seeking a Summer 2027 co-op.">
+    <meta name="twitter:image" content="https://martinwu.tech/assets/og.png">
+
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    
+
     <link rel="stylesheet" href="styles.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Cursor glow -->
-    <div class="cursor-glow" id="cursor-glow"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<g id="i-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></g>
+<g id="i-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></g>
+<g id="i-external"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></g>
+<g id="i-sun"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></g>
+<g id="i-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></g>
+<g id="i-arrow-up"><path d="M12 19V5M5 12l7-7 7 7"/></g>
+<g id="i-mail"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></g>
+</defs></svg>
 
-    <!-- Navigation -->
     <header class="header" id="header">
         <nav class="nav">
-            <a href="#" class="nav-logo">M<span class="accent">.</span></a>
+            <a href="#hero" class="nav-logo" aria-label="Back to top">M<span class="accent">.</span></a>
             <ul class="nav-links" id="nav-links">
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#experience" class="nav-link">Experience</a></li>
                 <li><a href="#projects" class="nav-link">Projects</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
-                <li><a href="docs/resume.pdf" class="nav-link resume-nav" target="_blank">Resume</a></li>
+                <li><a href="docs/resume.pdf" class="nav-link resume-nav" target="_blank" rel="noopener">Resume</a></li>
             </ul>
             <div class="nav-actions">
-                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-                    <i class="fas fa-moon"></i>
+                <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-moon"/></svg>
                 </button>
-                <button class="hamburger" id="hamburger" aria-label="Menu">
+                <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -44,217 +66,206 @@
         </nav>
     </header>
 
-    <!-- Side elements -->
-    <div class="side-email">
-        <a href="mailto:martinwu500@gmail.com" class="mono">martinwu500@gmail.com</a>
-    </div>
-    <div class="side-socials">
-        <a href="https://github.com/martinw500" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/martinwuu/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-    </div>
-
-    <!-- Hero -->
+    <main>
     <section class="hero" id="hero">
         <div class="hero-inner">
             <div class="hero-content">
-                <p class="hero-greeting mono fade-up" style="--delay: 0">Hi, my name is</p>
-                <h1 class="hero-name fade-up" style="--delay: 1">Martin Wu<span class="accent">.</span></h1>
-                <h2 class="hero-tagline fade-up" style="--delay: 2">Firmware and software, shipped.</h2>
-                <p class="hero-description fade-up" style="--delay: 3">
-                    Engineering student at UBC writing STM32 firmware for
-                    <span class="text-accent">UBC Solar</span>, co-founding
-                    <span class="text-accent">Supercluster</span> (agent orchestration),
-                    and shipping apps — including a game with
-                    <span class="text-accent">100k+ visits</span>.
+                <h1 class="hero-name fade-up" style="--delay:0">Martin Wu<span class="accent">.</span></h1>
+                <p class="hero-tagline fade-up" style="--delay:1">Firmware for a <span class="copper">solar race car</span>.<br>Web apps with <span class="text-accent">100k+ visits</span>.</p>
+                <p class="hero-description fade-up" style="--delay:2">
+                    Second-year Computer Engineering student at UBC, and co-founder of Supercluster.
                 </p>
-                <div class="hero-cta fade-up" style="--delay: 4">
-                    <a href="#projects" class="btn-primary">View my work</a>
-                    <a href="#contact" class="btn-ghost">Get in touch</a>
+                <!-- Program, availability and role type are the first filters an
+                     intern recruiter applies, so they sit above the fold. -->
+                <ul class="hero-meta mono fade-up" style="--delay:3">
+                    <li class="is-key">Co-op: Summer 2027 · 4 or 8 months</li>
+                    <li>UBC Computer Engineering '29</li>
+                    <li>SWE + embedded</li>
+                    <li>Vancouver, BC</li>
+                </ul>
+                <div class="hero-cta fade-up" style="--delay:4">
+                    <a href="#projects" class="btn-primary">View projects</a>
+                    <a href="docs/resume.pdf" class="btn-ghost" target="_blank" rel="noopener">
+                        Resume
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-external"/></svg>
+                    </a>
                 </div>
+                <dl class="proof fade-up" style="--delay:5">
+                    <div><dt>100k+</dt><dd>visits on Songless</dd></div>
+                    <div class="is-fw"><dt>6</dt><dd>merged firmware PRs</dd></div>
+                    <div><dt>Top 0.5%</dt><dd>CSMC, nationally</dd></div>
+                </dl>
             </div>
-            <div class="hero-visual fade-up" style="--delay: 3">
+            <div class="hero-visual fade-up" style="--delay:3">
                 <div class="hero-terminal">
                     <div class="terminal-header">
                         <div class="terminal-dots">
-                            <span class="terminal-dot" id="term-close" title="Close">
-                                <svg viewBox="0 0 12 12"><path d="M3.5 3.5l5 5M8.5 3.5l-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                            </span>
-                            <span class="terminal-dot" id="term-minimize" title="Minimize">
-                                <svg viewBox="0 0 12 12"><path d="M2.5 6h7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                            </span>
-                            <span class="terminal-dot" id="term-maximize" title="Maximize">
-                                <svg viewBox="0 0 12 12"><path d="M2 10L5 7M7 5l3-3M7.5 2H10v2.5M4.5 10H2V7.5" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            </span>
+                            <button class="terminal-dot" id="term-close" type="button" aria-label="Crash the terminal">
+                                <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 3.5l5 5M8.5 3.5l-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                            </button>
+                            <button class="terminal-dot" id="term-minimize" type="button" aria-label="Minimize the terminal">
+                                <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6h7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                            </button>
+                            <span class="terminal-dot" aria-hidden="true"></span>
                         </div>
                         <span class="terminal-title mono">martin@dev ~</span>
                     </div>
-                    <div class="terminal-body mono">
-                        <div class="terminal-line">
-                            <span class="prompt">$</span> <span class="cmd" id="typed-cmd"></span><span class="cursor-blink">|</span>
-                        </div>
-                        <div class="terminal-output" id="terminal-output"></div>
-                    </div>
+                    <div class="terminal-body mono" aria-hidden="true"></div>
                 </div>
             </div>
         </div>
-        <div class="scroll-hint">
-            <div class="scroll-line"></div>
+        <!-- A CAN bus differential pair: CAN_H rises and CAN_L falls on every
+             dominant bit. The same bus every board on the solar car talks over. -->
+        <div class="hero-trace" aria-hidden="true">
+            <span class="trace-label mono">CAN_H</span>
+            <span class="trace-label mono is-low">CAN_L</span>
+            <svg viewBox="0 0 2400 56" preserveAspectRatio="none">
+                <path class="trace-h" vector-effect="non-scaling-stroke" d="M0 28H30V12H60V28H120V12H180V28H210V12H240V28H330V12H420V28H450V12H480V28H540V12H570V28H600V12H660V28H750V12H810V28H840V12H870V28H900V12H960V28H990V12H1020V28H1080V12H1140V28H1170V12H1200V28H1230V12H1260V28H1320V12H1380V28H1410V12H1440V28H1530V12H1620V28H1650V12H1680V28H1740V12H1770V28H1800V12H1860V28H1950V12H2010V28H2040V12H2070V28H2100V12H2160V28H2190V12H2220V28H2280V12H2340V28H2370V12H2400"/>
+                <path class="trace-l" vector-effect="non-scaling-stroke" d="M0 28H30V44H60V28H120V44H180V28H210V44H240V28H330V44H420V28H450V44H480V28H540V44H570V28H600V44H660V28H750V44H810V28H840V44H870V28H900V44H960V28H990V44H1020V28H1080V44H1140V28H1170V44H1200V28H1230V44H1260V28H1320V44H1380V28H1410V44H1440V28H1530V44H1620V28H1650V44H1680V28H1740V44H1770V28H1800V44H1860V28H1950V44H2010V28H2040V44H2070V28H2100V44H2160V28H2190V44H2220V28H2280V44H2340V28H2370V44H2400"/>
+            </svg>
         </div>
     </section>
 
-    <!-- About -->
     <section class="section" id="about">
         <div class="section-container">
-            <h2 class="section-heading"><span class="heading-num mono">01.</span> About Me</h2>
+            <h2 class="section-heading">About</h2>
             <div class="about-grid">
                 <div class="about-text">
                     <p>
-                        I'm a first-year engineering student at <span class="text-accent">UBC</span>.
-                        Most of my time is on embedded firmware and software that has to work on real hardware
-                        or a real URL.
+                        I'm a second-year computer engineering student at UBC. I like work that has to
+                        hold up outside my laptop: firmware on a race car at competition, and web apps
+                        that strangers actually use.
                     </p>
-                    <p>
-                        At <span class="text-accent">UBC Solar</span> I write C for Cascadia — motor-drive,
-                        steering-wheel, and driver-display boards on CAN. I'm co-founding
-                        <span class="text-accent">Supercluster</span>, a two-plane Go runtime that
-                        orchestrates AI agents (mTLS gRPC control plane + governed data plane). I also ship web apps
-                        (Songless, 100k+ visits).
-                    </p>
-                    <p>Recently:</p>
-                    <ul class="tech-list mono">
-                        <li>C / STM32 / FreeRTOS</li>
-                        <li>SPI / CAN bus</li>
-                        <li>Go / gRPC</li>
-                        <li>TypeScript / React</li>
-                        <li>Python</li>
-                        <li>Vite / Cloudflare R2</li>
-                        <li>CMake / Git</li>
-                        <li>Docker</li>
-                    </ul>
+                    <!-- Grouped the way resume.tex groups them. -->
+                    <dl class="tech-groups mono">
+                        <dt>Languages</dt>
+                        <dd>C, C++, Go, Python, TypeScript, JavaScript</dd>
+                        <dt class="copper">Embedded</dt>
+                        <dd>STM32, FreeRTOS, SPI, CAN bus, HAL, CMake</dd>
+                        <dt>Software</dt>
+                        <dd>gRPC, React, Vite, Docker, Playwright, Git</dd>
+                    </dl>
                 </div>
                 <div class="about-photo">
-                    <div class="photo-wrapper">
-                        <img src="docs/pfp.png" alt="Martin Wu" class="about-img" loading="lazy">
-                        <div class="photo-border"></div>
-                    </div>
+                    <img src="docs/pfp.jpg" alt="Martin Wu" class="about-img" width="600" height="597" loading="lazy" decoding="async">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Experience -->
     <section class="section" id="experience">
         <div class="section-container">
-            <h2 class="section-heading"><span class="heading-num mono">02.</span> Experience</h2>
+            <h2 class="section-heading">Experience</h2>
             <div class="exp-list">
-                <div class="exp-card">
+                <article class="exp-card">
                     <div class="exp-left">
                         <span class="exp-date mono">Oct 2025 — Present</span>
                     </div>
                     <div class="exp-right">
-                        <h3 class="exp-role">Co-Founder & Software Engineer <span class="exp-at">· Supercluster</span></h3>
-                        <p class="exp-context mono">Vancouver, BC · <a href="https://github.com/ericx057/supercluster" target="_blank" rel="noopener">github.com/ericx057/supercluster</a></p>
+                        <h3 class="exp-role">Co-Founder &amp; Software Engineer <span class="exp-at">at Supercluster</span></h3>
+                        <p class="exp-context mono"><span>Vancouver, BC</span></p>
+                        <p class="exp-summary">Infrastructure that lets AI agents use a company's databases and APIs without touching them directly. Every request is checked against policy and written to a hash-chained audit log.</p>
                         <ul class="exp-points">
-                            <li>Building a two-plane Go runtime for agent orchestration: control plane dispatches over mTLS gRPC (bidi <code>Connect</code> + unary <code>ReportCompletion</code>); data plane is the only path agents have to Postgres, S3, REST, etc.</li>
-                            <li>Wrote <code>data-plane-local</code> — an in-memory probe of the production 11-step dispatcher (identity → idempotency → outbox → intent audit → adapter → result audit). Fail-closed denials never reach the adapter; <code>go run</code>, no Docker</li>
-                            <li>Shipped the operator console (vanilla HTML/CSS/JS): live INTENT/RESULT/DENIED ledger, DAG workflows with fail-closed halt, 11 adapter sources, policy denials</li>
-                            <li>Planes share only <code>proto/agent</code>. Every agent read/write is mediated by policy and a tamper-evident audit chain — metadata only; row values never cross the boundary</li>
+                            <li>Built <code>data-plane-local</code>, a <code>go run</code> replica of the production 11-step request dispatcher, so the team can test identity checks, idempotent writes and fail-closed denials without Docker.</li>
+                            <li>Shipped the operator console: a live ledger of allowed and denied agent requests, DAG workflows that halt on a denial, and 11 data-source adapters.</li>
+                            <li>The gateway: an mTLS gRPC control plane dispatches work, and the data plane is an agent's only route to Postgres, S3 and REST. It logs metadata, never row data.</li>
                         </ul>
                         <div class="exp-tech">
-                            <span>Go</span><span>gRPC</span><span>TypeScript</span><span>policy</span><span>audit</span>
+                            <span>Go</span><span>gRPC</span><span>mTLS</span><span>TypeScript</span>
                         </div>
                     </div>
-                </div>
+                </article>
 
-                <div class="exp-card">
+                <article class="exp-card is-fw">
                     <div class="exp-left">
                         <span class="exp-date mono">Sep 2025 — Present</span>
                     </div>
                     <div class="exp-right">
-                        <h3 class="exp-role">Embedded Systems Engineer <span class="exp-at">· UBC Solar</span></h3>
-                        <p class="exp-context mono">Vancouver, BC · Cascadia / firmware_v4</p>
+                        <h3 class="exp-role">Embedded Systems Engineer <span class="exp-at">at UBC Solar</span></h3>
+                        <p class="exp-context mono"><span>Vancouver, BC</span><span>Cascadia race car</span></p>
+                        <p class="exp-summary">Firmware for UBC's competition solar car: the boards that drive the motor, read battery temperature and run the steering wheel, all talking over CAN.</p>
                         <ul class="exp-points">
-                            <li>Brought up STM32 Motor Drive Interface firmware — pinout, SPI chip-select, CAN filters, FreeRTOS tasks. Six merged PRs across MDI, STR, and DRD on <a href="https://github.com/UBC-Solar/firmware_v4" target="_blank">firmware_v4</a></li>
-                            <li>Wrote the MAX31865 PT1000 driver (15-bit conversion, 3-wire SPI). Hardware-verified &lt;1°C; faulted samples are debounced and not sent on CAN</li>
-                            <li>Parsed driver-display motor commands on MDI with timeout-aware command caching for the motor controller</li>
-                            <li>Shipped steering-wheel firmware: cyclic drive-control CAN (regen, cruise, lights), MDU RPM → km/h, AS1115 hex speed display</li>
-                            <li>Wrote DRD external-lights firmware for the v4 vehicle</li>
+                            <li>Brought up firmware for the Motor Drive Interface board: SPI, CAN filters, FreeRTOS tasks. Six merged PRs on <a href="https://github.com/UBC-Solar/firmware_v4" target="_blank" rel="noopener">firmware_v4</a>.</li>
+                            <li>Wrote a MAX31865 driver for PT1000 temperature sensors (3-wire SPI), verified on hardware to within 1&nbsp;°C. Faulted samples are debounced and never sent on CAN.</li>
+                            <li>Parsed driver-display motor commands off CAN and cached them with a timeout for the motor controller.</li>
+                            <li>Shipped steering-wheel firmware (CAN frames for regen, cruise and lights; an LED speed display) and the external-lights firmware for the v4 car.</li>
                         </ul>
                         <div class="exp-tech">
                             <span>C</span><span>STM32</span><span>FreeRTOS</span><span>SPI</span><span>CAN</span><span>CMake</span>
                         </div>
                     </div>
-                </div>
+                </article>
+            </div>
+            <div class="awards">
+                <h3 class="awards-heading">Mathematics competitions <span class="awards-note mono">2023 – 2025</span></h3>
+                <ul class="awards-list">
+                    <li><strong>CSMC</strong> Top 0.5% nationally, 71st in Canada</li>
+                    <li><strong>AIME</strong> Qualifier, twice</li>
+                    <li><strong>Euclid</strong> Top 2%, 85/100</li>
+                </ul>
             </div>
         </div>
     </section>
 
-    <!-- Projects -->
     <section class="section" id="projects">
         <div class="section-container">
-            <h2 class="section-heading"><span class="heading-num mono">03.</span> Projects</h2>
-            
+            <h2 class="section-heading">Projects</h2>
+
             <div class="featured-projects">
                 <article class="featured-project" data-project="songless" tabindex="0">
                     <div class="fp-content">
-                        <p class="fp-overline mono">Featured Project</p>
+                        <p class="fp-overline mono">100k+ visits</p>
                         <h3 class="fp-title">Songless</h3>
-                        <div class="fp-desc">
-                            <p>Song-intro guessing game. 100k+ visits. Stage-locked Web Audio clues (0.01s–15s), then the full track from Cloudflare R2. Vercel hosts the app; audio never goes in the git repo.</p>
-                        </div>
+                        <p class="fp-desc">A music guessing game: you hear a sliver of a song intro and name it. Web Audio plays clues from 0.01&nbsp;s to 15&nbsp;s, then the full track streams from Cloudflare R2.</p>
                         <ul class="fp-tech mono">
                             <li>React</li>
                             <li>TypeScript</li>
-                            <li>Vite</li>
                             <li>Cloudflare R2</li>
                             <li>Web Audio</li>
                         </ul>
-                        <div class="fp-links">
-                            <a href="https://github.com/martinw500/songless" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                            <a href="https://songless-zeta.vercel.app" target="_blank" aria-label="Live Demo"><i class="fas fa-external-link-alt"></i></a>
+                        <div class="fp-links mono">
+                            <a href="https://songless-zeta.vercel.app" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-external"/></svg>Live</a>
+                            <a href="https://github.com/martinw500/songless" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-github"/></svg>Code</a>
+                            <span class="fp-more" data-more="songless"></span>
                         </div>
                     </div>
                     <div class="fp-image">
-                        <div class="shot" data-shot="assets/projects/songless-cover.png" data-label="songless-cover.png"></div>
+                        <div class="shot" data-shot="assets/projects/songless-cover.png" data-alt="Songless game screen"></div>
                     </div>
                 </article>
 
-                <article class="featured-project reverse" data-project="us" tabindex="0">
+                <article class="featured-project" data-project="us" tabindex="0">
                     <div class="fp-content">
-                        <p class="fp-overline mono">Featured Project</p>
+                        <p class="fp-overline mono">15+ scenes · playable end to end</p>
                         <h3 class="fp-title">Us</h3>
-                        <div class="fp-desc">
-                            <p>Browser story game in a Pokémon Gen 3 pixel style. Custom Phaser 4 engine: grid movement, save/fast-travel, dialogue, audio buses, touch + keyboard. 15+ scenes with Playwright visual audits.</p>
-                        </div>
+                        <p class="fp-desc">A browser story game in Gen 3 Pokémon pixel style, on a custom Phaser 4 engine: grid movement, save and fast travel, dialogue with rewind, audio buses. Playwright tests catch visual regressions.</p>
                         <ul class="fp-tech mono">
                             <li>Phaser 4</li>
                             <li>TypeScript</li>
-                            <li>Vite</li>
                             <li>Playwright</li>
                         </ul>
-                        <div class="fp-links">
-                            <a href="https://github.com/martinw500/larissa-game" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                            <a href="https://martinw500.github.io/larissa-game/" target="_blank" aria-label="Live Demo"><i class="fas fa-external-link-alt"></i></a>
+                        <div class="fp-links mono">
+                            <a href="https://martinw500.github.io/larissa-game/" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-external"/></svg>Live</a>
+                            <span class="fp-more" data-more="us"></span>
                         </div>
                     </div>
                     <div class="fp-image">
-                        <div class="shot" data-shot="assets/projects/us-cover.png" data-label="us-cover.png"></div>
+                        <div class="shot" data-shot="assets/projects/us-cover.png" data-alt="Us title screen"></div>
                     </div>
                 </article>
             </div>
 
-            <h3 class="other-heading">Other Projects</h3>
+            <h3 class="other-heading">More projects</h3>
             <div class="projects-grid">
                 <article class="project-tile" data-project="uth" tabindex="0">
                     <div class="tile-header">
-                        <i class="far fa-folder tile-icon"></i>
+                        <h4 class="tile-title">Useful Tool Hub</h4>
                         <div class="tile-links">
-                            <a href="https://github.com/martinw500/UTH" target="_blank"><i class="fab fa-github"></i></a>
-                            <a href="https://martinw500.github.io/UTH/" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                            <a href="https://github.com/martinw500/UTH" target="_blank" rel="noopener" aria-label="Useful Tool Hub on GitHub"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-github"/></svg></a>
+                            <a href="https://martinw500.github.io/UTH/" target="_blank" rel="noopener" aria-label="Useful Tool Hub live site"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-external"/></svg></a>
                         </div>
                     </div>
-                    <h4 class="tile-title">Useful Tool Hub</h4>
-                    <p class="tile-desc">Ten in-browser tools (convert, edit, QR, PDF). YouTube/Instagram downloaders on Vercel Python; everything else stays on-device.</p>
+                    <p class="tile-desc">Ten small utilities in one page: file conversion, image editing, QR codes, PDF tools. Everything but the downloaders runs on your own device.</p>
                     <ul class="tile-tech mono">
                         <li>JavaScript</li>
                         <li>Python</li>
@@ -264,14 +275,14 @@
 
                 <article class="project-tile" data-project="nutritracker" tabindex="0">
                     <div class="tile-header">
-                        <i class="far fa-folder tile-icon"></i>
+                        <h4 class="tile-title">NutriTracker</h4>
                         <div class="tile-links">
-                            <a href="https://github.com/martinw500/Nutritracker" target="_blank"><i class="fab fa-github"></i></a>
-                            <a href="https://nutritracker-mocha.vercel.app" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                            <a href="https://github.com/martinw500/Nutritracker" target="_blank" rel="noopener" aria-label="NutriTracker on GitHub"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-github"/></svg></a>
+                            <a href="https://nutritracker-mocha.vercel.app" target="_blank" rel="noopener" aria-label="NutriTracker live site"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-external"/></svg></a>
                         </div>
                     </div>
-                    <h4 class="tile-title">NutriTracker</h4>
-                    <p class="tile-desc">59 micronutrient values against USDA FoodData Central. A vision model would only name the food; the database owns every number.</p>
+                    <p class="tile-desc">Scores meals on 59 micronutrients from the USDA database. Photo logging uses a model only to name the food, never to invent a number.</p>
+                    <p class="tile-status">In progress: UI runs on demo data</p>
                     <ul class="tile-tech mono">
                         <li>TypeScript</li>
                         <li>Postgres</li>
@@ -281,13 +292,12 @@
 
                 <article class="project-tile" data-project="haar" tabindex="0">
                     <div class="tile-header">
-                        <i class="far fa-folder tile-icon"></i>
+                        <h4 class="tile-title">Haar Wavelet Compressor</h4>
                         <div class="tile-links">
-                            <a href="https://github.com/martinw500/Haar-Wavelet-Image-Compressor" target="_blank"><i class="fab fa-github"></i></a>
+                            <a href="https://github.com/martinw500/Haar-Wavelet-Image-Compressor" target="_blank" rel="noopener" aria-label="Haar Wavelet Compressor on GitHub"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-github"/></svg></a>
                         </div>
                     </div>
-                    <h4 class="tile-title">Haar Wavelet Compressor</h4>
-                    <p class="tile-desc">Haar transform on RGB channels with NumPy. Desktop GUI for threshold and iteration — closer to DSP than a web toy.</p>
+                    <p class="tile-desc">Image compression from the Haar wavelet transform, written as matrix operations in NumPy, with a desktop GUI for tuning threshold and depth.</p>
                     <ul class="tile-tech mono">
                         <li>Python</li>
                         <li>NumPy</li>
@@ -297,67 +307,49 @@
         </div>
     </section>
 
-    <!-- Contact -->
     <section class="section" id="contact">
         <div class="section-container contact-container">
-            <p class="contact-overline mono">04. What's Next?</p>
-            <h2 class="contact-heading">Get In Touch</h2>
+            <h2 class="contact-heading">Get in touch</h2>
             <p class="contact-text">
-                Internships, firmware, or software — email is the fastest way to reach me.
+                I'm looking for a <span class="text-accent">Summer 2027 co-op</span>, 4 or 8 months, in software
+                or embedded. Email is the fastest way to reach me.
             </p>
-            
-            <form class="contact-form" action="https://formspree.io/f/xpwrlbje" method="POST">
-                <div class="form-row">
-                    <div class="form-group">
-                        <input type="text" name="name" placeholder="Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" name="email" placeholder="Email" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input type="text" name="subject" placeholder="Subject" required>
-                </div>
-                <div class="form-group">
-                    <textarea name="message" placeholder="Message" rows="5" required></textarea>
-                </div>
-                <input type="hidden" name="_captcha" value="false">
-                <button type="submit" class="btn-primary">Send Message</button>
-            </form>
 
-            <div class="contact-divider">
-                <span class="mono">OR</span>
-            </div>
+            <a href="mailto:martinwu500@gmail.com" class="contact-email">martinwu500@gmail.com</a>
 
-            <div class="contact-direct">
-                <a href="mailto:martinwu500@gmail.com" class="contact-email">martinwu500@gmail.com</a>
-                <div class="contact-info-row">
-                    <span class="contact-chip"><i class="fas fa-phone"></i> (236) 518-9477</span>
-                    <span class="contact-chip"><i class="fas fa-map-marker-alt"></i> Vancouver, BC</span>
-                </div>
+            <div class="contact-links">
+                <a href="https://www.linkedin.com/in/martinwuu/" target="_blank" rel="noopener">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-linkedin"/></svg>
+                    LinkedIn
+                </a>
+                <a href="https://github.com/martinw500" target="_blank" rel="noopener">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-github"/></svg>
+                    GitHub
+                </a>
+                <a href="docs/resume.pdf" target="_blank" rel="noopener">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-external"/></svg>
+                    Resume
+                </a>
             </div>
         </div>
     </section>
+    </main>
 
-    <!-- Footer -->
     <footer class="footer">
-        <div class="footer-socials-mobile">
-            <a href="https://github.com/martinw500" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://www.linkedin.com/in/martinwuu/" target="_blank"><i class="fab fa-linkedin"></i></a>
-            <a href="mailto:martinwu500@gmail.com"><i class="fas fa-envelope"></i></a>
-        </div>
-        <p class="footer-text mono">
-            Built by Martin Wu
-        </p>
+        <p class="footer-text mono">Built by hand by Martin Wu. No framework, no build step.</p>
     </footer>
 
-    <div class="project-modal" id="project-modal" hidden>
-        <div class="project-modal-backdrop" data-modal-close></div>
-        <div class="project-modal-panel" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-arrow-up"/></svg>
+    </button>
+
+    <!-- Native dialog: focus trap, Esc and an inert page come with showModal(). -->
+    <dialog class="project-modal" id="project-modal" aria-labelledby="project-modal-title">
+        <div class="project-modal-panel">
             <button class="project-modal-close" type="button" data-modal-close aria-label="Close">&times;</button>
             <div class="project-modal-body" id="project-modal-body"></div>
         </div>
-    </div>
+    </dialog>
 
     <script src="script.js"></script>
 </body>
