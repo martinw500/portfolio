@@ -56,7 +56,7 @@
 
 \newcommand{\resumeProjectHeading}[2]{
     \item
-    \begin{tabular*}{1.001\textwidth}{l@{\extracolsep{\fill}}r}
+    \begin{tabular*}{1.0\textwidth}{l@{\extracolsep{\fill}}r}
       \small#1 & \textbf{\small #2}\\
     \end{tabular*}\vspace{-6pt}
 }
@@ -73,52 +73,45 @@
 
 \begin{center}
     {\Huge \scshape \textbf{Martin Wu}} \\ \vspace{2pt}
+    Vancouver, BC $|$
     \href{mailto:martinwu500@gmail.com}{\underline{martinwu500@gmail.com}} $|$
-    \href{https://martinwu.tech}{\underline{martinwu.tech}} $|$
-    \href{https://www.linkedin.com/in/martinwuu/}{\underline{LinkedIn}} $|$
-    \href{https://github.com/martinw500}{\underline{GitHub}}
+    \href{https://martinwu.dev}{\underline{martinwu.dev}} $|$
+    \href{https://www.linkedin.com/in/martinwuu/}{\underline{linkedin.com/in/martinwuu}} $|$
+    \href{https://github.com/martinw500}{\underline{github.com/martinw500}}
 \end{center}
 
 \section{Education}
   \resumeSubHeadingListStart
     \resumeSubheading
       {University of British Columbia}{Expected May 2029}
-      {Bachelor of Applied Science in Computer Engineering}{Vancouver, BC}
+      {Bachelor of Applied Science in Computer Engineering}{Internship availability: Jan or May 2027, 4, 8 or 12 months}
       \resumeItemListStart
-        \resumeItem{\textbf{Seeking co-op: Summer 2027, 4 or 8 months}}
+        \resumeItem{Average: A- $|$ Coursework: Computer Systems (SystemVerilog, FPGA, RISC-V), Software Construction (Java)}
       \resumeItemListEnd
   \resumeSubHeadingListEnd
-
-\section{Technical Skills}
- \begin{itemize}[leftmargin=0.15in, label={}]
-    \small{\item{
-    \textbf{Languages}{: C, C++, Go, Python, TypeScript, JavaScript} \\
-     \textbf{Embedded}{: STM32, FreeRTOS, SPI, CAN bus, HAL, CMake} \\
-     \textbf{Software}{: gRPC, React, Git, Docker, Vite, Playwright} \\
-    }}
- \end{itemize}
- \vspace{-8pt}
 
 \section{Experience}
   \resumeSubHeadingListStart
 
     \resumeSubheading
-      {Co-Founder \& Software Engineer}{Oct 2025 -- Present}
-      {Supercluster}{Vancouver, BC}
+      {Embedded Systems Developer}{Sep 2025 -- Present}
+      {UBC Solar}{Vancouver, BC}
       \resumeItemListStart
-        \resumeItem{Co-founded a startup building a Go runtime that lets AI agents reach company databases and APIs only through a policy-checked gateway: an mTLS gRPC control plane dispatches to an isolated data plane, and every request lands in a hash-chained audit log (metadata only, never row data)}
-        \resumeItem{Built \texttt{data-plane-local}, a \texttt{go run} replica of the production 11-step request dispatcher (identity gate, idempotent writes, audit before any backend call, fail-closed denials) so the team can test the full path without Docker}
-        \resumeItem{Shipped the operator console (HTML/CSS/JS): a live ledger of allowed and denied agent requests, DAG workflows that halt on a denial, and 11 data-source adapters}
+        \resumeItem{Brought up the Motor Drive Interface firmware on STM32: pin setup, a CAN driver with a hardware filter for motor commands, and ADC readings of board voltage and temperature}
+        \resumeItem{Made motor commands expire after 100\,ms of CAN silence, so a stale command cannot keep driving the motor; confirmed on hardware by cutting the command stream}
+        \resumeItem{Proposed PT1000 RTD motor-temperature sensing with a MAX31865 and wrote its firmware from the first prototype to the SPI driver; verified with heat-gun tests and integration-tested with the car's electrical system}
+        \resumeItem{Built RTD fault handling: a leaky-counter debounce latches after 5 bad reads, fault and SPI-error bits go out on CAN, and a config read-back catches a missing chip that would otherwise read $-$259\,°C}
+        \resumeItem{Wrote external-lights firmware as FreeRTOS tasks (turn signals, hazards, brake lights) and steering-wheel code that shows CAN speed data in km/h or mph on the hex display}
+        \resumeItem{Added the new CAN signals to the telemetry DBC, the Grafana dashboards and the pit-crew test, so the crew sees motor-board data and sensor faults live}
       \resumeItemListEnd
 
     \resumeSubheading
-      {Embedded Systems Engineer}{Sep 2025 -- Present}
-      {UBC Solar}{Vancouver, BC}
+      {Co-Founder \& Software Engineer}{Oct 2025 -- Present}
+      {Stealth AI Infrastructure Startup}{Vancouver, BC}
       \resumeItemListStart
-        \resumeItem{Brought up firmware for the Motor Drive Interface board on the Cascadia race car (STM32, FreeRTOS, SPI, CAN filters); 6 merged PRs to \href{https://github.com/UBC-Solar/firmware_v4}{firmware\_v4}}
-        \resumeItem{Wrote a MAX31865 driver for PT1000 temperature sensors over 3-wire SPI, verified on hardware to within 1\,°C; faulted samples are debounced and never sent on CAN}
-        \resumeItem{Parsed driver-display motor commands off CAN and cached them with a timeout for the motor controller}
-        \resumeItem{Shipped steering-wheel firmware (periodic CAN frames for regen, cruise and lights; AS1115-driven LED speed display) and the external-lights firmware for the v4 car}
+        \resumeItem{Wrote a Go test harness whose in-memory adapters drive reads, idempotent replays, identity denials and adapter panics through the team's 11-step dispatcher without Docker}
+        \resumeItem{Fixed the tooling and rewrote the demo script for the live product demo, where AI agents query Postgres through access policies, human approvals and an audit trail; it is used in investor meetings and accelerator applications}
+        \resumeItem{Ran the technical review for the first enterprise deal, an on-prem AI cluster now at the LOI stage: showed the model would not fit unquantized, flagged support and purchasing risks, and drafted the LOI}
       \resumeItemListEnd
 
   \resumeSubHeadingListEnd
@@ -126,28 +119,30 @@
 \section{Projects}
     \resumeSubHeadingListStart
       \resumeProjectHeading
-          {\textbf{Songless} $|$ \emph{React, TypeScript, Vite, Cloudflare R2, Web Audio} $|$ \href{https://songless-zeta.vercel.app}{Live}}{2026}
+          {\textbf{Songless} $|$ \emph{React, TypeScript, Vite, Cloudflare R2} $|$ \href{https://songless-zeta.vercel.app}{Live}}{2026}
           \resumeItemListStart
-            \resumeItem{Song-intro guessing game with 100k+ visits: Web Audio clues from 0.01\,s to 15\,s, then the full track streamed from R2}
-            \resumeItem{Built the media pipeline: source audit, silence trimming, encoding and a hard R2 storage cap; 120-song catalogue}
+            \resumeItem{Built a music-guessing web game with \textbf{100k+ visits} and 804 songs; 30-second clues stream from R2, and the full track loads only on the results screen}
+            \resumeItem{Wrote the upload pipeline: trims leading silence, encodes 128\,kbps MP3s, and refuses any batch that would push the bucket past an 8.5\,GB ceiling}
           \resumeItemListEnd
       \resumeProjectHeading
-          {\textbf{Us} $|$ \emph{Phaser 4, TypeScript, Vite, Playwright} $|$ \href{https://martinw500.github.io/larissa-game/}{Live}}{2026}
+          {\textbf{Useful Tool Hub} $|$ \emph{JavaScript, Python, Jest, Vercel} $|$ \href{https://useful-tool-hub.vercel.app}{Live}}{2026}
           \resumeItemListStart
-            \resumeItem{Browser story game on a custom Phaser engine: grid movement, save/fast travel, dialogue with rewind, 15+ scenes}
-            \resumeItem{Playwright visual-audit tests check lighting, walk cycles and collision so a scene cannot silently regress}
+            \resumeItem{Made a dozen web tools (file conversion, OCR, transcription, PDF signing) that run in the browser, with a Python backend only for downloaders; Jest runs in CI and scripts check the deployed site}
           \resumeItemListEnd
       \resumeProjectHeading
-          {\textbf{Useful Tool Hub} $|$ \emph{JavaScript, Python, Vercel} $|$ \href{https://martinw500.github.io/UTH/}{Live}}{2025 -- 2026}
+          {\textbf{Us (browser story game)} $|$ \emph{Phaser 4, TypeScript, Playwright} $|$ \href{https://martinw500.github.io/larissa-game/}{Live}}{2026}
           \resumeItemListStart
-            \resumeItem{Ten tools in one page (conversion, PDF, QR, image editing); converters run on-device, downloaders on Vercel Python}
+            \resumeItem{Created 15+ scenes in Phaser 4 with saves, fast travel and dialogue rewind; Playwright scripts play through routes and check lighting and collision}
           \resumeItemListEnd
-          \resumeSubHeadingListEnd
+    \resumeSubHeadingListEnd
 
-\section{Awards}
+\section{Skills \& Awards}
  \begin{itemize}[leftmargin=0.15in, label={}]
     \small{\item{
-    \textbf{Mathematics (2023--2025)}{: CSMC Top 0.5\% nationally (71st) $|$ AIME Qualifier 2x $|$ Euclid Top 2\% (85/100)} \\
+    \textbf{Languages}{: C, Python, Go, TypeScript, JavaScript, Java, SystemVerilog} \\
+    \textbf{Embedded}{: STM32 HAL, FreeRTOS, CAN bus, SPI, ADC, CMake, oscilloscope, PCAN, J-Link, ST-Link} \\
+    \textbf{Frameworks \& Tools}{: Linux, Git, React, Vite, Docker, Grafana, Playwright, Jest} \\
+    \textbf{Awards}{: CSMC Top 0.5\% nationally (71st) $|$ AIME Qualifier 2x $|$ Euclid Top 2\% (85/100)}
     }}
  \end{itemize}
 

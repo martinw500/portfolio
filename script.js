@@ -353,24 +353,6 @@ const PROJECTS = {
             'On-device converters never upload the file.',
         ],
     },
-    nutritracker: {
-        title: 'NutriTracker',
-        overline: 'In progress',
-        github: 'https://github.com/martinw500/Nutritracker',
-        live: 'https://nutritracker-mocha.vercel.app',
-        tech: ['TypeScript', 'Postgres', 'USDA FDC'],
-        shots: [
-            { src: 'nutritracker-1.png', caption: 'The daily view scores intake against estimated need and flags which of the 59 tracked nutrients are short.' },
-            { src: 'nutritracker-2.png', caption: 'Macronutrients are shown as acceptable ranges rather than single targets, because that is how the reference data is actually published.' },
-        ],
-        body: [
-            'A nutrition tracker that scores meals on 59 micronutrients and phytonutrients from USDA FoodData Central. Photo logging is designed so a model only names the food; nutrient numbers come from the database, never from the model.',
-        ],
-        points: [
-            'Status: the interface runs on labelled demo data while the Postgres and auth foundation is finished.',
-            'No composite “health scores.” Claims carry an evidence tier.',
-        ],
-    },
     haar: {
         title: 'Haar Wavelet Compressor',
         overline: 'NumPy, no codec library',

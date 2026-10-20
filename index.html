@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Martin Wu — Computer Engineering @ UBC | Firmware &amp; Software</title>
-    <meta name="description" content="Second-year computer engineering student at UBC. STM32 firmware for the UBC Solar race car, Go agent infrastructure at Supercluster, and Songless, a web game with 100k+ visits. Seeking a Summer 2027 co-op.">
-    <link rel="canonical" href="https://martinwu.tech/">
+    <meta name="description" content="Second-year computer engineering student at UBC. STM32 firmware for the UBC Solar race car, Go infrastructure work at a stealth AI infrastructure startup, and Songless, a web game with 100k+ visits. Seeking a Summer 2027 co-op.">
+    <link rel="canonical" href="https://martinwu.dev/">
 
     <!-- Set the theme before first paint so a light-mode visitor never sees a dark flash. -->
     <script>try{document.documentElement.dataset.theme=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark')}catch(e){document.documentElement.dataset.theme='dark'}</script>
@@ -13,16 +13,16 @@
     <!-- Link previews: the site is meant to be sent to people, so it needs to
          unfurl with a title, a summary and an image rather than a bare URL. -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://martinwu.tech/">
+    <meta property="og:url" content="https://martinwu.dev/">
     <meta property="og:title" content="Martin Wu — Computer Engineering @ UBC">
     <meta property="og:description" content="Firmware for a solar race car. Web apps with 100k+ visits. Seeking a Summer 2027 co-op, 4 or 8 months.">
-    <meta property="og:image" content="https://martinwu.tech/assets/og.png">
+    <meta property="og:image" content="https://martinwu.dev/assets/og.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Martin Wu — Computer Engineering @ UBC">
     <meta name="twitter:description" content="Firmware for a solar race car. Web apps with 100k+ visits. Seeking a Summer 2027 co-op.">
-    <meta name="twitter:image" content="https://martinwu.tech/assets/og.png">
+    <meta name="twitter:image" content="https://martinwu.dev/assets/og.png">
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -73,7 +73,7 @@
                 <h1 class="hero-name fade-up" style="--delay:0">Martin Wu<span class="accent">.</span></h1>
                 <p class="hero-tagline fade-up" style="--delay:1">Firmware for a <span class="copper">solar race car</span>.<br>Web apps with <span class="text-accent">100k+ visits</span>.</p>
                 <p class="hero-description fade-up" style="--delay:2">
-                    Second-year Computer Engineering student at UBC, and co-founder of Supercluster.
+                    Second-year Computer Engineering student at UBC, and co-founder of a stealth AI infrastructure startup.
                 </p>
                 <!-- Program, availability and role type are the first filters an
                      intern recruiter applies, so they sit above the fold. -->
@@ -92,7 +92,7 @@
                 </div>
                 <dl class="proof fade-up" style="--delay:5">
                     <div><dt>100k+</dt><dd>visits on Songless</dd></div>
-                    <div class="is-fw"><dt>6</dt><dd>merged firmware PRs</dd></div>
+                    <div class="is-fw"><dt>3</dt><dd>race-car boards shipped</dd></div>
                     <div><dt>Top 0.5%</dt><dd>CSMC, nationally</dd></div>
                 </dl>
             </div>
@@ -143,7 +143,7 @@
                         <dt class="copper">Embedded</dt>
                         <dd>STM32, FreeRTOS, SPI, CAN bus, HAL, CMake</dd>
                         <dt>Software</dt>
-                        <dd>gRPC, React, Vite, Docker, Playwright, Git</dd>
+                        <dd>gRPC, React, Docker, Playwright, Git</dd>
                     </dl>
                 </div>
                 <div class="about-photo">
@@ -162,13 +162,12 @@
                         <span class="exp-date mono">Oct 2025 — Present</span>
                     </div>
                     <div class="exp-right">
-                        <h3 class="exp-role">Co-Founder &amp; Software Engineer <span class="exp-at">at Supercluster</span></h3>
+                        <h3 class="exp-role">Co-Founder &amp; Software Engineer <span class="exp-at">at a stealth AI infrastructure startup</span></h3>
                         <p class="exp-context mono"><span>Vancouver, BC</span></p>
                         <p class="exp-summary">Infrastructure that lets AI agents use a company's databases and APIs without touching them directly. Every request is checked against policy and written to a hash-chained audit log.</p>
                         <ul class="exp-points">
                             <li>Built <code>data-plane-local</code>, a <code>go run</code> replica of the production 11-step request dispatcher, so the team can test identity checks, idempotent writes and fail-closed denials without Docker.</li>
                             <li>Shipped the operator console: a live ledger of allowed and denied agent requests, DAG workflows that halt on a denial, and 11 data-source adapters.</li>
-                            <li>The gateway: an mTLS gRPC control plane dispatches work, and the data plane is an agent's only route to Postgres, S3 and REST. It logs metadata, never row data.</li>
                         </ul>
                         <div class="exp-tech">
                             <span>Go</span><span>gRPC</span><span>mTLS</span><span>TypeScript</span>
@@ -185,10 +184,9 @@
                         <p class="exp-context mono"><span>Vancouver, BC</span><span>Cascadia race car</span></p>
                         <p class="exp-summary">Firmware for UBC's competition solar car: the boards that drive the motor, read battery temperature and run the steering wheel, all talking over CAN.</p>
                         <ul class="exp-points">
-                            <li>Brought up firmware for the Motor Drive Interface board: SPI, CAN filters, FreeRTOS tasks. Six merged PRs on <a href="https://github.com/UBC-Solar/firmware_v4" target="_blank" rel="noopener">firmware_v4</a>.</li>
+                            <li>Brought up firmware for the Motor Drive Interface board: SPI, CAN filters, FreeRTOS tasks. Motor commands parsed off CAN are cached with a timeout, so a stale command cannot keep driving the motor.</li>
                             <li>Wrote a MAX31865 driver for PT1000 temperature sensors (3-wire SPI), verified on hardware to within 1&nbsp;°C. Faulted samples are debounced and never sent on CAN.</li>
-                            <li>Parsed driver-display motor commands off CAN and cached them with a timeout for the motor controller.</li>
-                            <li>Shipped steering-wheel firmware (CAN frames for regen, cruise and lights; an LED speed display) and the external-lights firmware for the v4 car.</li>
+                            <li>Shipped steering-wheel firmware (CAN frames for regen, cruise and lights; an LED speed display) and the external-lights firmware for the v4 car. Six merged PRs on <a href="https://github.com/UBC-Solar/firmware_v4" target="_blank" rel="noopener">firmware_v4</a>.</li>
                         </ul>
                         <div class="exp-tech">
                             <span>C</span><span>STM32</span><span>FreeRTOS</span><span>SPI</span><span>CAN</span><span>CMake</span>
@@ -273,22 +271,6 @@
                     </ul>
                 </article>
 
-                <article class="project-tile" data-project="nutritracker" tabindex="0">
-                    <div class="tile-header">
-                        <h4 class="tile-title">NutriTracker</h4>
-                        <div class="tile-links">
-                            <a href="https://github.com/martinw500/Nutritracker" target="_blank" rel="noopener" aria-label="NutriTracker on GitHub"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-github"/></svg></a>
-                            <a href="https://nutritracker-mocha.vercel.app" target="_blank" rel="noopener" aria-label="NutriTracker live site"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-external"/></svg></a>
-                        </div>
-                    </div>
-                    <p class="tile-desc">Scores meals on 59 micronutrients from the USDA database. Photo logging uses a model only to name the food, never to invent a number.</p>
-                    <p class="tile-status">In progress: UI runs on demo data</p>
-                    <ul class="tile-tech mono">
-                        <li>TypeScript</li>
-                        <li>Postgres</li>
-                        <li>USDA FDC</li>
-                    </ul>
-                </article>
 
                 <article class="project-tile" data-project="haar" tabindex="0">
                     <div class="tile-header">

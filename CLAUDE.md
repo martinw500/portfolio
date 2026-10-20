@@ -1,4 +1,4 @@
-# Portfolio — martinwu.tech
+# Portfolio — martinwu.dev
 
 Personal portfolio for SWE and embedded internship applications. Three files, no build step.
 
