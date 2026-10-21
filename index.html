@@ -3,335 +3,332 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Martin Wu — Computer Engineering @ UBC | Firmware &amp; Software</title>
-    <meta name="description" content="Second-year computer engineering student at UBC. STM32 firmware for the UBC Solar race car, Go infrastructure work at a stealth AI infrastructure startup, and Songless, a web game with 100k+ visits. Seeking a Summer 2027 co-op.">
+    <title>Martin Wu · Embedded and software engineer</title>
+    <meta name="description" content="Second-year computer engineering student at UBC. Firmware for UBC Solar's race car and web apps including Songless, with 100k+ visits. Looking for internships from January or May 2027.">
     <link rel="canonical" href="https://martinwu.dev/">
 
-    <!-- Set the theme before first paint so a light-mode visitor never sees a dark flash. -->
-    <script>try{document.documentElement.dataset.theme=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark')}catch(e){document.documentElement.dataset.theme='dark'}</script>
+    <!-- Set the theme before first paint so a dark-mode visitor never sees a white flash. -->
+    <script>try{document.documentElement.dataset.theme=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){document.documentElement.dataset.theme='light'}document.documentElement.classList.add('js')</script>
 
-    <!-- Link previews: the site is meant to be sent to people, so it needs to
-         unfurl with a title, a summary and an image rather than a bare URL. -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://martinwu.dev/">
-    <meta property="og:title" content="Martin Wu — Computer Engineering @ UBC">
-    <meta property="og:description" content="Firmware for a solar race car. Web apps with 100k+ visits. Seeking a Summer 2027 co-op, 4 or 8 months.">
+    <meta property="og:title" content="Martin Wu · Embedded and software engineer">
+    <meta property="og:description" content="Firmware for UBC Solar's race car. Web apps with 100k+ visits. Looking for internships from January or May 2027.">
     <meta property="og:image" content="https://martinwu.dev/assets/og.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Martin Wu — Computer Engineering @ UBC">
-    <meta name="twitter:description" content="Firmware for a solar race car. Web apps with 100k+ visits. Seeking a Summer 2027 co-op.">
-    <meta name="twitter:image" content="https://martinwu.dev/assets/og.png">
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
-<g id="i-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></g>
-<g id="i-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></g>
-<g id="i-external"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></g>
-<g id="i-sun"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></g>
-<g id="i-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></g>
-<g id="i-arrow-up"><path d="M12 19V5M5 12l7-7 7 7"/></g>
-<g id="i-mail"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></g>
-</defs></svg>
-
-    <header class="header" id="header">
-        <nav class="nav">
-            <a href="#hero" class="nav-logo" aria-label="Back to top">M<span class="accent">.</span></a>
-            <ul class="nav-links" id="nav-links">
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#experience" class="nav-link">Experience</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-                <li><a href="docs/resume.pdf" class="nav-link resume-nav" target="_blank" rel="noopener">Resume</a></li>
-            </ul>
-            <div class="nav-actions">
-                <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-moon"/></svg>
-                </button>
-                <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
+    <header class="bar">
+        <a class="bar-name" href="#top">Martin Wu</a>
+        <nav class="bar-nav" aria-label="Sections">
+            <a href="#projects">Projects</a>
+            <a href="#firmware">Firmware</a>
+            <a href="#experience">Experience</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
         </nav>
+        <div class="bar-end">
+            <button class="theme" id="theme" type="button">Dark</button>
+            <a class="button" href="docs/resume.pdf" target="_blank" rel="noopener">Résumé</a>
+        </div>
     </header>
 
-    <main>
-    <section class="hero" id="hero">
-        <div class="hero-inner">
-            <div class="hero-content">
-                <h1 class="hero-name fade-up" style="--delay:0">Martin Wu<span class="accent">.</span></h1>
-                <p class="hero-tagline fade-up" style="--delay:1">Firmware for a <span class="copper">solar race car</span>.<br>Web apps with <span class="text-accent">100k+ visits</span>.</p>
-                <p class="hero-description fade-up" style="--delay:2">
-                    Second-year Computer Engineering student at UBC, and co-founder of a stealth AI infrastructure startup.
-                </p>
-                <!-- Program, availability and role type are the first filters an
-                     intern recruiter applies, so they sit above the fold. -->
-                <ul class="hero-meta mono fade-up" style="--delay:3">
-                    <li class="is-key">Co-op: Summer 2027 · 4 or 8 months</li>
-                    <li>UBC Computer Engineering '29</li>
-                    <li>SWE + embedded</li>
-                    <li>Vancouver, BC</li>
-                </ul>
-                <div class="hero-cta fade-up" style="--delay:4">
-                    <a href="#projects" class="btn-primary">View projects</a>
-                    <a href="docs/resume.pdf" class="btn-ghost" target="_blank" rel="noopener">
-                        Resume
-                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-external"/></svg>
-                    </a>
-                </div>
-                <dl class="proof fade-up" style="--delay:5">
-                    <div><dt>100k+</dt><dd>visits on Songless</dd></div>
-                    <div class="is-fw"><dt>3</dt><dd>race-car boards shipped</dd></div>
-                    <div><dt>Top 0.5%</dt><dd>CSMC, nationally</dd></div>
-                </dl>
-            </div>
-            <div class="hero-visual fade-up" style="--delay:3">
-                <div class="hero-terminal">
-                    <div class="terminal-header">
-                        <div class="terminal-dots">
-                            <button class="terminal-dot" id="term-close" type="button" aria-label="Crash the terminal">
-                                <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 3.5l5 5M8.5 3.5l-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                            </button>
-                            <button class="terminal-dot" id="term-minimize" type="button" aria-label="Minimize the terminal">
-                                <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6h7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                            </button>
-                            <span class="terminal-dot" aria-hidden="true"></span>
-                        </div>
-                        <span class="terminal-title mono">martin@dev ~</span>
-                    </div>
-                    <div class="terminal-body mono" aria-hidden="true"></div>
-                </div>
-            </div>
-        </div>
-        <!-- A CAN bus differential pair: CAN_H rises and CAN_L falls on every
-             dominant bit. The same bus every board on the solar car talks over. -->
-        <div class="hero-trace" aria-hidden="true">
-            <span class="trace-label mono">CAN_H</span>
-            <span class="trace-label mono is-low">CAN_L</span>
-            <svg viewBox="0 0 2400 56" preserveAspectRatio="none">
-                <path class="trace-h" vector-effect="non-scaling-stroke" d="M0 28H30V12H60V28H120V12H180V28H210V12H240V28H330V12H420V28H450V12H480V28H540V12H570V28H600V12H660V28H750V12H810V28H840V12H870V28H900V12H960V28H990V12H1020V28H1080V12H1140V28H1170V12H1200V28H1230V12H1260V28H1320V12H1380V28H1410V12H1440V28H1530V12H1620V28H1650V12H1680V28H1740V12H1770V28H1800V12H1860V28H1950V12H2010V28H2040V12H2070V28H2100V12H2160V28H2190V12H2220V28H2280V12H2340V28H2370V12H2400"/>
-                <path class="trace-l" vector-effect="non-scaling-stroke" d="M0 28H30V44H60V28H120V44H180V28H210V44H240V28H330V44H420V28H450V44H480V28H540V44H570V28H600V44H660V28H750V44H810V28H840V44H870V28H900V44H960V28H990V44H1020V28H1080V44H1140V28H1170V44H1200V28H1230V44H1260V28H1320V44H1380V28H1410V44H1440V28H1530V44H1620V28H1650V44H1680V28H1740V44H1770V28H1800V44H1860V28H1950V44H2010V28H2040V44H2070V28H2100V44H2160V28H2190V44H2220V28H2280V44H2340V28H2370V44H2400"/>
-            </svg>
-        </div>
-    </section>
-
-    <section class="section" id="about">
-        <div class="section-container">
-            <h2 class="section-heading">About</h2>
-            <div class="about-grid">
-                <div class="about-text">
-                    <p>
-                        I'm a second-year computer engineering student at UBC. I like work that has to
-                        hold up outside my laptop: firmware on a race car at competition, and web apps
-                        that strangers actually use.
-                    </p>
-                    <!-- Grouped the way resume.tex groups them. -->
-                    <dl class="tech-groups mono">
-                        <dt>Languages</dt>
-                        <dd>C, C++, Go, Python, TypeScript, JavaScript</dd>
-                        <dt class="copper">Embedded</dt>
-                        <dd>STM32, FreeRTOS, SPI, CAN bus, HAL, CMake</dd>
-                        <dt>Software</dt>
-                        <dd>gRPC, React, Docker, Playwright, Git</dd>
-                    </dl>
-                </div>
-                <div class="about-photo">
-                    <img src="docs/pfp.jpg" alt="Martin Wu" class="about-img" width="600" height="597" loading="lazy" decoding="async">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section" id="experience">
-        <div class="section-container">
-            <h2 class="section-heading">Experience</h2>
-            <div class="exp-list">
-                <article class="exp-card">
-                    <div class="exp-left">
-                        <span class="exp-date mono">Oct 2025 — Present</span>
-                    </div>
-                    <div class="exp-right">
-                        <h3 class="exp-role">Co-Founder &amp; Software Engineer <span class="exp-at">at a stealth AI infrastructure startup</span></h3>
-                        <p class="exp-context mono"><span>Vancouver, BC</span></p>
-                        <p class="exp-summary">Infrastructure that lets AI agents use a company's databases and APIs without touching them directly. Every request is checked against policy and written to a hash-chained audit log.</p>
-                        <ul class="exp-points">
-                            <li>Built <code>data-plane-local</code>, a <code>go run</code> replica of the production 11-step request dispatcher, so the team can test identity checks, idempotent writes and fail-closed denials without Docker.</li>
-                            <li>Shipped the operator console: a live ledger of allowed and denied agent requests, DAG workflows that halt on a denial, and 11 data-source adapters.</li>
-                        </ul>
-                        <div class="exp-tech">
-                            <span>Go</span><span>gRPC</span><span>mTLS</span><span>TypeScript</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="exp-card is-fw">
-                    <div class="exp-left">
-                        <span class="exp-date mono">Sep 2025 — Present</span>
-                    </div>
-                    <div class="exp-right">
-                        <h3 class="exp-role">Embedded Systems Engineer <span class="exp-at">at UBC Solar</span></h3>
-                        <p class="exp-context mono"><span>Vancouver, BC</span><span>Cascadia race car</span></p>
-                        <p class="exp-summary">Firmware for UBC's competition solar car: the boards that drive the motor, read battery temperature and run the steering wheel, all talking over CAN.</p>
-                        <ul class="exp-points">
-                            <li>Brought up firmware for the Motor Drive Interface board: SPI, CAN filters, FreeRTOS tasks. Motor commands parsed off CAN are cached with a timeout, so a stale command cannot keep driving the motor.</li>
-                            <li>Wrote a MAX31865 driver for PT1000 temperature sensors (3-wire SPI), verified on hardware to within 1&nbsp;°C. Faulted samples are debounced and never sent on CAN.</li>
-                            <li>Shipped steering-wheel firmware (CAN frames for regen, cruise and lights; an LED speed display) and the external-lights firmware for the v4 car. Six merged PRs on <a href="https://github.com/UBC-Solar/firmware_v4" target="_blank" rel="noopener">firmware_v4</a>.</li>
-                        </ul>
-                        <div class="exp-tech">
-                            <span>C</span><span>STM32</span><span>FreeRTOS</span><span>SPI</span><span>CAN</span><span>CMake</span>
-                        </div>
-                    </div>
-                </article>
-            </div>
-            <div class="awards">
-                <h3 class="awards-heading">Mathematics competitions <span class="awards-note mono">2023 – 2025</span></h3>
-                <ul class="awards-list">
-                    <li><strong>CSMC</strong> Top 0.5% nationally, 71st in Canada</li>
-                    <li><strong>AIME</strong> Qualifier, twice</li>
-                    <li><strong>Euclid</strong> Top 2%, 85/100</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <section class="section" id="projects">
-        <div class="section-container">
-            <h2 class="section-heading">Projects</h2>
-
-            <div class="featured-projects">
-                <article class="featured-project" data-project="songless" tabindex="0">
-                    <div class="fp-content">
-                        <p class="fp-overline mono">100k+ visits</p>
-                        <h3 class="fp-title">Songless</h3>
-                        <p class="fp-desc">A music guessing game: you hear a sliver of a song intro and name it. Web Audio plays clues from 0.01&nbsp;s to 15&nbsp;s, then the full track streams from Cloudflare R2.</p>
-                        <ul class="fp-tech mono">
-                            <li>React</li>
-                            <li>TypeScript</li>
-                            <li>Cloudflare R2</li>
-                            <li>Web Audio</li>
-                        </ul>
-                        <div class="fp-links mono">
-                            <a href="https://songless-zeta.vercel.app" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-external"/></svg>Live</a>
-                            <a href="https://github.com/martinw500/songless" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-github"/></svg>Code</a>
-                            <span class="fp-more" data-more="songless"></span>
-                        </div>
-                    </div>
-                    <div class="fp-image">
-                        <div class="shot" data-shot="assets/projects/songless-cover.png" data-alt="Songless game screen"></div>
-                    </div>
-                </article>
-
-                <article class="featured-project" data-project="us" tabindex="0">
-                    <div class="fp-content">
-                        <p class="fp-overline mono">15+ scenes · playable end to end</p>
-                        <h3 class="fp-title">Us</h3>
-                        <p class="fp-desc">A browser story game in Gen 3 Pokémon pixel style, on a custom Phaser 4 engine: grid movement, save and fast travel, dialogue with rewind, audio buses. Playwright tests catch visual regressions.</p>
-                        <ul class="fp-tech mono">
-                            <li>Phaser 4</li>
-                            <li>TypeScript</li>
-                            <li>Playwright</li>
-                        </ul>
-                        <div class="fp-links mono">
-                            <a href="https://martinw500.github.io/larissa-game/" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-external"/></svg>Live</a>
-                            <span class="fp-more" data-more="us"></span>
-                        </div>
-                    </div>
-                    <div class="fp-image">
-                        <div class="shot" data-shot="assets/projects/us-cover.png" data-alt="Us title screen"></div>
-                    </div>
-                </article>
-            </div>
-
-            <h3 class="other-heading">More projects</h3>
-            <div class="projects-grid">
-                <article class="project-tile" data-project="uth" tabindex="0">
-                    <div class="tile-header">
-                        <h4 class="tile-title">Useful Tool Hub</h4>
-                        <div class="tile-links">
-                            <a href="https://github.com/martinw500/UTH" target="_blank" rel="noopener" aria-label="Useful Tool Hub on GitHub"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-github"/></svg></a>
-                            <a href="https://martinw500.github.io/UTH/" target="_blank" rel="noopener" aria-label="Useful Tool Hub live site"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-external"/></svg></a>
-                        </div>
-                    </div>
-                    <p class="tile-desc">Ten small utilities in one page: file conversion, image editing, QR codes, PDF tools. Everything but the downloaders runs on your own device.</p>
-                    <ul class="tile-tech mono">
-                        <li>JavaScript</li>
-                        <li>Python</li>
-                        <li>Vercel</li>
-                    </ul>
-                </article>
-
-
-                <article class="project-tile" data-project="haar" tabindex="0">
-                    <div class="tile-header">
-                        <h4 class="tile-title">Haar Wavelet Compressor</h4>
-                        <div class="tile-links">
-                            <a href="https://github.com/martinw500/Haar-Wavelet-Image-Compressor" target="_blank" rel="noopener" aria-label="Haar Wavelet Compressor on GitHub"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-github"/></svg></a>
-                        </div>
-                    </div>
-                    <p class="tile-desc">Image compression from the Haar wavelet transform, written as matrix operations in NumPy, with a desktop GUI for tuning threshold and depth.</p>
-                    <ul class="tile-tech mono">
-                        <li>Python</li>
-                        <li>NumPy</li>
-                    </ul>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <section class="section" id="contact">
-        <div class="section-container contact-container">
-            <h2 class="contact-heading">Get in touch</h2>
-            <p class="contact-text">
-                I'm looking for a <span class="text-accent">Summer 2027 co-op</span>, 4 or 8 months, in software
-                or embedded. Email is the fastest way to reach me.
+    <main id="top">
+    <section class="hero">
+        <div class="hero-text">
+            <h1 class="lines">
+                <span class="line"><span data-line style="--i:0">Embedded and</span></span>
+                <span class="line"><span data-line style="--i:1">software engineer</span></span>
+            </h1>
+            <p class="hero-sub" data-load>Second-year Computer Engineering at UBC. I write firmware for UBC Solar's race car and build web apps, including Songless, a music game with more than 100,000 visits.</p>
+            <p class="chip" data-load><span class="chip-dot" aria-hidden="true"></span>Available January or May 2027 · 4, 8 or 12 months</p>
+            <p class="hero-links" data-load>
+                <a href="mailto:martinwu500@gmail.com">Email</a>
+                <a href="https://github.com/martinw500" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://www.linkedin.com/in/martinwuu/" target="_blank" rel="noopener">LinkedIn</a>
             </p>
+        </div>
 
-            <a href="mailto:martinwu500@gmail.com" class="contact-email">martinwu500@gmail.com</a>
-
-            <div class="contact-links">
-                <a href="https://www.linkedin.com/in/martinwuu/" target="_blank" rel="noopener">
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-linkedin"/></svg>
-                    LinkedIn
-                </a>
-                <a href="https://github.com/martinw500" target="_blank" rel="noopener">
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-github"/></svg>
-                    GitHub
-                </a>
-                <a href="docs/resume.pdf" target="_blank" rel="noopener">
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-external"/></svg>
-                    Resume
-                </a>
+        <div class="panel diagram" data-load>
+            <div class="switch" role="group" aria-label="What the picture shows">
+                <button type="button" data-view="hw" aria-pressed="true">Hardware</button>
+                <button type="button" data-view="sw" aria-pressed="false">Software</button>
             </div>
+            <div class="stage">
+                <figure class="view" data-view="hw">
+                    <div class="shot">
+                        <img src="assets/photos/hero-board.jpg" width="1050" height="1150" fetchpriority="high"
+                             alt="The RTD breakout being plugged into UBC Solar's Motor Drive Interface board">
+                        <ul class="calls">
+                            <li class="call" style="--x:31%;--y:35%" data-side="right"><span class="dot"></span><span class="lab"><b>RTD breakout</b>A PT1000 sensor read by a MAX31865</span></li>
+                            <li class="call" style="--x:67%;--y:66%" data-side="left"><span class="dot"></span><span class="lab"><b>SPI header</b>Where my driver talks to the converter</span></li>
+                            <li class="call" style="--x:45%;--y:94%" data-side="right"><span class="dot"></span><span class="lab"><b>STM32</b>Runs the board's firmware: CAN, ADC, faults</span></li>
+                        </ul>
+                    </div>
+                    <figcaption>Motor Drive Interface board, Rev 2.0, on UBC Solar's car.</figcaption>
+                </figure>
+                <figure class="view is-off" data-view="sw">
+                    <div class="shot phone">
+                        <img src="assets/photos/hero-songless.jpg" width="600" height="1298" loading="lazy"
+                             alt="Songless on a phone: difficulty buttons, the clue bar at 0.1 seconds, and a search suggesting Bohemian Rhapsody">
+                        <ul class="calls">
+                            <li class="call" style="--x:42%;--y:29.5%" data-side="left"><span class="dot"></span><span class="lab"><b>Five difficulties</b>804 songs to guess</span></li>
+                            <li class="call" style="--x:90%;--y:46%" data-side="right"><span class="dot"></span><span class="lab"><b>Clue stages</b>From 0.01 s up to 15 s</span></li>
+                            <li class="call" style="--x:30%;--y:51%" data-side="left"><span class="dot"></span><span class="lab"><b>Search</b>Titles, aliases and artists</span></li>
+                        </ul>
+                    </div>
+                    <figcaption>Songless on a phone. I built it end to end.</figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <section class="projects" id="projects" aria-labelledby="projects-title">
+        <div class="head">
+            <h2 id="projects-title" data-rise>Projects</h2>
+            <p data-rise>Things I've built on my own time, then the firmware I write for UBC Solar.</p>
+        </div>
+
+        <div class="grid">
+            <article class="panel project is-wide" data-rise>
+                <a class="project-shot" href="https://songless-zeta.vercel.app" target="_blank" rel="noopener" tabindex="-1">
+                    <img src="assets/projects/songless-1.png" width="1280" height="620" loading="lazy" alt="Songless mid-round: difficulty buttons, the clue bar, a play button and a search box">
+                </a>
+                <div class="project-body">
+                    <h3>Songless</h3>
+                    <p class="project-kind">Music guessing game · 100k+ visits</p>
+                    <p>Hear a sliver of a song's intro and name it. 804 songs across five difficulties, clue stages from 0.01&nbsp;s to 15&nbsp;s, and a search that matches titles, aliases and artists. Every song passes audits for source, version and an audible opening before it goes live; the audio is served from Cloudflare R2.</p>
+                    <p class="project-stack">React, TypeScript, Vite, Cloudflare R2</p>
+                    <p class="project-links"><a href="https://songless-zeta.vercel.app" target="_blank" rel="noopener">Play it</a><a href="https://github.com/martinw500/songless" target="_blank" rel="noopener">Code</a></p>
+                </div>
+            </article>
+
+            <article class="panel project" data-rise>
+                <a class="project-shot" href="https://nutritracker-mocha.vercel.app" target="_blank" rel="noopener" tabindex="-1">
+                    <img src="assets/projects/nutritracker.jpg" width="1280" height="800" loading="lazy" alt="NutriTracker's daily view: energy against need, macronutrient bars and nutrients that need attention">
+                </a>
+                <div class="project-body">
+                    <h3>NutriTracker</h3>
+                    <p class="project-kind">Nutrition tracker · in progress</p>
+                    <p>Tracks 59 nutrients against personal reference intakes, not just calories and macros. It's designed so the AI only recognises the food in a photo and every nutrient value comes from USDA FoodData Central. The reference layer is written; accounts and logging are next.</p>
+                    <p class="project-stack">Next.js, TypeScript, Drizzle, Postgres, Vitest</p>
+                    <p class="project-links"><a href="https://nutritracker-mocha.vercel.app" target="_blank" rel="noopener">Demo</a><a href="https://github.com/martinw500/Nutritracker" target="_blank" rel="noopener">Code</a></p>
+                </div>
+            </article>
+
+            <article class="panel project" data-rise>
+                <a class="project-shot" href="https://martinw500.github.io/larissa-game/" target="_blank" rel="noopener" tabindex="-1">
+                    <img src="assets/projects/us-cover.png" width="1280" height="960" loading="lazy" alt="Us title screen: a pink pixel-art menu with Start and Settings">
+                </a>
+                <div class="project-body">
+                    <h3>Us</h3>
+                    <p class="project-kind">Browser story game</p>
+                    <p>A story game in Gen 3 Pokémon pixel style on Phaser 4: more than 15 scenes, saves, fast travel and dialogue you can rewind. Playwright scripts play through routes and check lighting and collision.</p>
+                    <p class="project-stack">Phaser 4, TypeScript, Playwright</p>
+                    <p class="project-links"><a href="https://martinw500.github.io/larissa-game/" target="_blank" rel="noopener">Play it</a></p>
+                </div>
+            </article>
+
+            <article class="panel project" data-rise>
+                <a class="project-shot" href="https://useful-tool-hub.vercel.app" target="_blank" rel="noopener" tabindex="-1">
+                    <img src="assets/projects/uth-1.png" width="1280" height="760" loading="lazy" alt="Useful Tool Hub's home page listing its tools">
+                </a>
+                <div class="project-body">
+                    <h3>Useful Tool Hub</h3>
+                    <p class="project-kind">Browser tools</p>
+                    <p>A dozen tools (file conversion, OCR, transcription, PDF signing) that run on your device; a small Python backend handles the downloaders. Jest runs in CI.</p>
+                    <p class="project-stack">JavaScript, Python, Jest, Vercel</p>
+                    <p class="project-links"><a href="https://useful-tool-hub.vercel.app" target="_blank" rel="noopener">Use it</a><a href="https://github.com/martinw500/UTH" target="_blank" rel="noopener">Code</a></p>
+                </div>
+            </article>
+
+            <article class="panel project" data-rise>
+                <a class="project-shot" href="https://martinw500.github.io/Math-Quiz-Generator/" target="_blank" rel="noopener" tabindex="-1">
+                    <img src="assets/projects/mathquiz.jpg" width="1280" height="800" loading="lazy" alt="Math Quiz's new-quiz screen: four game modes, presets, difficulty and question sliders">
+                </a>
+                <div class="project-body">
+                    <h3>Math Quiz</h3>
+                    <p class="project-kind">Quiz app</p>
+                    <p>Four modes, including a seeded daily challenge that's the same for everyone, plus XP and levels, 18 achievements and per-operation stats.</p>
+                    <p class="project-stack">React, styled-components</p>
+                    <p class="project-links"><a href="https://martinw500.github.io/Math-Quiz-Generator/" target="_blank" rel="noopener">Try it</a><a href="https://github.com/martinw500/Math-Quiz-Generator" target="_blank" rel="noopener">Code</a></p>
+                </div>
+            </article>
+
+            <article class="panel project is-text" data-rise>
+                <div class="project-body">
+                    <h3>Haar wavelet compressor</h3>
+                    <p class="project-kind">Desktop app</p>
+                    <p>Compresses images with the Haar wavelet transform, written as matrix operations, with sliders for threshold and depth and a live before-and-after.</p>
+                    <p class="project-stack">Python, NumPy, CustomTkinter</p>
+                    <p class="project-links"><a href="https://github.com/martinw500/Haar-Wavelet-Image-Compressor" target="_blank" rel="noopener">Code</a></p>
+                </div>
+            </article>
+
+            <div class="panel fw-list" data-rise>
+            <h3>Firmware for UBC Solar</h3>
+            <ul>
+                <li><a href="#firmware"><span>RTD temperature sensing</span><span>Proposed it, wrote the driver and the fault handling</span><span>2026</span></a></li>
+                <li><a href="https://github.com/UBC-Solar/firmware_v4" target="_blank" rel="noopener"><span>Motor Drive Interface</span><span>Board bring-up: pins, a filtered CAN driver, ADC readings</span><span>2026</span></a></li>
+                <li><a href="https://github.com/UBC-Solar/firmware_v4" target="_blank" rel="noopener"><span>Steering wheel</span><span>CAN speed data on the hex display, in km/h or mph</span><span>2026</span></a></li>
+                <li><a href="https://github.com/UBC-Solar/firmware_v4" target="_blank" rel="noopener"><span>External lights</span><span>Turn signals, hazards and brake lights as FreeRTOS tasks</span><span></span></a></li>
+                <li><a href="https://github.com/UBC-Solar/sunlink" target="_blank" rel="noopener"><span>Telemetry</span><span>New signals in the DBC, the Grafana dashboards and the pit-crew test</span><span>2026</span></a></li>
+            </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="firmware" id="firmware" aria-labelledby="fw-title">
+        <div class="head">
+            <h2 id="fw-title" data-rise>Motor temperature over CAN</h2>
+            <p data-rise>On UBC Solar's car I proposed measuring the motor's temperature with a PT1000 RTD and wrote the firmware from a breadboard prototype to the driver on the Motor Drive Interface board. Here is the path a reading takes.</p>
+        </div>
+
+        <ol class="flow" data-rise aria-label="Signal path">
+            <li class="node"><b>PT1000 RTD</b><span>Platinum sensor on the motor</span></li>
+            <li class="link" aria-hidden="true"><span>wire</span></li>
+            <li class="node"><b>MAX31865</b><span>Turns resistance into a reading</span></li>
+            <li class="link" aria-hidden="true"><span>SPI</span></li>
+            <li class="node is-mine"><b>STM32 on the MDI</b><span>My driver and fault debounce</span></li>
+            <li class="link" aria-hidden="true"><span>CAN</span></li>
+            <li class="node"><b>0x502, once a second</b><span>Success, °C, fault flags</span></li>
+            <li class="link" aria-hidden="true"><span>telemetry</span></li>
+            <li class="node"><b>Grafana</b><span>The pit crew's dashboard</span></li>
+        </ol>
+
+        <div class="fw-detail">
+            <div class="fw-text">
+                <p data-rise>A missing chip doesn't cause an SPI error; it reads back as about −259&nbsp;°C. So the driver reads its config register back before every conversion, and a fault has to last five reads before the flag latches, so one glitch never raises it.</p>
+                <p data-rise>Try it on the right. The table follows the firmware's own rules, and the last photo below is the real capture with the sensor pulled.</p>
+            </div>
+            <div data-ui class="live" data-rise>
+                <table class="trace">
+                    <thead><tr><th>CAN-ID</th><th>Length</th><th>Data</th><th>Means</th></tr></thead>
+                    <tbody>
+                        <tr><td>0x500</td><td>4</td><td id="f500">00 00 00 00</td><td id="m500">up 0 s</td></tr>
+                        <tr><td>0x501</td><td>1</td><td id="f501">00</td><td id="m501">no flags</td></tr>
+                        <tr><td>0x502</td><td>6</td><td id="f502">01 18 00 00 00 00</td><td id="m502">read ok, 24 °C</td></tr>
+                    </tbody>
+                </table>
+                <div class="live-controls">
+                    <button type="button" id="unplug">Unplug the RTD</button>
+                    <span id="live-count" aria-live="polite">Reading. Fault count 0 of 5</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="bench">
+            <figure data-rise><img src="assets/photos/run-breadboard.jpg" width="800" height="600" loading="lazy" alt="A MAX31865 breakout on a breadboard wired to an RTD probe, next to a laptop"><figcaption>The first prototype on a breadboard</figcaption></figure>
+            <figure data-rise><img src="assets/photos/run-mdi.jpg" width="600" height="800" loading="lazy" alt="The Motor Drive Interface board with the RTD breakout fitted and a green LED lit"><figcaption>On the Motor Drive Interface, Rev 2.0</figcaption></figure>
+            <figure data-rise><img src="assets/photos/run-heatgun.jpg" width="600" height="800" loading="lazy" alt="The heat-gun test bench: a heat gun on the probe, a thermocouple meter and a laptop"><figcaption>Heat-gun test on the bench</figcaption></figure>
+            <figure data-rise><video src="assets/photos/thermal.mp4" poster="assets/photos/thermal-poster.jpg" width="720" height="1280" muted loop playsinline autoplay preload="none" aria-label="A thermal camera pointed at the probe during the heat-gun test"></video><figcaption>Thermal camera, same test</figcaption></figure>
+            <figure data-rise><img src="assets/photos/run-jlink.jpg" width="600" height="800" loading="lazy" alt="The Motor Drive Interface board with a PCAN-USB adapter and a J-Link attached"><figcaption>PCAN-USB and a J-Link on the board</figcaption></figure>
+            <figure data-rise><img src="assets/photos/run-pcan.jpg" width="1000" height="500" loading="lazy" alt="PCAN-View showing three frames: D5 00 00 00, 08, and 00 00 00 00 00 80"><figcaption>The real capture: fault bit 08 set</figcaption></figure>
+        </div>
+    </section>
+
+    <section class="experience" id="experience" aria-labelledby="exp-title">
+        <div class="head">
+            <h2 id="exp-title" data-rise>Experience</h2>
+        </div>
+        <div class="jobs">
+            <article class="panel job" data-rise>
+                <p class="job-when">Sep 2025 – now · Vancouver</p>
+                <h3>Embedded Systems Developer</h3>
+                <p class="job-org">UBC Solar</p>
+                <ul>
+                    <li>Brought up the Motor Drive Interface firmware on STM32: pin setup, a CAN driver with a hardware filter for motor commands, and ADC readings of board voltage and temperature.</li>
+                    <li>Made motor commands expire after 100&nbsp;ms of CAN silence, so a stale command can't keep driving the motor; confirmed it on the car by cutting the command stream.</li>
+                    <li>Proposed and built PT1000 motor-temperature sensing, then the external-lights tasks and the steering-wheel speed display.</li>
+                </ul>
+                <p class="project-stack">C, STM32 HAL, FreeRTOS, CAN, SPI, Grafana</p>
+            </article>
+            <article class="panel job" data-rise>
+                <p class="job-when">Oct 2025 – now · Vancouver</p>
+                <h3>Co-founder, Software Engineer</h3>
+                <p class="job-org">A stealth AI infrastructure startup</p>
+                <ul>
+                    <li>Wrote a Go test harness whose in-memory adapters drive reads, idempotent replays, identity denials and adapter panics through the team's 11-step dispatcher without Docker.</li>
+                    <li>Rebuilt the live product demo, where AI agents query Postgres through access policies, human approvals and an audit trail.</li>
+                    <li>Ran the technical review for the first enterprise deal.</li>
+                </ul>
+                <p class="project-stack">Go, Postgres, Docker</p>
+            </article>
+        </div>
+        <div class="panel strip" data-rise>
+            <div>
+                <h3>Education</h3>
+                <p><b>BASc Computer Engineering</b>, University of British Columbia, expected May 2029. Average A-.</p>
+                <p class="muted">Computer Systems (SystemVerilog, FPGA, RISC-V), Software Construction (Java).</p>
+            </div>
+            <div>
+                <h3>Awards</h3>
+                <ul class="awards">
+                    <li><b>CSMC</b> Top 0.5% in Canada, 71st</li>
+                    <li><b>AIME</b> Qualified twice</li>
+                    <li><b>Euclid</b> Top 2%, 85 of 100</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about" aria-labelledby="about-title">
+        <div class="head">
+            <h2 id="about-title" data-rise>About</h2>
+        </div>
+        <div class="panel about-panel">
+            <img class="about-photo" src="assets/photos/contact-martin.jpg" width="480" height="480" loading="lazy" alt="Martin in the UBC Solar bay on a motor installation night" data-rise>
+            <div class="about-text">
+                <p data-rise>I'm Martin, in my second year of Computer Engineering at UBC. I like work that has to hold up outside my laptop: firmware that runs on a race car, and web apps that strangers actually use.</p>
+                <p data-rise>Most weeks are split between the UBC Solar bay, with an oscilloscope, a PCAN adapter and a J-Link, and my own projects. Before university it was competition math.</p>
+            </div>
+        </div>
+        <div class="panel tools" data-rise>
+            <div>
+                <h3>Web and apps</h3>
+                <p>TypeScript, JavaScript, React, Next.js, Vite, Tailwind, styled-components, Phaser, Drizzle, Postgres, Playwright, Jest, Vitest, Cloudflare R2, Vercel</p>
+            </div>
+            <div>
+                <h3>Systems and backend</h3>
+                <p>Go, Python, NumPy, Java, SystemVerilog, Docker, Linux, Git</p>
+            </div>
+            <div>
+                <h3>Embedded and bench</h3>
+                <p>C, STM32 HAL, FreeRTOS, CAN, SPI, ADC, CMake, oscilloscope, PCAN, J-Link, ST-Link, Grafana</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+        <div class="panel contact-panel" data-rise>
+            <h2 id="contact-title">Hiring an intern for 2027?</h2>
+            <p>I'm looking for a software or embedded role. Email is the fastest way to reach me. I'd love to work in the US and I'm happy to relocate.</p>
+            <a class="contact-mail" href="mailto:martinwu500@gmail.com?subject=Internship">martinwu500@gmail.com</a>
+            <p class="contact-links">
+                <a class="button" href="docs/resume.pdf" target="_blank" rel="noopener">Résumé</a>
+                <a href="https://www.linkedin.com/in/martinwuu/" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="https://github.com/martinw500" target="_blank" rel="noopener">GitHub</a>
+            </p>
         </div>
     </section>
     </main>
 
-    <footer class="footer">
-        <p class="footer-text mono">Built by hand by Martin Wu. No framework, no build step.</p>
+    <footer class="foot">
+        <p>Martin Wu, Vancouver</p>
+        <p>Built by hand: HTML, CSS and a little JavaScript.</p>
     </footer>
-
-    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-arrow-up"/></svg>
-    </button>
-
-    <!-- Native dialog: focus trap, Esc and an inert page come with showModal(). -->
-    <dialog class="project-modal" id="project-modal" aria-labelledby="project-modal-title">
-        <div class="project-modal-panel">
-            <button class="project-modal-close" type="button" data-modal-close aria-label="Close">&times;</button>
-            <div class="project-modal-body" id="project-modal-body"></div>
-        </div>
-    </dialog>
 
     <script src="script.js"></script>
 </body>
