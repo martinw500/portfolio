@@ -298,8 +298,8 @@ h3 { font-size: var(--step-lead); font-weight: 600; line-height: 1.2; letter-spa
 .awards b { display: inline-block; min-width: 4.5em; font-weight: 600; }
 
 /* About */
-.about-panel { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 40px; padding: 12px; align-items: center; }
-.about-photo { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 4px; }
+.about-panel { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 40px; padding: 12px; align-items: center; }
+.about-photo { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 4px; }
 .about-text { display: grid; gap: 16px; padding: 12px 28px 12px 0; max-width: 46em; }
 .tools { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px 48px; margin-top: 12px; padding: 28px; }
 .tools h3 { font-size: var(--step-body); margin-bottom: 8px; }
