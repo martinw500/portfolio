@@ -89,7 +89,7 @@
                             <li class="call" style="--x:30%;--y:51%" data-side="left"><span class="dot"></span><span class="lab"><b>Search</b>Titles, aliases and artists</span></li>
                         </ul>
                     </div>
-                    <figcaption>Songless on a phone. I built it end to end.</figcaption>
+                    <figcaption>Songless on a phone, mid-round.</figcaption>
                 </figure>
             </div>
         </div>
@@ -98,7 +98,6 @@
     <section class="projects" id="projects" aria-labelledby="projects-title">
         <div class="head">
             <h2 id="projects-title" data-rise>Projects</h2>
-            <p data-rise>Things I've built on my own time, then the firmware I write for UBC Solar.</p>
         </div>
 
         <div class="grid">
@@ -109,7 +108,7 @@
                 <div class="project-body">
                     <h3>Songless</h3>
                     <p class="project-kind">Music guessing game · 100k+ visits</p>
-                    <p>Hear a sliver of a song's intro and name it. 804 songs across five difficulties, clue stages from 0.01&nbsp;s to 15&nbsp;s, and a search that matches titles, aliases and artists. Every song passes audits for source, version and an audible opening before it goes live; the audio is served from Cloudflare R2.</p>
+                    <p>Hear a sliver of a song's intro and name it. 804 songs across five difficulties, clue stages from 0.01&nbsp;s to 15&nbsp;s, and a search that matches titles, aliases and artists. Before a song goes live, scripts check it's the right version from a permitted source and that its opening is audible. The audio is served from Cloudflare R2.</p>
                     <p class="project-stack">React, TypeScript, Vite, Cloudflare R2</p>
                     <p class="project-links"><a href="https://songless-zeta.vercel.app" target="_blank" rel="noopener">Play it</a><a href="https://github.com/martinw500/songless" target="_blank" rel="noopener">Code</a></p>
                 </div>
@@ -122,7 +121,7 @@
                 <div class="project-body">
                     <h3>NutriTracker</h3>
                     <p class="project-kind">Nutrition tracker · in progress</p>
-                    <p>Tracks 59 nutrients against personal reference intakes, not just calories and macros. It's designed so the AI only recognises the food in a photo and every nutrient value comes from USDA FoodData Central. The reference layer is written; accounts and logging are next.</p>
+                    <p>Most trackers stop at calories and macros; this one tracks 59 nutrients against your own reference intakes. It's designed so the AI only recognises the food in a photo and every nutrient value comes from USDA FoodData Central. The reference layer is written; accounts and logging are next.</p>
                     <p class="project-stack">Next.js, TypeScript, Drizzle, Postgres, Vitest</p>
                     <p class="project-links"><a href="https://nutritracker-mocha.vercel.app" target="_blank" rel="noopener">Demo</a><a href="https://github.com/martinw500/Nutritracker" target="_blank" rel="noopener">Code</a></p>
                 </div>
@@ -193,7 +192,7 @@
     <section class="firmware" id="firmware" aria-labelledby="fw-title">
         <div class="head">
             <h2 id="fw-title" data-rise>Motor temperature over CAN</h2>
-            <p data-rise>On UBC Solar's car I proposed measuring the motor's temperature with a PT1000 RTD and wrote the firmware from a breadboard prototype to the driver on the Motor Drive Interface board. Here is the path a reading takes.</p>
+            <p data-rise>On UBC Solar's car I proposed measuring the motor's temperature with a PT1000 RTD and wrote the firmware from a breadboard prototype to the driver on the Motor Drive Interface board.</p>
         </div>
 
         <ol class="flow" data-rise aria-label="Signal path">
@@ -210,8 +209,8 @@
 
         <div class="fw-detail">
             <div class="fw-text">
-                <p data-rise>A missing chip doesn't cause an SPI error; it reads back as about −259&nbsp;°C. So the driver reads its config register back before every conversion, and a fault has to last five reads before the flag latches, so one glitch never raises it.</p>
-                <p data-rise>Try it on the right. The table follows the firmware's own rules, and the last photo below is the real capture with the sensor pulled.</p>
+                <p data-rise>If the chip is missing, SPI still succeeds and the reading comes back as about −259&nbsp;°C, so the driver reads its config register back before every conversion, and a fault has to last five reads before the flag latches, so one glitch never raises it.</p>
+                <p data-rise>Unplug the RTD in the table to watch the fault latch. It runs the firmware's rules; the last bench photo is the real capture with the sensor pulled.</p>
             </div>
             <div data-ui class="live" data-rise>
                 <table class="trace">
@@ -291,8 +290,8 @@
         <div class="panel about-panel">
             <img class="about-photo" src="assets/photos/about-bay.jpg" width="1500" height="1000" loading="lazy" alt="Martin and teammates in the UBC Solar bay on a motor installation night, seen through the car's canopy" data-rise>
             <div class="about-text">
-                <p data-rise>I'm Martin, in my second year of Computer Engineering at UBC. I like work that has to hold up outside my laptop: firmware that runs on a race car, and web apps that strangers actually use.</p>
-                <p data-rise>Most weeks are split between the UBC Solar bay, with an oscilloscope, a PCAN adapter and a J-Link, and my own projects. Before university it was competition math.</p>
+                <p data-rise>I'm Martin, a second-year Computer Engineering student at UBC. On UBC Solar I write firmware for the motor board, and on my own time I build web apps, mostly games and tools.</p>
+                <p data-rise>My bench kit is an oscilloscope, a PCAN adapter and a J-Link. Before university I did competition math.</p>
             </div>
         </div>
         <div class="panel tools" data-rise>
