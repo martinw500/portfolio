@@ -13,7 +13,7 @@ Personal portfolio for SWE and embedded internship applications. Three files, no
 
 | File | Lines | Contains |
 |---|---|---|
-| `index.html` | ~330 | Inline theme script, sticky bar, hero with the Hardware/Software diagram, Projects (software panels + firmware list), Firmware deep-dive (signal path, live CAN table, bench photos), Experience, About + tools, Contact, footer |
+| `index.html` | ~330 | Inline theme script, sticky bar, hero with the Hardware/Software diagram, Projects (software panels + firmware list), Firmware deep-dive (signal path, live CAN table, bench photos), Experience, Skills (bay photo + tools), Contact, footer |
 | `styles.css` | ~390 | Tokens on `:root` / `[data-theme="dark"]`, sections in page order, then `1099px`, `860px` and `599px` queries, then motion |
 | `script.js` | ~120 | Theme toggle, scroll reveal, the hero switch and its phone legend, live CAN frames |
 
@@ -36,7 +36,7 @@ Hardware photos are in `assets/photos/`, cut from Martin's originals (gitignored
 
 Project screenshots are in `assets/projects/`. NutriTracker and Math Quiz were captured from their live sites with Playwright; `hero-songless.jpg` is the live Songless at 390×844 with "bohem" typed in the search. Game shots come from driving the live build (seed `localStorage` to skip the gate, seed `howwemet.save`'s `scene` to jump, `howwemet:dev-mode` — note the colon — unlocks travel). **Capture at final size; never downscale pixel art.**
 
-Content rules: NutriTracker is described as in progress, because its own `docs/STATUS.md` says the UI still runs on demo data. Songless facts come from its README (804 songs, clue stages 0.01–15 s), not the old résumé's "30-second clues". The Roblox game, Trader-Bot and course labs stay off the site.
+Content rules: every line has to tell a recruiter a fact; no slogans, no lines describing the page itself (Martin called out "My bench kit is…" and the old "work that has to hold up outside my laptop" line). Don't invent motives, feelings or habits for him; ask instead. The humanizer plugin (blader/humanizer, user scope) is installed for copy passes. The Us card uses a gameplay shot inside Molly Tea (`us-mollytea.png`); Martin rejected the title screen (just pink) and the sunset shot (doesn't show off enough). The dorm was tried too, but the game draws it small in a dark field. To capture a scene, seed `howwemet.gate`=1, `howwemet.tutorial`=1 and `howwemet.save`={v:1,flags:[],discovered:[scene],album:[],scene} then press E on CONTINUE. NutriTracker is described as in progress, because its own `docs/STATUS.md` says the UI still runs on demo data. Songless facts come from its README (804 songs, clue stages 0.01–15 s), not the old résumé's "30-second clues". The Roblox game, Trader-Bot and course labs stay off the site.
 
 ## Things that will bite you
 

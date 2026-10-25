@@ -36,7 +36,7 @@
             <a href="#projects">Projects</a>
             <a href="#firmware">Firmware</a>
             <a href="#experience">Experience</a>
-            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
             <a href="#contact">Contact</a>
         </nav>
         <div class="bar-end">
@@ -52,8 +52,8 @@
                 <span class="line"><span data-line style="--i:0">Embedded and</span></span>
                 <span class="line"><span data-line style="--i:1">software engineer</span></span>
             </h1>
-            <p class="hero-sub" data-load>Second-year Computer Engineering at UBC. I write firmware for UBC Solar's race car and build web apps, including Songless, a music game with more than 100,000 visits.</p>
-            <p class="chip" data-load><span class="chip-dot" aria-hidden="true"></span>Available January or May 2027 · 4, 8 or 12 months</p>
+            <p class="hero-sub" data-load>I'm a second-year Computer Engineering student at UBC. I write firmware for UBC Solar's race car and build web apps on the side, including Songless, a song-guessing game with over 100,000 visits.</p>
+            <p class="chip" data-load><span class="chip-dot" aria-hidden="true"></span>Looking for an internship starting January or May 2027</p>
             <p class="hero-links" data-load>
                 <a href="mailto:martinwu500@gmail.com">Email</a>
                 <a href="https://github.com/martinw500" target="_blank" rel="noopener">GitHub</a>
@@ -77,7 +77,7 @@
                             <li class="call" style="--x:45%;--y:94%" data-side="right"><span class="dot"></span><span class="lab"><b>STM32</b>Runs the board's firmware: CAN, ADC, faults</span></li>
                         </ul>
                     </div>
-                    <figcaption>Motor Drive Interface board, Rev 2.0, on UBC Solar's car.</figcaption>
+                    <figcaption>UBC Solar's Motor Drive Interface board with the RTD breakout plugged in. The labelled parts run my firmware.</figcaption>
                 </figure>
                 <figure class="view is-off" data-view="sw">
                     <div class="shot phone">
@@ -107,8 +107,8 @@
                 </a>
                 <div class="project-body">
                     <h3>Songless</h3>
-                    <p class="project-kind">Music guessing game · 100k+ visits</p>
-                    <p>Hear a sliver of a song's intro and name it. 804 songs across five difficulties, clue stages from 0.01&nbsp;s to 15&nbsp;s, and a search that matches titles, aliases and artists. Before a song goes live, scripts check it's the right version from a permitted source and that its opening is audible. The audio is served from Cloudflare R2.</p>
+                    <p class="project-kind">Song-guessing game · 100k+ visits</p>
+                    <p>My version of Songless: you hear the first 0.01&nbsp;seconds of a song and try to name it, and each skip plays a bit more, up to 15&nbsp;seconds. There are 804 songs across five difficulties. Behind it is a pipeline that pulls each track, checks it's the right version with an audible opening, and uploads the clips to Cloudflare R2.</p>
                     <p class="project-stack">React, TypeScript, Vite, Cloudflare R2</p>
                     <p class="project-links"><a href="https://songless-zeta.vercel.app" target="_blank" rel="noopener">Play it</a><a href="https://github.com/martinw500/songless" target="_blank" rel="noopener">Code</a></p>
                 </div>
@@ -121,7 +121,7 @@
                 <div class="project-body">
                     <h3>NutriTracker</h3>
                     <p class="project-kind">Nutrition tracker · in progress</p>
-                    <p>Most trackers stop at calories and macros; this one tracks 59 nutrients against your own reference intakes. It's designed so the AI only recognises the food in a photo and every nutrient value comes from USDA FoodData Central. The reference layer is written; accounts and logging are next.</p>
+                    <p>Most nutrition apps stop at calories and macros. This one tracks 59 nutrients against your own daily targets, and you'll log meals by taking a photo. The AI only names the food; every number comes from the USDA's food database, so a bad guess shows up as the wrong food instead of a made-up value. The nutrient reference and the interface are built; accounts and real logging are next.</p>
                     <p class="project-stack">Next.js, TypeScript, Drizzle, Postgres, Vitest</p>
                     <p class="project-links"><a href="https://nutritracker-mocha.vercel.app" target="_blank" rel="noopener">Demo</a><a href="https://github.com/martinw500/Nutritracker" target="_blank" rel="noopener">Code</a></p>
                 </div>
@@ -129,12 +129,12 @@
 
             <article class="panel project" data-rise>
                 <a class="project-shot" href="https://martinw500.github.io/larissa-game/" target="_blank" rel="noopener" tabindex="-1">
-                    <img src="assets/projects/us-cover.png" width="1280" height="960" loading="lazy" alt="Us title screen: a pink pixel-art menu with Start and Settings">
+                    <img src="assets/projects/us-mollytea.png" width="1280" height="960" loading="lazy" alt="Us gameplay inside the Molly Tea shop: a barista with an exclamation-mark prompt and the order and pickup counters">
                 </a>
                 <div class="project-body">
                     <h3>Us</h3>
-                    <p class="project-kind">Browser story game</p>
-                    <p>A story game in Gen 3 Pokémon pixel style on Phaser 4: more than 15 scenes, saves, fast travel and dialogue you can rewind. Playwright scripts play through routes and check lighting and collision.</p>
+                    <p class="project-kind">Pixel-art story game</p>
+                    <p>A short story game in the style of the Gen 3 Pokémon games, built on Phaser 4. It has 15+ scenes with saving, fast travel and dialogue you can rewind. To test it, I wrote Playwright scripts that play through the routes and check lighting and collisions.</p>
                     <p class="project-stack">Phaser 4, TypeScript, Playwright</p>
                     <p class="project-links"><a href="https://martinw500.github.io/larissa-game/" target="_blank" rel="noopener">Play it</a></p>
                 </div>
@@ -147,7 +147,7 @@
                 <div class="project-body">
                     <h3>Useful Tool Hub</h3>
                     <p class="project-kind">Browser tools</p>
-                    <p>A dozen tools (file conversion, OCR, transcription, PDF signing) that run on your device; a small Python backend handles the downloaders. Jest runs in CI.</p>
+                    <p>A dozen small tools in one site: file conversion, OCR, transcription, PDF signing. Almost everything runs in your browser, so your files stay on your device; only the downloaders use a small Python backend. Jest runs in CI.</p>
                     <p class="project-stack">JavaScript, Python, Jest, Vercel</p>
                     <p class="project-links"><a href="https://useful-tool-hub.vercel.app" target="_blank" rel="noopener">Use it</a><a href="https://github.com/martinw500/UTH" target="_blank" rel="noopener">Code</a></p>
                 </div>
@@ -160,7 +160,7 @@
                 <div class="project-body">
                     <h3>Math Quiz</h3>
                     <p class="project-kind">Quiz app</p>
-                    <p>Four modes, including a seeded daily challenge that's the same for everyone, plus XP and levels, 18 achievements and per-operation stats.</p>
+                    <p>A math quiz with four modes, including a daily challenge that gives everyone the same questions. It tracks XP, levels and 18 achievements.</p>
                     <p class="project-stack">React, styled-components</p>
                     <p class="project-links"><a href="https://martinw500.github.io/Math-Quiz-Generator/" target="_blank" rel="noopener">Try it</a><a href="https://github.com/martinw500/Math-Quiz-Generator" target="_blank" rel="noopener">Code</a></p>
                 </div>
@@ -170,7 +170,7 @@
                 <div class="project-body">
                     <h3>Haar wavelet compressor</h3>
                     <p class="project-kind">Desktop app</p>
-                    <p>Compresses images with the Haar wavelet transform, written as matrix operations, with sliders for threshold and depth and a live before-and-after.</p>
+                    <p>Image compression with the Haar wavelet transform, written as matrix operations in NumPy. A small desktop app lets you change the threshold and depth and compare the result with the original.</p>
                     <p class="project-stack">Python, NumPy, CustomTkinter</p>
                     <p class="project-links"><a href="https://github.com/martinw500/Haar-Wavelet-Image-Compressor" target="_blank" rel="noopener">Code</a></p>
                 </div>
@@ -192,7 +192,7 @@
     <section class="firmware" id="firmware" aria-labelledby="fw-title">
         <div class="head">
             <h2 id="fw-title" data-rise>Motor temperature over CAN</h2>
-            <p data-rise>On UBC Solar's car I proposed measuring the motor's temperature with a PT1000 RTD and wrote the firmware from a breadboard prototype to the driver on the Motor Drive Interface board.</p>
+            <p data-rise>I proposed adding motor temperature sensing to UBC Solar's car with a PT1000 RTD, then wrote the firmware for it, from a breadboard prototype to the driver on the Motor Drive Interface board.</p>
         </div>
 
         <ol class="flow" data-rise aria-label="Signal path">
@@ -209,8 +209,8 @@
 
         <div class="fw-detail">
             <div class="fw-text">
-                <p data-rise>If the chip is missing, SPI still succeeds and the reading comes back as about −259&nbsp;°C, so the driver reads its config register back before every conversion, and a fault has to last five reads before the flag latches, so one glitch never raises it.</p>
-                <p data-rise>Unplug the RTD in the table to watch the fault latch. It runs the firmware's rules; the last bench photo is the real capture with the sensor pulled.</p>
+                <p data-rise>The tricky part was failures that look like data. If the MAX31865 is missing, SPI reads still succeed and return about −259&nbsp;°C, which looks like a real temperature, so the driver checks the chip's config register before every conversion. A fault also has to persist for five reads before the flag is set, so one noisy reading doesn't raise an alarm.</p>
+                <p data-rise>Try unplugging the sensor in the table. It follows the same rules as the firmware. The last photo below is a real capture from the board with the sensor pulled.</p>
             </div>
             <div data-ui class="live" data-rise>
                 <table class="trace">
@@ -283,29 +283,28 @@
         </div>
     </section>
 
-    <section class="about" id="about" aria-labelledby="about-title">
+    <section class="about" id="skills" aria-labelledby="skills-title">
         <div class="head">
-            <h2 id="about-title" data-rise>About</h2>
+            <h2 id="skills-title" data-rise>Skills</h2>
         </div>
         <div class="panel about-panel">
-            <img class="about-photo" src="assets/photos/about-bay.jpg" width="1500" height="1000" loading="lazy" alt="Martin and teammates in the UBC Solar bay on a motor installation night, seen through the car's canopy" data-rise>
-            <div class="about-text">
-                <p data-rise>I'm Martin, a second-year Computer Engineering student at UBC. On UBC Solar I write firmware for the motor board, and on my own time I build web apps, mostly games and tools.</p>
-                <p data-rise>My bench kit is an oscilloscope, a PCAN adapter and a J-Link. Before university I did competition math.</p>
-            </div>
-        </div>
-        <div class="panel tools" data-rise>
-            <div>
-                <h3>Web and apps</h3>
-                <p>TypeScript, JavaScript, React, Next.js, Vite, Tailwind, styled-components, Phaser, Drizzle, Postgres, Playwright, Jest, Vitest, Cloudflare R2, Vercel</p>
-            </div>
-            <div>
-                <h3>Systems and backend</h3>
-                <p>Go, Python, NumPy, Java, SystemVerilog, Docker, Linux, Git</p>
-            </div>
-            <div>
-                <h3>Embedded and bench</h3>
-                <p>C, STM32 HAL, FreeRTOS, CAN, SPI, ADC, CMake, oscilloscope, PCAN, J-Link, ST-Link, Grafana</p>
+            <figure class="about-figure" data-rise>
+                <img class="about-photo" src="assets/photos/about-bay.jpg" width="1500" height="1000" loading="lazy" alt="Martin and teammates in the UBC Solar bay on a motor installation night, seen through the car's canopy">
+                <figcaption>Motor installation night in the UBC Solar bay. I'm the one in the grey beanie.</figcaption>
+            </figure>
+            <div class="tools" data-rise>
+                <div>
+                    <h3>Web and apps</h3>
+                    <p>TypeScript, JavaScript, React, Next.js, Vite, Tailwind, styled-components, Phaser, Drizzle, Postgres, Playwright, Jest, Vitest, Cloudflare R2, Vercel</p>
+                </div>
+                <div>
+                    <h3>Systems and backend</h3>
+                    <p>Go, Python, NumPy, Java, SystemVerilog, Docker, Linux, Git</p>
+                </div>
+                <div>
+                    <h3>Embedded and bench</h3>
+                    <p>C, STM32 HAL, FreeRTOS, CAN, SPI, ADC, CMake, oscilloscope, PCAN, J-Link, ST-Link, Grafana</p>
+                </div>
             </div>
         </div>
     </section>
@@ -313,7 +312,7 @@
     <section class="contact" id="contact" aria-labelledby="contact-title">
         <div class="panel contact-panel" data-rise>
             <h2 id="contact-title">Hiring an intern for 2027?</h2>
-            <p>I'm looking for a software or embedded role. Email is the fastest way to reach me. I'd love to work in the US and I'm happy to relocate.</p>
+            <p>I'm looking for a software or embedded internship starting January or May 2027, for 4, 8 or 12 months. I'd like to work in the US and I'm happy to relocate. Email is the fastest way to reach me.</p>
             <a class="contact-mail" href="mailto:martinwu500@gmail.com?subject=Internship">martinwu500@gmail.com</a>
             <p class="contact-links">
                 <a class="button" href="docs/resume.pdf" target="_blank" rel="noopener">Résumé</a>
